@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- TODO: sample citation
-<cs:contributors/cs:contributor/@contributorType>. <only year cs:timeInstant>. <cs:resourceTitle>. <cs:curationDetails/cs:curation/cs:curatingInstitution>. <cs:resourceIdentifier>. Retrieved <actual date>
-
-nel caso di UNISSBID20090804ST125
-
-Antonella Lugliè. 2009. Lake Bidighinzu water sample at 2.5m. University of Sassari - Department of Architecture, Design and Urban Planning. UNISSBID20090804ST125. Retrieved September 06, 2018
--->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:cs="https://igsn.csiro.au/schemas/3.0"
