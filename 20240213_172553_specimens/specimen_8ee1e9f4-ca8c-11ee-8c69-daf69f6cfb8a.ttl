@@ -1,0 +1,65 @@
+@prefix sosa: <http://www.w3.org/ns/sosa/>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix geosparql <http://www.opengis.net/ont/geosparql#>
+@prefix sf: <http://www.opengis.net/ont/sf#>
+@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix dcat: <http://www.w3.org/ns/dcat#>
+@prefix prov: <http://www.w3.org/ns/prov#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix sosa-rel: <http://www.w3.org/ns/sosa/sampling/>
+
+<uuid-8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a> rdf:type sosa:Sample ;
+  rdfs:comment 'Description of the sample'@en ;
+  rdfs:label 'Sample LM98_13A'@en ;
+  sosa:isSampleOf <https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> ;
+  sosa:madeSampling <https://deims.org/activity/50d7a52d-e384-4ed4-9976-5bf9c8302843> ;
+  sosa:isResultOfMadeBySampler <provide a sampler name> ; <!-- TODO store and archive also the sampler and not only the sensor!! -->
+  geosparql:hasGeometry  [ 
+    rdf:type sf:Polygon ;
+    geosparql:asWKT '<urn:ogc:def:crs:EPSG::4283> POLYGON ((8.61638 45.96204, 8.642529 45.96204, 8.642529 45.94946, 8.61638 45.94946, 8.61638 45.96204))'^^geosparql:wktLiteral
+  ] ;
+
+  dcat:contactPoint [
+    rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
+    rdfs:seeAlso   <https://ror.org/02db0kh50>
+  ] ;
+  dcat:contactPoint [
+    rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
+    rdfs:seeAlso   <https://ror.org/02wxw4x45>
+  ] ;
+
+  dcat:contactPoint [
+    rdf:type       prov:Person , foaf:Person ;
+    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
+    rdfs:seeAlso   <https://orcid.org/0000-0003-3627-0363> ;
+    foaf:fullName  'Andrea Lami'
+  ] ;
+  dcat:contactPoint [
+    rdf:type       prov:Person , foaf:Person ;
+    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/custodian> ;
+    rdfs:seeAlso   <https://orcid.org/0000-0003-3515-0220> ;
+    foaf:fullName  'Michela Rogora'
+  ] ;
+  dcat:contactPoint [
+    rdf:type       prov:Person , foaf:Person ;
+    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
+    rdfs:seeAlso   <https://orcid.org/0000-0002-7997-219X> ;
+    foaf:fullName  'Alessandro Oggioni'
+  ] ;
+  owl:sameAs <http://rdfdata.get-it.it/elter/sample/uuid-8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a> ;
+  sosa:MaterialSample <http://vocabulary.odm2.org/medium/sediment> ;
+  sosa:SamplingProcedure <https://doi.org/10.1007/BF02544119> ;
+  sosa-rel:relatedSample <10.xxxx/hahaahoadho> , <10.xxxx/hahaahoadhb> .
+
+<https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> sosa:hasSample <uuid-8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a> .
+
+<https://deims.org/activity/50d7a52d-e384-4ed4-9976-5bf9c8302843> a sosa:Sampling ;
+  sosa:hasResult <8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a> ;
+  sosa:madeBySampler <provide a sampler name> ; <!-- TODO store and archive also the sampler and not only the sensor!! -->
+  sosa:resultTime '2008-02-12'^^xsd:date ;
+  sosa:hasFeatureOfInterest <https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> .
+
+<provide a sampler name> a sosa:Sampler . <!-- TODO store and archive also the sampler and not only the sensor!! -->
+
+sosa:SampleCollection ... <!-- TODO -->
