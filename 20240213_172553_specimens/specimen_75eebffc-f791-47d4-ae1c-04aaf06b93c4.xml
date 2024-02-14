@@ -26,14 +26,14 @@
     <cs:campaign>https://deims.org/activity/50d7a52d-e384-4ed4-9976-5bf9c8302843</cs:campaign>
     <cs:curationDetails>
       <cs:curation>
-        <cs:curator>Andrea Lami</cs:curator>
-        <cs:curatingInstitution institutionURI="https://ror.org/02db0kh50"/>
+        <cs:curator>Kovács János</cs:curator>
+        <cs:curatingInstitution institutionURI="https://ror.org/02db0k"/>
       </cs:curation>
     </cs:curationDetails>
     <cs:contributors>
       <cs:contributor contributorType="http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner">
-        <cs:contributorName>Andrea Lami</cs:contributorName>
-        <cs:contributorIdentifier contributorIdentifierType="http://pid.geoscience.gov.au/def/voc/igsn-codelists/ORCID">https://orcid.org/0000-0003-3627-0363</cs:contributorIdentifier>
+        <cs:contributorName>Kovács János</cs:contributorName>
+        <cs:contributorIdentifier contributorIdentifierType="http://pid.geoscience.gov.au/def/voc/igsn-codelists/ORCID">https://orcid.org/0000-0003-3627</cs:contributorIdentifier>
       </cs:contributor>
     </cs:contributors>
     <cs:logDate eventType="registered">2024-02-13</cs:logDate>

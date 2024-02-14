@@ -22,14 +22,14 @@
 
   dcat:contactPoint [
     rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
-    rdfs:seeAlso   <https://ror.org/02db0kh50>
+    rdfs:seeAlso   <https://ror.org/02db0k>
   ] ;
 
   dcat:contactPoint [
     rdf:type       prov:Person , foaf:Person ;
     prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
-    rdfs:seeAlso   <https://orcid.org/0000-0003-3627-0363> ;
-    foaf:fullName  'Andrea Lami'
+    rdfs:seeAlso   <https://orcid.org/0000-0003-3627> ;
+    foaf:fullName  'Kovács János'
   ] ;
   owl:sameAs <http://rdfdata.get-it.it/elter/sample/uuid-75eebffc-f791-47d4-ae1c-04aaf06b93c4> ;
   sosa:MaterialSample <http://vocabulary.odm2.org/medium/liquidAqueous> ;

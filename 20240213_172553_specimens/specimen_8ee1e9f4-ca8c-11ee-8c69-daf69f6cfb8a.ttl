@@ -22,30 +22,30 @@
 
   dcat:contactPoint [
     rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
-    rdfs:seeAlso   <https://ror.org/02db0kh50>
+    rdfs:seeAlso   <https://ror.org/02db0k>
   ] ;
   dcat:contactPoint [
     rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
-    rdfs:seeAlso   <https://ror.org/02wxw4x45>
+    rdfs:seeAlso   <https://ror.org/02wxw>
   ] ;
 
   dcat:contactPoint [
     rdf:type       prov:Person , foaf:Person ;
     prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
-    rdfs:seeAlso   <https://orcid.org/0000-0003-3627-0363> ;
-    foaf:fullName  'Andrea Lami'
+    rdfs:seeAlso   <https://orcid.org/0000-0003-3627> ;
+    foaf:fullName  'Kovács János'
   ] ;
   dcat:contactPoint [
     rdf:type       prov:Person , foaf:Person ;
     prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/custodian> ;
-    rdfs:seeAlso   <https://orcid.org/0000-0003-3515-0220> ;
-    foaf:fullName  'Michela Rogora'
+    rdfs:seeAlso   <https://orcid.org/0000-0003-3515> ;
+    foaf:fullName  'Jane Doe'
   ] ;
   dcat:contactPoint [
     rdf:type       prov:Person , foaf:Person ;
     prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
-    rdfs:seeAlso   <https://orcid.org/0000-0002-7997-219X> ;
-    foaf:fullName  'Alessandro Oggioni'
+    rdfs:seeAlso   <https://orcid.org/0000-0002-7997> ;
+    foaf:fullName  'Mario Rossi'
   ] ;
   owl:sameAs <http://rdfdata.get-it.it/elter/sample/uuid-8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a> ;
   sosa:MaterialSample <http://vocabulary.odm2.org/medium/sediment> ;
