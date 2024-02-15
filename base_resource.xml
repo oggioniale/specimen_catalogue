@@ -3,4 +3,4 @@
 <cs:resources xmlns:cs="https://igsn.csiro.au/schemas/3.0"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xmlns:xlink="http://www.w3.org/1999/xlink/namespace"
-              xsi:schemaLocation="https://igsn.csiro.au/schemas/3.0 https://igsn.csiro.au/schemas/3.0/igsn-csiro-v3.0.xsd"></cs:resources>
+              xsi:schemaLocation="https://igsn.csiro.au/schemas/3.0 https://igsn.csiro.au/schemas/3.0/igsn-csiro-v3.0.xsd"> </cs:resources>
