@@ -7,3 +7,5 @@ The implementation has been done following [Physical Sample Curation recommendat
 
 [2] IGSN CSIRO version 3.0 - https://igsn.csiro.au/schemas/3.0/ 08-2019
 
+The production flow is illustrated in the figure:
+![Screenshot 2024-02-15 at 18 28 55](https://github.com/oggioniale/specimen_catalogue/assets/1393893/23b6ae4b-37ee-41d2-aaf1-e77ec658adb9)
