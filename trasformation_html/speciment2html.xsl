@@ -34,17 +34,14 @@
                 <meta name="description"
                       content="Human readable version of a sample description from resources"/>
                 <meta name="author" content="Alessandro Oggioni"/>
-                <link rel="icon" href="http://skmi.irea.cnr.it/static/geosk/img/favicon.ico"/>
+                <link rel="icon" href=".assets/img/icon/favicon.ico"/>
 
                 <title>Sample description</title>
                 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
                       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
                       crossorigin=""/>
 
-                <!--link href="../../assets/css/bootstrap-3.0.3.min.css"
-                      rel="stylesheet"/-->
-
-                <link href="../../assets/font-awesome-4.1.0/css/font-awesome.min.css"
+                <link href="./assets/css/font-awesome.min.css"
                       rel="stylesheet"/>
 
                 <style type="text/css">
@@ -175,25 +172,17 @@
                     }
                 </style>
 
-                <!--script src="../../assets/js/jquery-1.11.1.min.js" type="text/javascript"/-->
+                <script src="./assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
 
-                <script src="../../assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
-
-                <!--<script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#rootwizard').bootstrapWizard({'tabClass': 'nav nav-tabs'});
-                    });
-                </script>-->
-
-                <script src="../../assets/js/leaflet-1.1.0.js" type="text/javascript"/>
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" />
 
                 <!-- DataTables -->
-                <link rel="stylesheet" href="../../assets/css/bootstrap-3.3.7.min.css"/>
-                <link rel="stylesheet" href="../../assets/DataTables/datatables.css"/>
+                <link rel="stylesheet" href="./assets/css/bootstrap-3.3.7.min.css"/>
+                <link rel="stylesheet" href="./assets/DataTables/datatables.css"/>
 
-                <script type="text/javascript" src="../../assets/js/jquery-1.12.4.js"/>
-                <script type="text/javascript" src="../../assets/js/jquery-1.10.16.dataTables.min.js"/>
-                <script type="text/javascript" src="../../assets/DataTables/datatables.js"/>
+                <script type="text/javascript" src="./assets/js/jquery-1.12.4.js"/>
+                <script type="text/javascript" src="./assets/js/jquery-1.10.16.dataTables.min.js"/>
+                <script type="text/javascript" src="./assets/DataTables/datatables.js"/>
 
                 <script type="text/javascript">
                     $(document).ready(function() {
@@ -284,7 +273,7 @@
                             <!-- all -->
                             <div class="page-header">
                                 <div class="row">
-                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="qrcode" style=""/>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="qrcode"/>
                                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                         <xsl:call-template name="description"/>
                                     </div>
@@ -336,118 +325,6 @@
                 </div>
                 <!--/.container-->
 
-                <!-- map -->
-                <xsl:variable name="pointz" select="substring-after(//cs:location/cs:geometry/text(), 'POINTZ(')" />
-                <xsl:variable name="lon" select="substring-before($pointz, ' ')" />
-                <xsl:variable name="lat" select="substring-before(substring-after($pointz, ' '), ' ')" />
-                <xsl:variable name="alt" select="number(substring-after(substring-after(substring-before($pointz, ')'), ' '), ' '))" />
-
-                <script type="text/javascript">
-                    <xsl:choose>
-                        <xsl:when test="contains(//cs:sampledFeatures/cs:sampledFeature[1]/@sampledFeatureURI, 'layers')">
-                        <!--xsl:when test="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI[contains(.,  'layers')]" -->
-                            var popup;
-                            var map = L.map('map').setView([<xsl:value-of select="$lat" />, <xsl:value-of select="$lon" />], 5);
-
-                            function loadFOI() {
-                            var owsrootUrl = "<xsl:value-of select="concat(substring-before(//cs:sampledFeatures/cs:sampledFeature[1]/@sampledFeatureURI, '/layers/'), '/geoserver/geonode/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=',substring-after(//cs:sampledFeatures/cs:sampledFeature[1]/@sampledFeatureURI, '/layers/'),'&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326')" />"
-                            var URL = owsrootUrl;
-                            var WFSLayer = null;
-                            var ajax = $.ajax({
-                            url : URL,
-                            dataType : 'jsonp',
-                            jsonpCallback : 'getJson',
-                            success : function (response) {
-                            console.log(response);
-                            WFSLayer = L.geoJson(response, {
-                            style: function (feature) {
-                            return {
-                            stroke: false,
-                            fillColor: 'FFFFFF',
-                            fillOpacity: 0.3
-                            };
-                            },
-                            onEachFeature: function (feature, layer) {
-                            popupOptions = {maxWidth: 200};
-                            layer.bindPopup("Sampled feature of this sensor"
-                            ,popupOptions);
-                            }
-                            }).addTo(map);
-                            map.fitBounds(WFSLayer.getBounds());
-                            }
-                            });
-                            }
-
-                            L.marker([<xsl:value-of select="$lat" />, <xsl:value-of select="$lon" />]).addTo(map)
-                            .bindPopup(
-                            <xsl:choose>
-                                <xsl:when test="count(//cs:sampledFeatures/cs:sampledFeature)>1">
-                                    <xsl:for-each select="//cs:sampledFeatures/cs:sampledFeature/text()">
-                                        <xsl:variable name="sampledFeatureURI" select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI" />
-                                        '<xsl:value-of select="." /> ' +
-                                    </xsl:for-each>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:variable name="sampledFeatureURI" select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI" />
-                                    '<xsl:value-of select="." /> ' +
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            "Position:<xsl:text> </xsl:text><xsl:value-of select="$lat" /><xsl:text> E</xsl:text>, <xsl:value-of select="$lon" /><xsl:text> N</xsl:text><br/>" +
-                            <xsl:choose>
-                                <xsl:when test="$alt &lt; 0">
-                                    'Depth:<xsl:text> </xsl:text><xsl:value-of select="$alt"/><xsl:text> </xsl:text>m bsl').openPopup();
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    ' Altitude:<xsl:text> </xsl:text><xsl:value-of select="$alt" /><xsl:text> </xsl:text>m asl').openPopup();
-                                </xsl:otherwise>
-                            </xsl:choose>
-
-                            popup = L.popup();
-
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            maxZoom: 19,
-                            attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                            }).addTo(map);
-
-                            loadFOI();
-                        </xsl:when>
-                        <xsl:otherwise>
-                            var popup;
-                            var map = L.map('map').setView([<xsl:value-of select="$lat" />, <xsl:value-of select="$lon" />], 5);
-
-                            L.marker([<xsl:value-of select="$lat" />, <xsl:value-of select="$lon" />]).addTo(map)
-                            .bindPopup(
-                            <xsl:choose>
-                                <xsl:when test="count(//cs:sampledFeatures/cs:sampledFeature)>1">
-                                    <xsl:for-each select="//cs:sampledFeatures/cs:sampledFeature/text()">
-                                        <xsl:variable name="sampledFeatureURI" select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI" />
-                                        '<xsl:value-of select="." /> ' +
-                                    </xsl:for-each>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:variable name="sampledFeatureURI" select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI" />
-                                    '<xsl:value-of select="." /> ' +
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            "Position:<xsl:text> </xsl:text><xsl:value-of select="$lat" /><xsl:text> E</xsl:text>, <xsl:value-of select="$lon" /><xsl:text> N</xsl:text><br/>" +
-                            <xsl:choose>
-                                <xsl:when test="$alt &lt; 0">
-                                    'Depth:<xsl:text> </xsl:text><xsl:value-of select="$alt"/><xsl:text> </xsl:text>m bsl').openPopup();
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    ' Altitude:<xsl:text> </xsl:text><xsl:value-of select="$alt" /><xsl:text> </xsl:text>m asl').openPopup();
-                                </xsl:otherwise>
-                            </xsl:choose>
-
-                            popup = L.popup();
-
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            maxZoom: 19,
-                            attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                            }).addTo(map);
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </script>
                 <!-- qrcod -->
                 <script type="text/javascript">
                     $("#qrcode").qrcode({ text: "<xsl:value-of select="//cs:landingPage"/>",
@@ -462,6 +339,7 @@
 
     <xsl:template name="cite">
         <xsl:variable name="landingPage" select="//cs:landingPage"/>
+        <xsl:variable name="resID" select="//cs:resourceIdentifier"/>
         <xsl:value-of select="//cs:contributors/cs:contributor[@contributorType='//registry.it.csiro.au/def/isotc211/CI_RoleCode/owner']/cs:contributorName"/><xsl:text>. </xsl:text>
         <xsl:choose>
             <xsl:when test="//cs:timePeriod">
@@ -474,19 +352,19 @@
         <b><xsl:value-of select="//cs:campaign"/><xsl:text> - </xsl:text><xsl:value-of select="//cs:resourceTitle"/><xsl:text>. </xsl:text></b>
         <xsl:value-of select="//cs:curationDetails/cs:curation/cs:curatingInstitution"/><xsl:text>. </xsl:text>
         <xsl:value-of select="//cs:campaign"/><xsl:text>. </xsl:text>
-        <b><xsl:text>PID: </xsl:text><a href="{$landingPage}"><xsl:value-of select="//cs:resourceIdentifier"/></a></b><xsl:text>. </xsl:text>
+        <b><xsl:text>PID: </xsl:text><a href="{$resID}"><xsl:value-of select="//cs:resourceIdentifier"/></a></b><xsl:text>. </xsl:text>
     </xsl:template>
 
     <xsl:template name="description">
         <h1>
-            <xsl:value-of select="//cs:campaign"/><xsl:text> - </xsl:text><xsl:value-of select="//cs:resourceTitle" /> (PID: <xsl:value-of select="//cs:resourceIdentifier" />)<br/>
+            <xsl:value-of select="//cs:resourceTitle" /> (PID: <xsl:value-of select="//cs:resourceIdentifier" />)<br/>
             <xsl:for-each select="//cs:logDate">
                 <h3><b>Date of <xsl:value-of select="//cs:logDate/@eventType" /></b><xsl:text> </xsl:text><xsl:value-of select="//cs:logDate" /></h3>
             </xsl:for-each>
             <xsl:if
                     test="//cs:comments">
                 <h4><small>
-                    <b>Comment: </b><xsl:value-of select="//cs:comments"/><br/><b>Download: </b>
+                    <b>Download: </b>
                     <xsl:choose>
                         <xsl:when test="//cs:isPublic/text()='true'">
                             <xsl:variable name="landingPage" select="//cs:landingPage"></xsl:variable>
@@ -498,10 +376,13 @@
                             </b>
                         </xsl:when>
                         <xsl:otherwise>
-                            <b>CLOSE</b>
+                            <a role="button" class="btn btn-danger btn-xs">
+                                <i class="fa fa-download" aria-hidden="false"></i>
+                                CLOSE
+                            </a>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <br/><b>Licence: </b><a href="https://creativecommons.org/licenses/by/4.0/deed.en" target="_blank"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" height="20" /></a>
+                    <!--br/><b>Licence: </b><a href="https://creativecommons.org/licenses/by/4.0/deed.en" target="_blank"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" height="20" /></a-->
                 </small></h4>
             </xsl:if>
         </h1>
@@ -518,14 +399,23 @@
                     </tr>
                 </thead-->
                 <tbody>
+                    <!-- cs:comment -->
+                    <tr>
+                        <td>
+                            <b>Description</b>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//cs:comments"/>
+                        </td>
+                    </tr>
                     <!-- cs:campaign -->
                     <tr>
                         <td>
-                            <b>Campaign</b>
+                            <b>Campaign (activity from DEIMS-SDR)</b>
                         </td>
                         <td>
-                            <xsl:variable name="campLink" select="//cs:campaign/@xlink:href" />
-                            <a href="{$campLink}" target="_blank"><xsl:value-of select="//cs:campaign"/></a>
+                            <xsl:variable name="activityLink" select="json-doc(concat('https://deims.org/api/activities/', substring-after(//cs:campaign, 'https://deims.org/activity/')))" />
+                            <a href="{//cs:campaign}" target="_blank"><xsl:value-of select="$activityLink?title"/></a>
                         </td>
                     </tr>
                     <!-- cs:purpose -->
@@ -541,7 +431,7 @@
                     <xsl:for-each select="//cs:date">
                         <tr>
                             <td>
-                                <b>Date of collection</b>
+                                <b>Collecting date</b>
                             </td>
                             <td>
                                 <xsl:choose>
@@ -640,11 +530,11 @@
                     <!-- method -->
                     <tr>
                         <td>
-                            <b>Method or Instruments</b>
+                            <b>Method</b>
                         </td>
                         <td>
                             <xsl:variable name="methodLink" select="//cs:method/@methodURI" />
-                            <a href="{$methodLink}" target="_blank"><xsl:value-of select="//cs:method"/></a>
+                            <a href="{$methodLink}" target="_blank"><xsl:value-of select="//cs:method/@methodURI"/></a>
                         </td>
                     </tr>
                 </tbody>
@@ -657,57 +547,45 @@
             <xsl:if test="//cs:contributors">
                 <!-- curation -->
                 <h3>Curation by</h3>
-                <p>
-                    <i class="glyphicon glyphicon-user"/>
-                    <xsl:text> </xsl:text>
-                    <b>
-                        <xsl:value-of select="//cs:curationDetails/cs:curation/cs:curatingInstitution" />
-                    </b>
-                </p>
-                <p>
-                    <i class="glyphicon glyphicon-list-alt"/>
-                    <xsl:text> </xsl:text>
-                    <xsl:value-of
-                            select="//cs:curationDetails/cs:curation/cs:curationLocation"/>
-                </p>
-                <p>
-                    <i class="glyphicon glyphicon-envelope"/>
-                    <xsl:variable name="linkMailCur"
-                                  select="//cs:curationDetails/cs:curation/cs:curator"/>
-                    <a href="mailto:{$linkMailCur}">
+                <xsl:for-each select="//cs:curationDetails/cs:curation">
+                    <p>
+                        <i class="glyphicon glyphicon-home"/>
                         <xsl:text> </xsl:text>
-                        <xsl:value-of
-                                select="$linkMailCur"/>
+                        <!--<xsl:value-of select="./cs:contributorName" />--> <!--Substitute with ROR Institutuion Name-->
+                        <!--<xsl:text> </xsl:text>-->
+                        <xsl:choose>
+                            <xsl:when test="(./cs:curatingInstitution/@institutionURI) and (contains(./cs:curatingInstitution/@institutionURI, 'ror.org'))">
+                                <a href="{./cs:curatingInstitution/@institutionURI}" target="_blank">
+                                    <img alt="ROR logo" src="https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg" height="24" />
+                                    <!--<xsl:value-of select="./cs:curatingInstitution/@institutionURI"/>-->
+                                </a>
+                                <xsl:text> </xsl:text>
+                                <xsl:variable name="rorLink" select="json-doc(concat('https://api.dev.ror.org/v2/organizations/', substring-after(./cs:curatingInstitution/@institutionURI, 'https://ror.org/')))" />                                
+                                <xsl:value-of select="$rorLink?names?1?value"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <a href="{./cs:curatingInstitution/@institutionURI}" target="_blank">
+                                    PID
+                                </a>
+                            </xsl:otherwise>
+                        </xsl:choose>
                         <br/>
-                    </a>
-                </p>
-                <p>
-                    <i class="glyphicon glyphicon-link"/>
-                    <xsl:text> </xsl:text>
-                    <xsl:variable name="linkCur"
-                                  select="//cs:curationDetails/cs:curation/cs:curatingInstitution/@institutionURI" />
-                    <a href="{$linkCur}" target="_blank"
-                       data-title="{$linkCur}">
-                        <!--data-footer="A custom footer text">-->
-                        <xsl:value-of select="$linkCur"/>
-                    </a>
-                </p>
+                    </p>
+                </xsl:for-each>
             </xsl:if>
             <!-- contributor -->
             <xsl:if test="//cs:contributors">
                 <xsl:for-each select="//cs:contributors/cs:contributor">
                     <h3>
-                        Contributor - <xsl:value-of select="substring-after(./@contributorType, '//registry.it.csiro.au/def/isotc211/CI_RoleCode/')" />:
+                        Contributor - <xsl:value-of select="substring-after(./@contributorType, 'http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/')" />:
                     </h3>
                     <p>
                         <i class="glyphicon glyphicon-user"/>
                         <xsl:text> </xsl:text>
-                        <xsl:value-of select="./cs:contributorName" />
-                        <xsl:text> </xsl:text>
                         <xsl:choose>
                             <xsl:when test="(./cs:contributorIdentifier) and (contains(./cs:contributorIdentifier, 'orcid.org'))">
                                 <a href="{./cs:contributorIdentifier}" target="_blank">
-                                    <img src="http://www.get-it.it/assets/img/loghi/orcid.png" height="20" width="20"/>
+                                    <img src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" height="16" width="16"/>
                                 </a>
                             </xsl:when>
                             <xsl:otherwise>
@@ -716,9 +594,12 @@
                                 </a>
                             </xsl:otherwise>
                         </xsl:choose>
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="./cs:contributorName" />
+                        <xsl:text> </xsl:text>
                         <br/>
                     </p>
-                    <p>
+                    <!--<p>
                         <i class="glyphicon glyphicon-envelope"/>
                         <xsl:variable name="linkMailCont"
                                       select="./cs:contributorEmail"/>
@@ -728,32 +609,67 @@
                                     select="$linkMailCont"/>
                             <br/>
                         </a>
-                    </p>
+                    </p>-->
                 </xsl:for-each>
             </xsl:if>
         </div>
     </xsl:template>
 
     <xsl:template name="position">
-        <h2>Location -
-            <xsl:choose>
-                <xsl:when test="count(//cs:sampledFeatures/cs:sampledFeature)>1">
-                    <xsl:for-each select="//cs:sampledFeatures/cs:sampledFeature">
-                        <xsl:variable name="sampledFeatureURI" select="./@sampledFeatureURI" />
-                        <xsl:text> </xsl:text>
-                        <a href="{$sampledFeatureURI}" target="_blank"><xsl:value-of select="." /></a><br/>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:variable name="sampledFeatureURI" select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI" />
-                    <a href="{$sampledFeatureURI}" target="_blank"><xsl:value-of select="//cs:sampledFeatures/cs:sampledFeature/text()" /></a>
-                </xsl:otherwise>
-            </xsl:choose>
-        </h2>
+        <xsl:variable name="locationURI" select="//cs:location/cs:locality/@localityURI"/>
+        <xsl:variable name="locationIDAPI" select="json-doc(concat('https://deims.org/api/locations/', substring-after($locationURI, 'https://deims.org/locations/')))" />
+        <xsl:variable name="sampledFURI" select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI"/>
+        <xsl:variable name="deimsIDAPI" select="json-doc(concat('https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/')))" />
+        <xsl:value-of select="$deimsIDAPI?title"/>
+        <h2><a href="{//cs:location/cs:locality/@localityURI}" target="_blank"><xsl:value-of select="$locationIDAPI?properties?title"/></a> - Locality from DEIMS-SDR</h2>
         <!-- row -->
         <div class="row">
             <div id="map-container">
-                <div id="map"></div>
+                <div id="map">
+                    <!-- https://deims.org/geoserver/deims/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=deims:deims_sites_boundaries&outputFormat=text/javascript&CQL_FILTER=deimsid=%27https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe%27&amp;&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326 -->
+                    <!-- map -->
+                    <script type="text/javascript">
+                        var popup;
+                        var map;
+                        function loadFOI() {
+                        var owsrootUrl = "<xsl:value-of select="concat('https://deims.org/geoserver/deims/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=deims:deims_sites_boundaries&amp;outputFormat=text/javascript&amp;CQL_FILTER=deimsid=%27', $sampledFURI, '%27&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326')" />"
+                        var URL = owsrootUrl;
+                        var WFSLayer = null;
+                        var ajax = $.ajax({
+                          url : URL,
+                          dataType : 'jsonp',
+                          jsonpCallback : 'getJson',
+                          success : function (response) {
+                            console.log(response);
+                            WFSLayer = L.geoJson(response, {
+                              style: function (feature) {
+                                return {
+                                  stroke: false,
+                                  fillColor: 'FFFFFF',
+                                  fillOpacity: 0.3
+                                };
+                              },
+                              onEachFeature: function (feature, layer) {
+                                popupOptions = {maxWidth: 200};
+                                layer.bindPopup('<a href="{$sampledFURI}"><xsl:value-of select="$deimsIDAPI?title"/></a> is the sampled feature of this sample', popupOptions);
+                              }
+                            }).addTo(map);
+                            map.fitBounds(WFSLayer.getBounds());
+                          }
+                        });
+                        }
+                        
+                        map = L.map('map');
+                        popup = L.popup();
+                        
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        }).addTo(map);
+                        
+                        loadFOI();
+                    </script>
+                </div>
             </div>
             <!-- /map-outer -->
         </div>

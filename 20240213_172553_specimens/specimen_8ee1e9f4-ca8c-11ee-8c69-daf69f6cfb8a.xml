@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="../sensors/xslt/speciment2html.xsl" type="text/xsl"?>
+<?xml-stylesheet href="../trasformation_html/speciment2html.xsl" type="text/xsl"?>
 <cs:resources xmlns:cs="https://igsn.csiro.au/schemas/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink/namespace" xsi:schemaLocation="https://igsn.csiro.au/schemas/3.0 https://igsn.csiro.au/schemas/3.0/igsn-csiro-v3.0.xsd">
   <cs:resource registeredObjectType="http://pid.geoscience.gov.au/def/voc/igsn-codelists/PhysicalSample">
     <cs:resourceIdentifier>uuid-8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a</cs:resourceIdentifier>
@@ -28,15 +28,15 @@
     <cs:curationDetails>
       <cs:curation>
         <cs:curator>Kovács János</cs:curator>
-        <cs:curatingInstitution institutionURI="https://ror.org/02db0k"/>
+        <cs:curatingInstitution institutionURI="https://ror.org/02db0kh50"/>
       </cs:curation>
       <cs:curation>
         <cs:curator>Jane Doe</cs:curator>
-        <cs:curatingInstitution institutionURI="https://ror.org/02db0k"/>
+        <cs:curatingInstitution institutionURI="https://ror.org/02db0kh50"/>
       </cs:curation>
       <cs:curation>
         <cs:curator>Mario Rossi</cs:curator>
-        <cs:curatingInstitution institutionURI="https://ror.org/02wxw"/>
+        <cs:curatingInstitution institutionURI="https://ror.org/02wxw4x45"/>
       </cs:curation>
     </cs:curationDetails>
     <cs:contributors>
