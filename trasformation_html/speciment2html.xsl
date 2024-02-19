@@ -4,7 +4,6 @@
                 xmlns:cs="https://igsn.csiro.au/schemas/3.0"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xlink="http://www.w3.org/1999/xlink/namespace"
-
                 xmlns:swes="http://www.opengis.net/swes/2.0"
                 xmlns:sos="http://www.opengis.net/sos/2.0"
                 xmlns:swe="http://www.opengis.net/swe/2.0"
@@ -34,14 +33,14 @@
                 <meta name="description"
                       content="Human readable version of a sample description from resources"/>
                 <meta name="author" content="Alessandro Oggioni"/>
-                <link rel="icon" href=".assets/img/icon/favicon.ico"/>
+                <link rel="icon" href="http://skmi.irea.cnr.it/static/geosk/img/favicon.ico"/>
 
                 <title>Sample description</title>
                 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
                       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
                       crossorigin=""/>
 
-                <link href="./assets/css/font-awesome.min.css"
+                <link href="../trasformation_html/assets/css/font-awesome.min.css"
                       rel="stylesheet"/>
 
                 <style type="text/css">
@@ -172,18 +171,16 @@
                     }
                 </style>
 
-                <script src="./assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
-
                 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" />
 
                 <!-- DataTables -->
-                <link rel="stylesheet" href="./assets/css/bootstrap-3.3.7.min.css"/>
-                <link rel="stylesheet" href="./assets/DataTables/datatables.css"/>
+                <link rel="stylesheet" href="../trasformation_html/assets/css/bootstrap-3.3.7.min.css"/>
+                <link rel="stylesheet" href="../trasformation_html/assets/DataTables/datatables.css"/>
 
-                <script type="text/javascript" src="./assets/js/jquery-1.12.4.js"/>
-                <script type="text/javascript" src="./assets/js/jquery-1.10.16.dataTables.min.js"/>
-                <script type="text/javascript" src="./assets/DataTables/datatables.js"/>
-
+                <script type="text/javascript" src="../trasformation_html/assets/js/jquery-1.12.4.js"/>
+                <script type="text/javascript" src="../trasformation_html/assets/js/jquery-1.10.16.dataTables.min.js"/>
+                <script type="text/javascript" src="../trasformation_html/assets/DataTables/datatables.js"/>
+                
                 <script type="text/javascript">
                     $(document).ready(function() {
                     $('#example').DataTable();
@@ -245,6 +242,8 @@
                 </style>
 
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"/>
+                
+                <script src="../trasformation_html/assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
 
             </head>
 
@@ -340,7 +339,10 @@
     <xsl:template name="cite">
         <xsl:variable name="landingPage" select="//cs:landingPage"/>
         <xsl:variable name="resID" select="//cs:resourceIdentifier"/>
-        <xsl:value-of select="//cs:contributors/cs:contributor[@contributorType='//registry.it.csiro.au/def/isotc211/CI_RoleCode/owner']/cs:contributorName"/><xsl:text>. </xsl:text>
+        <xsl:for-each select="//cs:contributors/cs:contributor[@contributorType='http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner']/cs:contributorName">
+            <xsl:value-of select="."/> <xsl:text>, </xsl:text>
+        </xsl:for-each>
+        <xsl:text>. </xsl:text>
         <xsl:choose>
             <xsl:when test="//cs:timePeriod">
                 <xsl:value-of select="substring(//cs:timePeriod/cs:end,1,4)"/>
@@ -348,10 +350,10 @@
             <xsl:otherwise>
                 <xsl:value-of select="substring(//cs:timeInstant,1,4)" />
             </xsl:otherwise>
-        </xsl:choose><xsl:text>. </xsl:text>
-        <b><xsl:value-of select="//cs:campaign"/><xsl:text> - </xsl:text><xsl:value-of select="//cs:resourceTitle"/><xsl:text>. </xsl:text></b>
-        <xsl:value-of select="//cs:curationDetails/cs:curation/cs:curatingInstitution"/><xsl:text>. </xsl:text>
-        <xsl:value-of select="//cs:campaign"/><xsl:text>. </xsl:text>
+        </xsl:choose>
+        <xsl:text>. </xsl:text>
+        <xsl:value-of select="//cs:resourceTitle"/>
+        <xsl:text>. </xsl:text>
         <b><xsl:text>PID: </xsl:text><a href="{$resID}"><xsl:value-of select="//cs:resourceIdentifier"/></a></b><xsl:text>. </xsl:text>
     </xsl:template>
 
@@ -370,14 +372,20 @@
                             <xsl:variable name="landingPage" select="//cs:landingPage"></xsl:variable>
                             <b>
                                 <a role="button" class="btn btn-success btn-xs" href="{$landingPage}" download="{$landingPage}">
-                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                                    </svg>
                                     OPEN
                                 </a>
                             </b>
                         </xsl:when>
                         <xsl:otherwise>
                             <a role="button" class="btn btn-danger btn-xs">
-                                <i class="fa fa-download" aria-hidden="false"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sign-do-not-enter-fill" viewBox="0 0 16 16">
+                                    <path d="M4.237 4.28h-.32v1.44h.32c.396 0 .582-.239.582-.718 0-.481-.188-.722-.582-.722m2.392.859v-.277c0-.413-.211-.617-.494-.617-.285 0-.495.204-.495.617v.277c0 .414.21.618.495.618.283 0 .494-.204.494-.618m4.163 0v-.277c0-.413-.211-.617-.494-.617-.285 0-.495.204-.495.617v.277c0 .414.21.618.495.618.283 0 .494-.204.494-.618m.006 5.828v-.694h.39c.231 0 .378.126.378.354 0 .225-.142.34-.387.34z"/>
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M3.584 6V4h.69c.596 0 .886.355.886.998S4.867 6 4.274 6zm3.382-1.135v.272c0 .566-.318.903-.83.903-.513 0-.833-.337-.833-.903v-.272c0-.569.32-.904.832-.904.513 0 .83.337.83.904Zm1.021-.305V6h-.319V4h.293l.933 1.436h.015V4h.319v2h-.291L8 4.56zm3.142.305v.272c0 .566-.318.903-.83.903-.513 0-.833-.337-.833-.903v-.272c0-.569.32-.904.832-.904.513 0 .83.337.83.904Zm.899-.58V6h-.333V4.285h-.584V4h1.503v.285zM5.413 11.72V12H4.165v-2h1.248v.28h-.917v.57h.862v.268h-.862v.602zm.572.28h-.32v-2h.294l.933 1.436h.014v-1.435h.32V12h-.292l-.936-1.44h-.013zm2.279 0H7.93v-1.715h-.584V10H8.85v.284h-.586zm1.953-.28V12H8.97v-2h1.248v.28H9.3v.57h.863v.268H9.3v.602zM11.235 10c.42 0 .674.244.674.616a.575.575 0 0 1-.368.56l.404.824h-.373l-.36-.769h-.414V12h-.328v-2zM3.5 7h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"/>
+                                </svg>
                                 CLOSE
                             </a>
                         </xsl:otherwise>
@@ -499,7 +507,7 @@
                                 <b>Resource type</b>
                             </td>
                             <td>
-                                <xsl:variable name="typeLink" select="@xlink:href" />
+                                <xsl:variable name="typeLink" select="." />
                                 <a href="{$typeLink}" target="_blank"><xsl:value-of select="."/></a>
                             </td>
                         </tr>
@@ -511,8 +519,8 @@
                                 <b>Material type</b>
                             </td>
                             <td>
-                                <xsl:variable name="matLink" select="//cs:materialTypes/cs:materialType/@xlink:href" />
-                                <a href="{$matLink}" target="_blank"><xsl:value-of select="//cs:materialTypes/cs:materialType"/></a>
+                                <xsl:variable name="matLink" select="." />
+                                <a href="{$matLink}" target="_blank"><xsl:value-of select="."/></a>
                             </td>
                         </tr>
                     </xsl:for-each>
@@ -537,6 +545,15 @@
                             <a href="{$methodLink}" target="_blank"><xsl:value-of select="//cs:method/@methodURI"/></a>
                         </td>
                     </tr>
+                    <!-- sampler -->
+                    <tr>
+                        <td>
+                            <b>Sampler</b>
+                        </td>
+                        <td>
+                            <xsl:text> - </xsl:text>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -549,15 +566,15 @@
                 <h3>Curation by</h3>
                 <xsl:for-each select="//cs:curationDetails/cs:curation">
                     <p>
-                        <i class="glyphicon glyphicon-home"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+                            <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                            <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"/>
+                        </svg>
                         <xsl:text> </xsl:text>
-                        <!--<xsl:value-of select="./cs:contributorName" />--> <!--Substitute with ROR Institutuion Name-->
-                        <!--<xsl:text> </xsl:text>-->
                         <xsl:choose>
                             <xsl:when test="(./cs:curatingInstitution/@institutionURI) and (contains(./cs:curatingInstitution/@institutionURI, 'ror.org'))">
                                 <a href="{./cs:curatingInstitution/@institutionURI}" target="_blank">
                                     <img alt="ROR logo" src="https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg" height="24" />
-                                    <!--<xsl:value-of select="./cs:curatingInstitution/@institutionURI"/>-->
                                 </a>
                                 <xsl:text> </xsl:text>
                                 <xsl:variable name="rorLink" select="json-doc(concat('https://api.dev.ror.org/v2/organizations/', substring-after(./cs:curatingInstitution/@institutionURI, 'https://ror.org/')))" />                                
@@ -580,7 +597,10 @@
                         Contributor - <xsl:value-of select="substring-after(./@contributorType, 'http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/')" />:
                     </h3>
                     <p>
-                        <i class="glyphicon glyphicon-user"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                        </svg>
                         <xsl:text> </xsl:text>
                         <xsl:choose>
                             <xsl:when test="(./cs:contributorIdentifier) and (contains(./cs:contributorIdentifier, 'orcid.org'))">
@@ -599,17 +619,6 @@
                         <xsl:text> </xsl:text>
                         <br/>
                     </p>
-                    <!--<p>
-                        <i class="glyphicon glyphicon-envelope"/>
-                        <xsl:variable name="linkMailCont"
-                                      select="./cs:contributorEmail"/>
-                        <a href="mailto:{$linkMailCont}">
-                            <xsl:text> </xsl:text>
-                            <xsl:value-of
-                                    select="$linkMailCont"/>
-                            <br/>
-                        </a>
-                    </p>-->
                 </xsl:for-each>
             </xsl:if>
         </div>
@@ -620,7 +629,6 @@
         <xsl:variable name="locationIDAPI" select="json-doc(concat('https://deims.org/api/locations/', substring-after($locationURI, 'https://deims.org/locations/')))" />
         <xsl:variable name="sampledFURI" select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI"/>
         <xsl:variable name="deimsIDAPI" select="json-doc(concat('https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/')))" />
-        <xsl:value-of select="$deimsIDAPI?title"/>
         <h2><a href="{//cs:location/cs:locality/@localityURI}" target="_blank"><xsl:value-of select="$locationIDAPI?properties?title"/></a> - Locality from DEIMS-SDR</h2>
         <!-- row -->
         <div class="row">
@@ -631,6 +639,7 @@
                     <script type="text/javascript">
                         var popup;
                         var map;
+                        
                         function loadFOI() {
                         var owsrootUrl = "<xsl:value-of select="concat('https://deims.org/geoserver/deims/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=deims:deims_sites_boundaries&amp;outputFormat=text/javascript&amp;CQL_FILTER=deimsid=%27', $sampledFURI, '%27&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326')" />"
                         var URL = owsrootUrl;
@@ -663,8 +672,8 @@
                         popup = L.popup();
                         
                         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19,
-                        attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                          maxZoom: 19,
+                          attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         }).addTo(map);
                         
                         loadFOI();

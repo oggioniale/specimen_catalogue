@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../trasformation_html/speciment2html.xsl" type="text/xsl"?>
-<cs:resources xmlns:cs="https://igsn.csiro.au/schemas/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink/namespace" xsi:schemaLocation="https://igsn.csiro.au/schemas/3.0 https://igsn.csiro.au/schemas/3.0/igsn-csiro-v3.0.xsd">
+<cs:resources xmlns:cs="https://igsn.csiro.au/schemas/3.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink/namespace"
+  xsi:schemaLocation="https://igsn.csiro.au/schemas/3.0 https://igsn.csiro.au/schemas/3.0/igsn-csiro-v3.0.xsd">
   <cs:resource registeredObjectType="http://pid.geoscience.gov.au/def/voc/igsn-codelists/PhysicalSample">
     <cs:resourceIdentifier>uuid-8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a</cs:resourceIdentifier>
     <cs:landingPage>http://www.get-it.it/objects/samples/specimen_8ee1e9f4-ca8c-11ee-8c69-daf69f6cfb8a.xml</cs:landingPage>
