@@ -9,5 +9,6 @@ Thins compliance allows to have a compliant also with DataCite.
 [2] IGSN CSIRO version 3.0 - https://igsn.csiro.au/schemas/3.0/ 08-2019
 
 The production flow is illustrated in the figure:
-![image](https://github.com/oggioniale/specimen_catalogue/assets/1393893/8a543b21-5d3c-47a1-ac03-9079acbe99e9)
+![image](https://github.com/oggioniale/specimen_catalogue/assets/1393893/2277fa6c-920d-4a8d-bc26-3c8d22edc0f9)
+
 
