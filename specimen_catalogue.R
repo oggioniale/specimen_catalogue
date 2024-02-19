@@ -10,7 +10,7 @@
 #' @importFrom package function
 #' @export
 #' @example
-#' specimen_catalogue(excel_path = "./specimen.xlsx")
+#' specimen_catalogue(excel_path = "./specimen_template.xlsx")
 #' 
 ### function specimen_catalogue
 specimen_catalogue <- function(excel_path = NULL) {
@@ -19,12 +19,13 @@ specimen_catalogue <- function(excel_path = NULL) {
   excel_curators <- readxl::read_excel(excel_path, sheet = "CuratorsInfo")
   excel_relation <- readxl::read_excel(excel_path, sheet = "RelationInfo")
   # lines concerning examples, units of measurement and data types are removed ----
-  # excel_file <- excel_file[-c(1:2),]
-  # excel_curators <- excel_curators[-c(1:2),]
+  excel_file <- excel_file[-c(1:2),]
+  excel_curators <- excel_curators[-c(1:2),]
+  excel_relation <- excel_relation[-c(1:2),]
   # if excel file contains only example sensor ----
-  excel_file <- excel_file[c(-1),]
-  excel_curators <- excel_curators[c(-1),]
-  excel_relation <- excel_relation[c(-1),]
+  # excel_file <- excel_file[c(-1),]
+  # excel_curators <- excel_curators[c(-1),]
+  # excel_relation <- excel_relation[c(-1),]
   # assign sample IDs, so that references can be made ----
   # TODO change when the DOI can generate trough DataCite ----
   n_speciments <- nrow(excel_file)
