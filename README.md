@@ -1,7 +1,8 @@
 # Specimen catalogue
 This repository includes a solution to collect info about specimen (by excel file), transform info into XML and to turtle (TTL) using R functions, and translate them to HTML landing pages trough XSLT.
 
-The implementation has been done following [Physical Sample Curation recommendations of ESIP](https://wiki.esipfed.org/Physical_Sample_Curation), SOSA ontology main version https://www.w3.org/TR/vocab-ssn/ (19-10-2017) and the new draft https://w3c.github.io/sdw-sosa-ssn/ssn/ (09-02-2024 - https://github.com/w3c/sdw-sosa-ssn?tab=readme-ov-file), but also XSD schema solutions from SESAR (System for Earth Sample Registration) [1] and from CSIRO (Commonwealth Scientific and Industrial Research Organisation) [2].
+The implementation has been done following [Physical Sample Curation recommendations of ESIP](https://wiki.esipfed.org/Physical_Sample_Curation), SOSA ontology main version https://www.w3.org/TR/vocab-ssn/ (19-10-2017) and the new draft https://w3c.github.io/sdw-sosa-ssn/ssn/ (09-02-2024 - https://github.com/w3c/sdw-sosa-ssn?tab=readme-ov-file), but also XSD schema solutions from SESAR (System for Earth Sample Registration) [1] and from IGSN CSIRO (Commonwealth Scientific and Industrial Research Organisation) [2].
+Thins compliance allows to have a compliant also with DataCite.
 
 [1] System for Earth Sample Registration (SESAR). 2020. SESAR XML Schema for samples (Version 4.0). Zenodo. http://doi.org/10.5281/zenodo.3875531
 
