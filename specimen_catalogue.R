@@ -1,5 +1,3 @@
-# TODO change locationid of ReLTER::get_location_info() with location_id when the package ReLTER is rebuild
-
 #' @title
 #' @description
 #' A short description...
