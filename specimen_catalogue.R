@@ -19,13 +19,13 @@ specimen_catalogue <- function(excel_path = NULL) {
   excel_curators <- readxl::read_excel(excel_path, sheet = "CuratorsInfo")
   excel_relation <- readxl::read_excel(excel_path, sheet = "RelationInfo")
   # lines concerning examples, units of measurement and data types are removed ----
-  excel_file <- excel_file[-c(1:2),]
-  excel_curators <- excel_curators[-c(1:2),]
-  excel_relation <- excel_relation[-c(1:2),]
+  # excel_file <- excel_file[-c(1:3),]
+  # excel_curators <- excel_curators[-c(1:3),]
+  # excel_relation <- excel_relation[-c(1:3),]
   # if excel file contains only example sensor ----
-  # excel_file <- excel_file[c(-1),]
-  # excel_curators <- excel_curators[c(-1),]
-  # excel_relation <- excel_relation[c(-1),]
+  excel_file <- excel_file[c(-1),]
+  excel_curators <- excel_curators[c(-1),]
+  excel_relation <- excel_relation[c(-1),]
   # assign sample IDs, so that references can be made ----
   # TODO change when the DOI can generate trough DataCite ----
   n_speciments <- nrow(excel_file)
@@ -88,7 +88,7 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
       xml2::xml_add_sibling(
         "cs:landingPage",
         paste0(
-          "http://www.get-it.it/objects/samples/",
+          "http://www.lteritalia.it/samples/",
           file_name,
           ".xml"
         )
@@ -154,7 +154,7 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
       "localityURI" = excel_file$location_id[i]
     )
     location_info <- ReLTER::get_location_info(
-      locationid = excel_file$location_id[i]
+      location_id = excel_file$location_id[i]
     )
     geo_type <- sf::st_as_text(
       location_info$boundaries
@@ -181,7 +181,8 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
     g <- xml2::xml_add_sibling(
       f,
       "cs:method",
-      "methodURI" = excel_file$method_doi[i]
+      "methodURI" = excel_file$method_doi[i],
+      excel_file$sampler[i]
     ) |>
       xml2::xml_add_sibling(
         "cs:campaign",
@@ -337,8 +338,14 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     location_id <- excel_file$location_id[i]
     activity_id <- excel_file$campaign[i]
     sampler_name <- excel_file$sampler[i]
+    sampler_uuid <- sapply(
+      length(
+        excel_file$sampler[i]
+      ), 
+      uuid::UUIDgenerate
+    )
     location_info <- ReLTER::get_location_info(
-      locationid = location_id
+      location_id = location_id
     )
     geo_wkt <- sf::st_as_text(
       location_info$boundaries
@@ -366,12 +373,12 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
       contributors <- c(
         contributors,
         "  dcat:contactPoint [",
-        "    rdf:type       prov:Person , foaf:Person ;",
+        "    rdf:type       prov:Person, foaf:Person ;",
         paste0("    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/",
         gsub(
             " ",
             "",
-            excel_curator$contact_person_type[m]
+            excel_curator$contact_person_type[y]
           ),
         "> ;"),
         paste0("    rdfs:seeAlso   <", excel_curator$contact_person_orcid[y], "> ;"),
@@ -387,12 +394,23 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     }
     # related samples
     if (nrow(excel_rel) != 0) {
-      samples <- paste(excel_rel$related_resources, collapse = "> , <")
+      samples <- ""
+      for (w in 1:nrow(excel_rel)) {
+        samples <- c(
+          samples,
+          c(
+            "  sosa-rel:hasSampleRelationship [",
+            "     rdf:type sosa-rel:SampleRelationship ;",
+            paste0("     sosa-rel:natureOfRelationship",
+            " <http://pid.geoscience.gov.au/def/voc/igsn-codelists/", excel_rel$relation_type[w], "> ;"),
+            paste0("     sosa-rel:relatedSample <", excel_rel$related_resources[w], "> ;"),
+            "  ] ;"
+          )
+        )
+      }
       related_samples <- c(
-        paste0("  sosa:SamplingProcedure <", excel_file$method_doi[i], "> ;"),
-        paste0("  sosa-rel:relatedSample <",
         samples,
-        "> .")
+        paste0("  sosa:SamplingProcedure <", excel_file$method_doi[i], "> .")
       )
     } else {
       related_samples <- c(
@@ -401,30 +419,30 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     }
     # sosa:Sample
     sosa_sample <- c(
-      paste0("<uuid-", uuid, "> rdf:type sosa:Sample ;"),
+      paste0("<http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> rdf:type sosa:Sample, prov:Entity ;"),
+      paste0("  dcat:landingPage <http://www.lteritalia.it/samples/uuid-", uuid, ".xml> ;"),
       description,
       paste0("  rdfs:label '", excel_file$resource_title[i], "'@en ;"),
       paste0("  sosa:isSampleOf <", site_id, "> ;"),
       paste0("  sosa:madeSampling <", activity_id, "> ;"),
-      paste0("  sosa:isResultOfMadeBySampler <", sampler_name, "> ; <!-- TODO store and archive also the sampler and not only the sensor!! -->"),
-      "  geosparql:hasGeometry  [ ",
+      paste0("  sosa:isResultOfMadeBySampler <http://rdfdata.lteritalia.it/sampler/", sampler_uuid, "> ;"),
+      "  geosparql:hasGeometry [ ",
       paste0("    rdf:type sf:", stringr::str_to_title(geo_type), " ;"),
       paste0("    geosparql:asWKT '<urn:ogc:def:crs:EPSG::4283> ", geo_wkt, "'^^geosparql:wktLiteral"),
       "  ] ;",
       curators,
       contributors,
-      paste0("  owl:sameAs <http://rdfdata.get-it.it/elter/sample/uuid-", uuid, "> ;"),# TODO CHECK THE URI!!
       paste0("  sosa:MaterialSample <http://vocabulary.odm2.org/medium/", excel_file$material_type[i], "> ;"),
       related_samples
     )
     # sosa:hasSample
     sosa_hasSampling <- c(
-      paste0("<", site_id, "> sosa:hasSample <uuid-", uuid, "> .")
+      paste0("<", site_id, "> sosa:hasSample <http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> .")
     )
     sosa_sampling <- c(
-      paste0("<", activity_id, "> a sosa:Sampling ;"),
-      paste0("  sosa:hasResult <", uuid, "> ;"),
-      paste0("  sosa:madeBySampler <", sampler_name, "> ; <!-- TODO store and archive also the sampler and not only the sensor!! -->"),
+      paste0("<", activity_id, "> rdf:type sosa:Sampling ;"),
+      paste0("  sosa:hasResult <http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> ;"),
+      paste0("  sosa:madeBySampler <http://rdfdata.lteritalia.it/sampler/", sampler_uuid, "> ;"),
       paste0("  sosa:resultTime '",
         as.Date(
           as.numeric(excel_file$date[i]),
@@ -436,11 +454,8 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     )
     # sosa:Sampler
     sosa_sampler <- c(
-      paste0("<", sampler_name , "> a sosa:Sampler . <!-- TODO store and archive also the sampler and not only the sensor!! -->")
-    )
-    # sosa:SampleCollection
-    sosa_sampleCollection <- c(
-      paste0("sosa:SampleCollection ... <!-- TODO -->")
+      paste0("<http://rdfdata.lteritalia.it/sampler/", sampler_uuid , "> rdf:type sosa:Sampler, prov:Agent , prov:Entity ;"),
+      paste0("  rdfs:label '", sampler_name, "'@en .")
     )
     specimen <- c(
       specimen,
@@ -452,12 +467,24 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
       sosa_sampling,
       "",
       sosa_sampler,
-      "",
-      sosa_sampleCollection
+      ""
     )
     # write file specimen_file_ttl
     write(specimen, file = specimen_file_ttl)
     # close file
     close(specimen_file_ttl)
+  }
+  # send the ttl files to SPARQL endpoint
+  ttl_files <- list.files(path = root_dir, pattern = "\\.ttl$")
+  for (j in 1:length(ttl_files)) {
+    new_sensorType_qr <- httr2::request("http://fuseki1.get-it.it/specimen") |>
+      httr2::req_auth_basic(username = username_fuseki1, password = pwd_fuseki1) |>
+      httr2::req_method("POST") |>
+      httr2::req_body_file(
+        path = paste0(root_dir, "/", ttl_files[j]),
+        type = "text/turtle"
+      ) |>
+      httr2::req_retry(max_tries = 3, max_seconds = 120)
+    httr2::req_perform(new_sensorType_qr, verbosity = 3)
   }
 }
