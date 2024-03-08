@@ -11,4 +11,6 @@ Thins compliance allows to have a compliant also with DataCite.
 The production flow is illustrated in the figure:
 ![image](https://github.com/oggioniale/specimen_catalogue/assets/1393893/2277fa6c-920d-4a8d-bc26-3c8d22edc0f9)
 
-
+# The workflow of this app is:
+1. fill the `specimen_template.xlsx` spreadsheet
+2. use `specimen_catalogue()` function for obtain IGSN CSIRO XML and ttl from SOSA Ontology for each record(s) present in the speadsheet.
