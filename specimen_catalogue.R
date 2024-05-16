@@ -324,13 +324,14 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     specimen <- "@prefix sosa: <http://www.w3.org/ns/sosa/>
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-@prefix geosparql <http://www.opengis.net/ont/geosparql#>
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#>
 @prefix sf: <http://www.opengis.net/ont/sf#>
 @prefix foaf: <http://xmlns.com/foaf/0.1/>
 @prefix dcat: <http://www.w3.org/ns/dcat#>
 @prefix prov: <http://www.w3.org/ns/prov#>
 @prefix owl: <http://www.w3.org/2002/07/owl#>
-@prefix sosa-rel: <http://www.w3.org/ns/sosa/sampling/>"
+@prefix sosa-rel: <http://www.w3.org/ns/sosa/sampling/>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>"
     uuid <- speciments_uuids[i]
     site_id <- excel_file$site_id[i]
     location_id <- excel_file$location_id[i]
