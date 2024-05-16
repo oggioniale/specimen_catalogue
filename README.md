@@ -9,7 +9,8 @@ Thins compliance allows to have a compliant also with DataCite.
 [2] IGSN CSIRO version 3.0 - https://igsn.csiro.au/schemas/3.0/ 08-2019
 
 The production flow is illustrated in the figure:
-![image](https://github.com/oggioniale/specimen_catalogue/assets/1393893/2277fa6c-920d-4a8d-bc26-3c8d22edc0f9)
+![Screenshot 2024-05-16 at 09 55 41](https://github.com/oggioniale/specimen_catalogue/assets/1393893/5dde60fb-021b-4cde-80b3-fa8e6bbb8af9)
+
 
 # The workflow of this app is:
 1. fill the `specimen_template.xlsx` spreadsheet
