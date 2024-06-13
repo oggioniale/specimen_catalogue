@@ -20,7 +20,8 @@ By adhering to the above standards and schemas, the solution ensures compliance 
 Production Flow
 The production flow of this implementation is illustrated in the figure below:
 
-![image](https://github.com/oggioniale/specimen_catalogue/assets/1393893/11f6019e-7a48-424b-a6c9-6b557b501331)
+![image](https://github.com/oggioniale/specimen_catalogue/assets/1393893/3363c96e-ac55-46bd-9c82-cf15348e4b0c)
+
 
 # The workflow of this application consists of the following steps:
 
