@@ -1,18 +1,29 @@
 # Specimen catalogue
-This repository includes a solution to collect info about specimen (by excel file), transform info into XML and to turtle (TTL) using R functions, and translate them to HTML landing pages trough XSLT.
+This repository includes a comprehensive solution to manage specimen information. The solution encompasses the following processes:
 
-The implementation has been done following [Physical Sample Curation recommendations of ESIP](https://wiki.esipfed.org/Physical_Sample_Curation), SOSA ontology main version https://www.w3.org/TR/vocab-ssn/ (19-10-2017) and the new draft https://w3c.github.io/sdw-sosa-ssn/ssn/ (09-02-2024 - https://github.com/w3c/sdw-sosa-ssn?tab=readme-ov-file), but also XSD schema solutions from SESAR (System for Earth Sample Registration) [1] and from IGSN CSIRO (Commonwealth Scientific and Industrial Research Organisation) [2].
-Thins compliance allows to have a compliant also with DataCite.
+1. Data Collection: Collect information about specimens using an Excel file.
+2. Data Transformation: Convert the collected information into XML and Turtle (TTL) formats using R functions.
+3. Data Presentation: Translate the transformed data into HTML landing pages via XSLT.
 
-[1] System for Earth Sample Registration (SESAR). 2020. SESAR XML Schema for samples (Version 4.0). Zenodo. http://doi.org/10.5281/zenodo.3875531
+*Implementation Standards*
 
-[2] IGSN CSIRO version 3.0 - https://igsn.csiro.au/schemas/3.0/ 08-2019
+The implementation adheres to several standards and recommendations to ensure compliance and interoperability.
 
-The production flow is illustrated in the figure:
+- ESIP: the solution follows the [Physical Sample Curation recommendations](https://wiki.esipfed.org/Physical_Sample_Curation);
+- SOSA Ontology: the main version of the SOSA ontology (19-10-2017) - [W3C SOSA Ontology](https://www.w3.org/TR/vocab-ssn/);
+- The new draft of the SOSA ontology (09-02-2024) -  [W3C SOSA-SSN Draft and its GitHub repository](https://github.com/w3c/sdw-sosa-ssn?tab=readme-ov-file);
+- SESAR (System for Earth Sample Registration) XSD schema solutions [1];
+- IGSN (International Generic Sample Number) CSIRO (Commonwealth Scientific and Industrial Research Organisation) schema compliance [2].
 
-![Screenshot 2024-05-16 at 14 25 00](https://github.com/oggioniale/specimen_catalogue/assets/1393893/ef91cc5c-f761-470a-b89e-310b396fc15d)
+By adhering to the above standards and schemas, the solution ensures compliance with DataCite requirements, facilitating standardized and interoperable specimen data management.
 
+Production Flow
+The production flow of this implementation is illustrated in the figure below:
 
-# The workflow of this app is:
-1. fill the `specimen_template.xlsx` spreadsheet
-2. use `specimen_catalogue()` function for obtain IGSN CSIRO XML and ttl from SOSA Ontology for each record(s) present in the speadsheet.
+![image](https://github.com/oggioniale/specimen_catalogue/assets/1393893/11f6019e-7a48-424b-a6c9-6b557b501331)
+
+# The workflow of this application consists of the following steps:
+
+1. Fill the Spreadsheet: complete the `specimen_template.xlsx` spreadsheet with the relevant specimen information;
+
+2. Generate XML and TTL: use the `s`ecimen_catalogue()` function to generate IGSN CSIRO XML and TTL (Turtle) files based on the SOSA Ontology for each record present in the spreadsheet.
