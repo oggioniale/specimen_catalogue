@@ -1,18 +1,97 @@
 library(shiny)
 library(crosstalk)
+library(shinydashboard)
 
-ui <- fluidPage(
-  fluidRow(
-    column(12, leaflet::leafletOutput("specimen_map")),
-    column(12, DT::dataTableOutput("specimenTbl"))
+ui <- dashboardPage(
+  # skin = "blue",
+  # collapse_sidebar = TRUE,
+  header = dashboardHeader(
+    title = tagList(
+      tags$head(tags$style(HTML('.navbar {
+                              background-color: #334155 !important;
+                              }
+                              .column {
+                                float: left;
+                                width: 50%;
+                              }
+
+                              /* Clear floats after the columns */
+                              .row:after {
+                                content: "";
+                                display: table;
+                                clear: both;
+                              }
+                              '))),
+      tags$span(class = "logo-lg", "LTER-Italy samples"), 
+      tags$img(src = "//www.lteritalia.it/wordpress/wp-content/uploads/2023/09/solo_foglia.png")), 
+      # fixed = FALSE,
+      # enable_rightsidebar = TRUE,
+      # rightSidebarIcon = "gears",
+      tags$li(
+        class ="dropdown", 
+        tags$a(
+          href = "http://www.lteritalia.it",
+          tags$img(
+            src = "//www.lteritalia.it/wordpress/wp-content/uploads/LTER-IT-03_72DPI.png",
+            height = "35%",
+            width = "35%",
+            align = "right"
+          ),
+          style = "margin:0;padding-top:2px;padding-bottom:2px;padding-left:10px;padding-right:10px;",
+          target = "_blank"
+        )
+    )#,
+    # tags$li(class = "dropdown",
+    #         actionButton("help", "Give me an overview", style="margin-right: 10px; margin-top: 8px; color: #fff; background-color: #0069D9; border-color: #0069D9")
+    # )
+  ),
+  sidebar = dashboardSidebar(
+    collapsed = TRUE,
+    sidebarMenu(
+      menuItem("Samples", tabName = "fixed", icon = icon("map-marked-alt", lib = "font-awesome"))
+    )
+  ),
+  body = dashboardBody(
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "css/style.css")
+    ),
+    tabItems(
+      tabItem(
+        tabName = "fixed",
+        fluidRow(
+          box(
+            width = 12,
+            title = "Catalogue of LTER-Italy samples", 
+            closable = FALSE, 
+            status = "info", 
+            solidHeader = FALSE, 
+            collapsible = TRUE,
+            enable_sidebar = TRUE,
+            column(12, leaflet::leafletOutput("specimen_map")),
+            column(12, DT::dataTableOutput("specimenTbl"))
+          )
+        )
+      )
+    ),
+    tags$footer(HTML('<div class="row"><div class="column">
+               <p><span style="color: #94c5e5"><strong>Contacts:</strong></span><br><strong>Secretariat: </strong>Via Roberto Cozzi, 53 20156 Milan (Italy)<br><strong>Phone: </strong>+02 66173307<br><strong>E-mail: </strong><a href="mailto:lteritaly@gmail.com" target="_blank">lteritaly@gmail.com</a></p>
+            </div><div class="column"><span style="color: #94c5e5"><strong>Useful links</strong></span><br><a href="http://sparql.lteritalia.it/" target="_blank">SPARQL Endpoint</a></div></div>'), align = 'left')
   )
 )
+  
+
+
+# ui <- fluidPage(
+#   fluidRow(
+#     column(12, leaflet::leafletOutput("specimen_map")),
+#     column(12, DT::dataTableOutput("specimenTbl"))
+#   )
+# )
 
 server <- function(input, output, session) {
   # data table ----
   specimen_dataset <- "http://fuseki1.get-it.it/specimen/query"
-  specimen_query <- paste0(
-    "PREFIX sosa: <http://www.w3.org/ns/sosa/>
+  specimen_query <- "PREFIX sosa: <http://www.w3.org/ns/sosa/>
      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
      PREFIX geosparql: <http://www.opengis.net/ont/geosparql#>
@@ -38,12 +117,10 @@ server <- function(input, output, session) {
        OPTIONAL { ?c sosa:SamplingProcedure ?procedure . }
      }
      ORDER BY ASC(?l)"
-  )
   list_specimen_req <- httr2::request(specimen_dataset) |>
     httr2::req_url_query(query = specimen_query) |>
     httr2::req_method("POST") |>
     httr2::req_headers(Accept = "application/sparql-results+json") |>
-    httr2::req_user_agent("ReLTER dev") |>
     httr2::req_retry(max_tries = 3, max_seconds = 120) |>
     httr2::req_perform()
   httr2::resp_check_status(list_specimen_req)
@@ -184,17 +261,83 @@ server <- function(input, output, session) {
     }) |> dplyr::bind_rows()
   }
   # sampler label
-  # if (!is.na(list_specimen$specimen_sampler[n])) {
-  #   ...
-  #   list_specimen$specimen_sampler[n] <- ...
-  # } else {
-  #   list_specimen$specimen_sampler[n] <- NA
-  # }
+  if (any(is.na(samplers))) {
+    samplers <- samplers |>
+      purrr::discard(is.na)
+    samplers_tbl <- lapply(1:length(samplers), function(x){
+      sampler_uri <- samplers[x]
+      sampler_query <- paste0(
+        "PREFIX sosa: <http://www.w3.org/ns/sosa/>
+     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     SELECT ?sampler ?label
+     WHERE {
+       BIND(<", sampler_uri, "> as ?sampler)
+       ?sampler rdf:type sosa:Sampler .
+       ?sampler rdfs:label ?label .
+     }
+     ORDER BY ASC(?l)"
+      )
+      list_sampler_req <- httr2::request(specimen_dataset) |>
+        httr2::req_url_query(query = sampler_query) |>
+        httr2::req_method("POST") |>
+        httr2::req_headers(Accept = "application/sparql-results+json") |>
+        httr2::req_user_agent("ReLTER dev") |>
+        httr2::req_retry(max_tries = 3, max_seconds = 120) |>
+        httr2::req_perform()
+      httr2::resp_check_status(list_sampler_req)
+      list_sampler <-
+        httr2::resp_body_json(list_sampler_req, simplifyVector = TRUE) |>
+        purrr::pluck("results") |>
+        tibble::as_tibble()|>
+        dplyr::mutate(
+          specimen_sampler = bindings$sampler$value,
+          sampler_label = bindings$label$value,
+          .before = "sampler_label",
+          .keep = "none"
+        )
+    }) |> dplyr::bind_rows()
+    samplers_tbl <- rbind(samplers_tbl, NA)
+  } else {
+    samplers_tbl <- lapply(1:length(samplers), function(x){
+      sampler_uri <- samplers[x]
+      sampler_query <- paste0(
+        "PREFIX sosa: <http://www.w3.org/ns/sosa/>
+     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     SELECT ?sampler ?label
+     WHERE {
+       BIND(<", sampler_uri, "> as ?sampler)
+       ?sampler rdf:type sosa:Sampler .
+       ?sampler rdfs:label ?label .
+     }
+     ORDER BY ASC(?l)"
+      )
+      list_sampler_req <- httr2::request(specimen_dataset) |>
+        httr2::req_url_query(query = sampler_query) |>
+        httr2::req_method("POST") |>
+        httr2::req_headers(Accept = "application/sparql-results+json") |>
+        httr2::req_user_agent("ReLTER dev") |>
+        httr2::req_retry(max_tries = 3, max_seconds = 120) |>
+        httr2::req_perform()
+      httr2::resp_check_status(list_sampler_req)
+      list_sampler <-
+        httr2::resp_body_json(list_sampler_req, simplifyVector = TRUE) |>
+        purrr::pluck("results") |>
+        tibble::as_tibble()|>
+        dplyr::mutate(
+          specimen_sampler = bindings$sampler$value,
+          sampler_label = bindings$label$value,
+          .before = "sampler_label",
+          .keep = "none"
+        )
+    }) |> dplyr::bind_rows()
+  }
   list_specimen <- merge(x = list_specimen, y = rors_tbl, by = "specimen_ror", all.y = TRUE)
   list_specimen <- merge(x = list_specimen, y = materials_tbl, by = "specimen_material", all.y = TRUE)
-  # list_specimen <- merge(x = list_specimen, y = samplers_tbl, by = "specimen_sampler", all.y = TRUE)
+  list_specimen <- merge(x = list_specimen, y = samplers_tbl, by = "specimen_sampler", all.y = TRUE)
   # data shared ----
-  shared_specimentData <- list_specimen |>
+  shared_specimenData <- list_specimen |>
     dplyr::filter(!is.na(specimen_ror)) |>
     dplyr::mutate(
       `Specimen name` = paste0(
@@ -222,8 +365,7 @@ server <- function(input, output, session) {
         "<a href='",
         specimen_sampler,
         "' target = '_blank'>",
-        specimen_sampler,
-        # sampler_label,
+        sampler_label,
         "</a>"
       ),
       geom = stringr::str_replace_all(
@@ -239,7 +381,7 @@ server <- function(input, output, session) {
     dplyr::summarize(Institution = stringr::str_c(Institution, collapse = "<br> ")) |>
     dplyr::ungroup() |>
     sf::st_as_sf(wkt = "geom")
-  shared_data <- SharedData$new(shared_specimentData)
+  shared_data <- SharedData$new(shared_specimenData)
   
   # data table output
   output$specimenTbl <- DT::renderDT({
@@ -248,8 +390,8 @@ server <- function(input, output, session) {
       escape = FALSE,
       caption = htmltools::tags$caption(
         style = 'caption-side: bottom; text-align: center;',
-        'Tabella - ', htmltools::em(paste0(
-          'Contiene tutte le risorse da me caricate nel sito BrickSet (https://brickset.com).'
+        'Table - ', htmltools::em(paste0(
+          'Samples collected by LTER-Italy network'
         ))
       ),
       filter = 'top'
