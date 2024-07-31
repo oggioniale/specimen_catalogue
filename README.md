@@ -13,7 +13,8 @@ The implementation adheres to several standards and recommendations to ensure co
 - SOSA Ontology: the main version of the SOSA ontology (19-10-2017) - [W3C SOSA Ontology](https://www.w3.org/TR/vocab-ssn/);
 - The new draft of the SOSA ontology (09-02-2024) -  [W3C SOSA-SSN Draft and its GitHub repository](https://github.com/w3c/sdw-sosa-ssn?tab=readme-ov-file);
 - SESAR (System for Earth Sample Registration) XSD schema solutions [1];
-- IGSN (International Generic Sample Number) CSIRO (Commonwealth Scientific and Industrial Research Organisation) schema compliance [2].
+- IGSN (International Generic Sample Number) CSIRO (Commonwealth Scientific and Industrial Research Organisation) schema compliance [2];
+- [TDWG MIDS (Minimum Information about a Digital Specimen) specification](https://github.com/tdwg/mids/blob/working-draft/current-draft%20/MIDS-definition-v0.17-13Jul2023.md) at [level 1](https://github.com/tdwg/mids/blob/working-draft/current-draft%20/MIDS-definition-v0.17-13Jul2023.md#42-information-elements-expected-at-mids-level-1).
 
 By adhering to the above standards and schemas, the solution ensures compliance with DataCite requirements, facilitating standardized and interoperable specimen data management.
 
@@ -27,4 +28,4 @@ The production flow of this implementation is illustrated in the figure below:
 
 1. Fill the Spreadsheet: complete the `specimen_template.xlsx` spreadsheet with the relevant specimen information;
 
-2. Generate XML and TTL: use the `s`ecimen_catalogue()` function to generate IGSN CSIRO XML and TTL (Turtle) files based on the SOSA Ontology for each record present in the spreadsheet.
+2. Generate XML and TTL: use the `specimen_catalogue()` function to generate IGSN CSIRO XML and TTL (Turtle) files based on the SOSA Ontology for each record present in the spreadsheet.
