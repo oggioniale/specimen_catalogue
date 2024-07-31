@@ -1,0 +1,69 @@
+@prefix sosa: <http://www.w3.org/ns/sosa/>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#>
+@prefix sf: <http://www.opengis.net/ont/sf#>
+@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix dcat: <http://www.w3.org/ns/dcat#>
+@prefix prov: <http://www.w3.org/ns/prov#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix sosa-rel: <http://www.w3.org/ns/sosa/sampling/>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<http://rdfdata.lteritalia.it/samples/uuid-794f421e-4f41-11ef-80bc-daf69f6cfb8b> rdf:type sosa:Sample, prov:Entity ;
+  dcat:landingPage <http://www.lteritalia.it/samples/uuid-794f421e-4f41-11ef-80bc-daf69f6cfb8b.xml> ;
+  rdfs:comment 'Description: Description of the sample - Purpose: Measurements of pigments in the Lakes by CNR-ISE'@en ;
+  rdfs:label 'Sample LM98_13A'@en ;
+  sosa:isSampleOf <https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> ;
+  sosa:madeSampling <https://deims.org/activity/50d7a52d-e384-4ed4-9976-5bf9c8302843> ;
+  sosa:MadeBySampler <http://rdfdata.lteritalia.it/sampler/447dd332-13a7-11ef-b5ea-daf69f6cfb8b> ;
+  geosparql:hasGeometry [ 
+    rdf:type sf:Point ;
+    geosparql:asWKT '<urn:ogc:def:crs:EPSG::4283> POINT (8.632557 45.95221)'^^geosparql:wktLiteral
+  ] ;
+
+  dcat:contactPoint [
+    rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
+    rdfs:seeAlso   <https://ror.org/02db0kh50>
+  ] ;
+  dcat:contactPoint [
+    rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
+    rdfs:seeAlso   <https://ror.org/02wxw4x45>
+  ] ;
+
+  dcat:contactPoint [
+    rdf:type       prov:Person, foaf:Person ;
+    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
+    rdfs:seeAlso   <https://orcid.org/0000-0002-7997-219X> ;
+    foaf:fullName  'Kovács János'
+  ] ;
+  dcat:contactPoint [
+    rdf:type       prov:Person, foaf:Person ;
+    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/custodian> ;
+    rdfs:seeAlso   <https://orcid.org/0000-0002-7997-219X> ;
+    foaf:fullName  'Jane Doe'
+  ] ;
+  dcat:contactPoint [
+    rdf:type       prov:Person, foaf:Person ;
+    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
+    rdfs:seeAlso   <https://orcid.org/0000-0002-7997-219X> ;
+    foaf:fullName  'Mario Rossi'
+  ] ;
+  sosa-rel:hasSampleRelationship [
+     rdf:type sosa-rel:SampleRelationship ;
+     sosa-rel:natureOfRelationship <http://pid.geoscience.gov.au/def/voc/igsn-codelists/IsDerivedFrom> ;
+     sosa-rel:relatedSample <10.xxxx/hahaahoadhb> ;
+  ] ;
+  sosa:SamplingProcedure <https://doi.org/10.1007/BF02544119> ;
+  sosa:MaterialSample <http://vocabulary.odm2.org/medium/sediment> .
+
+<https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> sosa:hasSample <http://rdfdata.lteritalia.it/samples/uuid-794f421e-4f41-11ef-80bc-daf69f6cfb8b> .
+
+<https://deims.org/activity/50d7a52d-e384-4ed4-9976-5bf9c8302843> rdf:type sosa:Sampling ;
+  sosa:hasResult <http://rdfdata.lteritalia.it/samples/uuid-794f421e-4f41-11ef-80bc-daf69f6cfb8b> ;
+  sosa:MadeBySampler <http://rdfdata.lteritalia.it/sampler/447dd332-13a7-11ef-b5ea-daf69f6cfb8b> ;
+  sosa:resultTime '2008-02-12'^^xsd:date ;
+  sosa:hasFeatureOfInterest <https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> .
+
+
+

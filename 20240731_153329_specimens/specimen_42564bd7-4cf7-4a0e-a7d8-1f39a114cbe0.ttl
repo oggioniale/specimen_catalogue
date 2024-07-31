@@ -1,0 +1,46 @@
+@prefix sosa: <http://www.w3.org/ns/sosa/>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#>
+@prefix sf: <http://www.opengis.net/ont/sf#>
+@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix dcat: <http://www.w3.org/ns/dcat#>
+@prefix prov: <http://www.w3.org/ns/prov#>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix sosa-rel: <http://www.w3.org/ns/sosa/sampling/>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<http://rdfdata.lteritalia.it/samples/uuid-42564bd7-4cf7-4a0e-a7d8-1f39a114cbe0> rdf:type sosa:Sample, prov:Entity ;
+  dcat:landingPage <http://www.lteritalia.it/samples/uuid-42564bd7-4cf7-4a0e-a7d8-1f39a114cbe0.xml> ;
+  rdfs:comment 'Purpose: test'@en ;
+  rdfs:label 'Sample LG98_03'@en ;
+  sosa:isSampleOf <https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> ;
+
+  sosa:MadeBySampler <<http://rdfdata.lteritalia.it/sampler/7a759e5e-4f41-11ef-80bc-daf69f6cfb8b>> ;
+  geosparql:hasGeometry [ 
+    rdf:type sf:Point ;
+    geosparql:asWKT '<urn:ogc:def:crs:EPSG::4283> POINT (10.72 45.69)'^^geosparql:wktLiteral
+  ] ;
+
+  dcat:contactPoint [
+    rdf:type       prov:Agent, prov:Organization, foaf:Organization ;
+    rdfs:seeAlso   <https://ror.org/02db0kh50>
+  ] ;
+
+  dcat:contactPoint [
+    rdf:type       prov:Person, foaf:Person ;
+    prov:hadRole   <http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/owner> ;
+    rdfs:seeAlso   <https://orcid.org/0000-0002-7997-219X> ;
+    foaf:fullName  'Kovács János'
+  ] ;
+
+
+  sosa:MaterialSample <http://vocabulary.odm2.org/medium/liquidAqueous> .
+
+<https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe> sosa:hasSample <http://rdfdata.lteritalia.it/samples/uuid-794f421e-4f41-11ef-80bc-daf69f6cfb8b> .
+
+
+
+<http://rdfdata.lteritalia.it/sampler/7a759e5e-4f41-11ef-80bc-daf69f6cfb8b> rdf:type sosa:Sampler, prov:Agent , prov:Entity ;
+  rdfs:label 'sampler_test'@en .
+
