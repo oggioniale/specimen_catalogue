@@ -13,21 +13,24 @@
 ### function specimen_catalogue
 specimen_catalogue <- function(excel_path = NULL) {
   # read excel file sheets ----
-  excel_file <- readxl::read_excel(excel_path, sheet = "SpecimentsInfo")
+  excel_file <- readxl::read_excel(excel_path, sheet = "SpecimenInfo")
   excel_curators <- readxl::read_excel(excel_path, sheet = "CuratorsInfo")
   excel_relation <- readxl::read_excel(excel_path, sheet = "RelationInfo")
+  excel_sampler <- readxl::read_excel(excel_path, sheet = "SamplersInfo")
   # lines concerning examples, units of measurement and data types are removed ----
   # excel_file <- excel_file[-c(1:3),]
-  # excel_curators <- excel_curators[-c(1:3),]
+  # excel_curators <- excel_curators[-c(1:5),]
   # excel_relation <- excel_relation[-c(1:3),]
+  # excel_sampler <- excel_sampler[-c(1:3),]
   # if excel file contains only example sensor ----
   excel_file <- excel_file[c(-1),]
   excel_curators <- excel_curators[c(-1),]
   excel_relation <- excel_relation[c(-1),]
+  excel_sampler <- excel_sampler[c(-1),]
   # assign sample IDs, so that references can be made ----
   # TODO change when the DOI can generate trough DataCite ----
-  n_speciments <- nrow(excel_file)
-  speciments_uuids <- sapply(1:n_speciments, uuid::UUIDgenerate)
+  n_specimen <- nrow(excel_file)
+  specimen_uuids <- sapply(1:n_specimen, uuid::UUIDgenerate)
   # folders creation ----
   # root folder
   root_dir <- paste0(
@@ -38,18 +41,18 @@ specimen_catalogue <- function(excel_path = NULL) {
     dir.create(root_dir)
   }
   specimen_XML(excel_file = excel_file, excel_curators = excel_curators,
-               excel_relation = excel_relation,
-               speciments_uuids = speciments_uuids, root_dir = root_dir)
+               excel_relation = excel_relation, excel_sampler = excel_sampler,
+               specimen_uuids = specimen_uuids, root_dir = root_dir)
   specimen_ttl(excel_file = excel_file, excel_curators = excel_curators,
-               excel_relation = excel_relation,
-               speciments_uuids = speciments_uuids, root_dir = root_dir)
+               excel_relation = excel_relation, excel_sampler = excel_sampler,
+               specimen_uuids = specimen_uuids, root_dir = root_dir)
 }
 
 #' @title
 #' @param excel_file
 #' @param excel_curators
 #' @param excel_relation
-#' @param speciments_uuids
+#' @param specimen_uuids
 #' @param root_dir
 #' @author Alessandro Oggioni, phD (2023) \email{oggioni.a@@cnr.it}
 #' @importFrom httr2 request req_url_query req_method
@@ -59,17 +62,17 @@ specimen_catalogue <- function(excel_path = NULL) {
 #'
 ### function specimen_XML
 specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
-                         excel_relation = NULL, speciments_uuids = NULL,
-                         root_dir = NULL) {
+                         excel_relation = NULL, excel_sampler = NULL,
+                         specimen_uuids = NULL, root_dir = NULL) {
   # XML files creation ----
-  for (i in 1:length(speciments_uuids)) {
+  for (i in 1:length(specimen_uuids)) {
     sp_id <- excel_file$specimen_id[i]
     excel_curator <- excel_curators |>
       dplyr::filter(specimen_id == sp_id)
     excel_rel <- excel_relation |>
       dplyr::filter(specimen_id == sp_id)
     # name of XML specimen file ----
-    file_name <- paste0("specimen_", speciments_uuids[i])
+    file_name <- paste0("specimen_", specimen_uuids[i])
     # read XML ----
     specimen_XML_base <- xml2::read_xml("base_resource.xml")
     # XML ----
@@ -81,7 +84,7 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
       ) |>
       xml2::xml_add_child(
         "cs:resourceIdentifier",
-        paste0("uuid-", speciments_uuids[i]) # this element needs format like <string>-<string> e.g. uuuid-xxxxxx or doi-xxxxxx
+        paste0("uuid-", specimen_uuids[i]) # the XML schema needs that the format of this element seems like <string>-<string> e.g. uuuid-xxxxxx or doi-xxxxxx
       ) |>
       xml2::xml_add_sibling(
         "cs:landingPage",
@@ -176,16 +179,31 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
         origin = "1899-12-30"
       ))
     )
-    g <- xml2::xml_add_sibling(
-      f,
-      "cs:method",
-      "methodURI" = excel_file$method_doi[i],
-      excel_file$sampler[i]
-    ) |>
-      xml2::xml_add_sibling(
-        "cs:campaign",
-        excel_file$campaign[i]
+    if (!is.na(excel_file$method_doi[i]) & !is.na(excel_file$sampler[i])) {
+      g <- xml2::xml_add_sibling(
+        f,
+        "cs:method",
+        "methodURI" = excel_file$method_doi[i],
+        excel_file$sampler[i]
       )
+    } else if (!is.na(excel_file$method_doi[i]) & is.na(excel_file$sampler[i])) {
+      g <- xml2::xml_add_sibling(
+        f,
+        "cs:method",
+        excel_file$sampler[i]
+      )
+    } else if (is.na(excel_file$method_doi[i]) & is.na(excel_file$sampler[i])) {
+      g <- f
+    }
+    if (!is.na(excel_file$campaign[i])) {
+      g <- g |>
+        xml2::xml_add_sibling(
+          "cs:campaign",
+          excel_file$campaign[i]
+        )
+    } else {
+      g <- g
+    }
     # curators
     h <- xml2::xml_add_sibling(
       g,
@@ -296,7 +314,7 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
 #' @param excel_file
 #' @param excel_curators
 #' @param excel_relation
-#' @param speciments_uuids
+#' @param specimen_uuids
 #' @param root_dir
 #' @author Alessandro Oggioni, phD (2023) \email{oggioni.a@@cnr.it}
 #' @importFrom httr2 request req_url_query req_method
@@ -306,17 +324,17 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
 #'
 ### function specimen_ttl
 specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
-                         excel_relation = NULL, speciments_uuids = NULL,
-                         root_dir = NULL) {
+                         excel_relation = NULL, excel_sampler = NULL,
+                         specimen_uuids = NULL, root_dir = NULL) {
   # ttl files creation ----
-  for (i in 1:length(speciments_uuids)) {
+  for (i in 1:length(specimen_uuids)) {
     sp_id <- excel_file$specimen_id[i]
     excel_curator <- excel_curators |>
       dplyr::filter(specimen_id == sp_id)
     excel_rel <- excel_relation |>
       dplyr::filter(specimen_id == sp_id)
     # name of XML specimen file ----
-    file_name <- paste0("specimen_", speciments_uuids[i])
+    file_name <- paste0("specimen_", specimen_uuids[i])
     specimen_file_ttl <- file(
       paste0(root_dir, "/", file_name, ".ttl")
     )
@@ -332,17 +350,68 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
 @prefix owl: <http://www.w3.org/2002/07/owl#>
 @prefix sosa-rel: <http://www.w3.org/ns/sosa/sampling/>
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>"
-    uuid <- speciments_uuids[i]
+    uuid <- specimen_uuids[i]
     site_id <- excel_file$site_id[i]
     location_id <- excel_file$location_id[i]
     activity_id <- excel_file$campaign[i]
+    # samplers
     sampler_name <- excel_file$sampler[i]
-    sampler_uuid <- sapply(
-      length(
-        excel_file$sampler[i]
-      ), 
-      uuid::UUIDgenerate
-    )
+    if (check_sampler_exist(sampler_name = sampler_name)) {
+      sampler_query <- paste0("PREFIX sosa: <http://www.w3.org/ns/sosa/>
+     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+     SELECT ?c ?label 
+     WHERE {
+       ?c rdf:type sosa:Sampler .
+       ?c rdfs:label ?label .
+      FILTER( REGEX( ?label, '",
+                              sampler_name,
+                              "', 'i' ))
+    }
+    ORDER BY ASC(?l)")
+      sampler_qr <- httr2::request("http://fuseki1.get-it.it/specimen") |>
+        httr2::req_url_query(query = sampler_query) |>
+        httr2::req_method("POST") |>
+        httr2::req_headers(Accept = "application/sparql-results+json") |>
+        httr2::req_retry(max_tries = 3, max_seconds = 120) |>
+        httr2::req_perform()
+      httr2::resp_check_status(sampler_qr)
+      sampler_list <- httr2::resp_body_json(sampler_qr, simplifyVector = TRUE) |>
+        purrr::pluck("results") |>
+        tibble::as_tibble() |>
+        dplyr::mutate(
+          sampler_uri = bindings$c$value,
+          specimen_label = bindings$label$value,
+          .keep = "used"
+        ) |>
+        dplyr::select(
+          sampler_uri, specimen_label
+        )
+      sampler_uri <- sampler_list$sampler_uri
+      madeBy <- paste0("  sosa:MadeBySampler <", sampler_uri, "> ;")
+      # sosa:Sampler
+      sosa_sampler <- ""
+    } else {
+      if (!is.na(sampler_name)) {
+        sampler_uuid <- sapply(
+          length(
+            excel_file$sampler[i]
+          ), 
+          uuid::UUIDgenerate
+        )
+        sampler_uri <- paste0("<http://rdfdata.lteritalia.it/sampler/", sampler_uuid, ">")
+        # sosa:Sampler
+        sosa_sampler <- c(
+          paste0(sampler_uri, " rdf:type sosa:Sampler, prov:Agent , prov:Entity ;"),
+          paste0("  rdfs:label '", sampler_name, "'@en .")
+        )
+        madeBy <- paste0("  sosa:MadeBySampler <", sampler_uri, "> ;")
+      } else {
+        sampler_uri <- ""
+        sosa_sampler <- ""
+        madeBy <- ""
+      }
+    }
     location_info <- ReLTER::get_location_info(
       location_id = location_id
     )
@@ -385,77 +454,86 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
         "  ] ;"
       )
     }
-    # description
-    if (!is.na(excel_file$description[i])) {
-      description <- paste0("  rdfs:comment '", excel_file$description[i], "'@en ;")
+    # description + purpose
+    if (!is.na(excel_file$description[i]) & !is.na(excel_file$purpose[i])) {
+      description <- paste0("  rdfs:comment 'Description: ", excel_file$description[i], " - Purpose: ", excel_file$purpose[i], "'@en ;")
+    } else if (is.na(excel_file$description[i]) & !is.na(excel_file$purpose[i])) {
+      description <- paste0("  rdfs:comment 'Purpose: ", excel_file$purpose[i], "'@en ;")
+    } else if (!is.na(excel_file$description[i]) & is.na(excel_file$purpose[i])) {
+      description <- paste0("  rdfs:comment 'Description: ", excel_file$description[i], "'@en ;")
     } else {
-      ""
+      description <- ""
     }
     # related samples
     if (nrow(excel_rel) != 0) {
-      samples <- ""
       for (w in 1:nrow(excel_rel)) {
-        samples <- c(
-          samples,
-          c(
-            "  sosa-rel:hasSampleRelationship [",
-            "     rdf:type sosa-rel:SampleRelationship ;",
-            paste0("     sosa-rel:natureOfRelationship",
-            " <http://pid.geoscience.gov.au/def/voc/igsn-codelists/", excel_rel$relation_type[w], "> ;"),
-            paste0("     sosa-rel:relatedSample <", excel_rel$related_resources[w], "> ;"),
-            "  ] ;"
-          )
+        related <- c(
+          "  sosa-rel:hasSampleRelationship [",
+          "     rdf:type sosa-rel:SampleRelationship ;",
+          paste0("     sosa-rel:natureOfRelationship",
+          " <http://pid.geoscience.gov.au/def/voc/igsn-codelists/", excel_rel$relation_type[w], "> ;"),
+          paste0("     sosa-rel:relatedSample <", excel_rel$related_resources[w], "> ;"),
+          "  ] ;"
         )
       }
-      related_samples <- c(
-        samples,
-        paste0("  sosa:SamplingProcedure <", excel_file$method_doi[i], "> .")
-      )
     } else {
-      related_samples <- c(
-        paste0("  sosa:SamplingProcedure <", excel_file$method_doi[i], "> .")
-      )
+      related <- ""
     }
+    # procedure
+    if (!is.na(excel_file$method_doi[i])) {
+      procedure <- paste0("  sosa:SamplingProcedure <", excel_file$method_doi[i], "> ;")
+    } else {
+      procedure <- ""
+    }
+    # meterial
+    material <- paste0("  sosa:MaterialSample <http://vocabulary.odm2.org/medium/", excel_file$material_type[i], "> .")
     # sosa:Sample
+    if (!is.na(activity_id)) {
+      activityId <- paste0("  sosa:madeSampling <", activity_id, "> ;")
+    } else {
+      activityId <- ""
+    }
+    
     sosa_sample <- c(
       paste0("<http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> rdf:type sosa:Sample, prov:Entity ;"),
       paste0("  dcat:landingPage <http://www.lteritalia.it/samples/uuid-", uuid, ".xml> ;"),
       description,
       paste0("  rdfs:label '", excel_file$resource_title[i], "'@en ;"),
       paste0("  sosa:isSampleOf <", site_id, "> ;"),
-      paste0("  sosa:madeSampling <", activity_id, "> ;"),
-      paste0("  sosa:isResultOfMadeBySampler <http://rdfdata.lteritalia.it/sampler/", sampler_uuid, "> ;"),
+      activityId,
+      madeBy,
       "  geosparql:hasGeometry [ ",
       paste0("    rdf:type sf:", stringr::str_to_title(geo_type), " ;"),
       paste0("    geosparql:asWKT '<urn:ogc:def:crs:EPSG::4283> ", geo_wkt, "'^^geosparql:wktLiteral"),
       "  ] ;",
       curators,
       contributors,
-      paste0("  sosa:MaterialSample <http://vocabulary.odm2.org/medium/", excel_file$material_type[i], "> ;"),
-      related_samples
+      related,
+      procedure,
+      material
     )
     # sosa:hasSample
-    sosa_hasSampling <- c(
-      paste0("<", site_id, "> sosa:hasSample <http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> .")
-    )
-    sosa_sampling <- c(
-      paste0("<", activity_id, "> rdf:type sosa:Sampling ;"),
-      paste0("  sosa:hasResult <http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> ;"),
-      paste0("  sosa:madeBySampler <http://rdfdata.lteritalia.it/sampler/", sampler_uuid, "> ;"),
-      paste0("  sosa:resultTime '",
-        as.Date(
-          as.numeric(excel_file$date[i]),
-          origin = "1899-12-30"
+    if (!is.na(activity_id)) {
+      sosa_hasSampling <- c(
+        paste0("<", site_id, "> sosa:hasSample <http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> .")
+      )
+      sosa_sampling <- c(
+        paste0("<", activity_id, "> rdf:type sosa:Sampling ;"),
+        paste0("  sosa:hasResult <http://rdfdata.lteritalia.it/samples/uuid-", uuid, "> ;"),
+        madeBy,
+        paste0("  sosa:resultTime '",
+               as.Date(
+                 as.numeric(excel_file$date[i]),
+                 origin = "1899-12-30"
+               ),
+               "'^^xsd:date ;"
         ),
-        "'^^xsd:date ;"
-      ),
-      paste0("  sosa:hasFeatureOfInterest <", site_id, "> .")
-    )
-    # sosa:Sampler
-    sosa_sampler <- c(
-      paste0("<http://rdfdata.lteritalia.it/sampler/", sampler_uuid , "> rdf:type sosa:Sampler, prov:Agent , prov:Entity ;"),
-      paste0("  rdfs:label '", sampler_name, "'@en .")
-    )
+        paste0("  sosa:hasFeatureOfInterest <", site_id, "> .")
+      )
+    } else {
+      sosa_sampling <- ""
+    }
+    
     specimen <- c(
       specimen,
       "",
@@ -474,16 +552,63 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     close(specimen_file_ttl)
   }
   # send the ttl files to SPARQL endpoint
-  ttl_files <- list.files(path = root_dir, pattern = "\\.ttl$")
-  for (j in 1:length(ttl_files)) {
-    new_sensorType_qr <- httr2::request("http://fuseki1.get-it.it/specimen") |>
-      httr2::req_auth_basic(username = username_fuseki1, password = pwd_fuseki1) |>
-      httr2::req_method("POST") |>
-      httr2::req_body_file(
-        path = paste0(root_dir, "/", ttl_files[j]),
-        type = "text/turtle"
-      ) |>
-      httr2::req_retry(max_tries = 3, max_seconds = 120)
-    httr2::req_perform(new_sensorType_qr, verbosity = 3)
+  # ttl_files <- list.files(path = root_dir, pattern = "\\.ttl$")
+  # for (j in 1:length(ttl_files)) {
+  #   new_sensorType_qr <- httr2::request("http://fuseki1.get-it.it/specimen") |>
+  #     httr2::req_auth_basic(username = username_fuseki1, password = pwd_fuseki1) |>
+  #     httr2::req_method("POST") |>
+  #     httr2::req_body_file(
+  #       path = paste0(root_dir, "/", ttl_files[j]),
+  #       type = "text/turtle"
+  #     ) |>
+  #     httr2::req_retry(max_tries = 3, max_seconds = 120)
+  #   httr2::req_perform(new_sensorType_qr, verbosity = 3)
+  # }
+}
+
+#' @title
+#' @description
+#' A short description...
+#' 
+#' @param sampler_name description
+#' @return description
+#' @author Alessandro Oggioni, phD (2023) \email{oggioni.a@@cnr.it}
+#' @importFrom httr2 request req_url_query req_method
+#' @importFrom httr2 req_headers req_retry req_perform
+#' @importFrom httr2 resp_check_status resp_body_json
+#' @example
+#' check_sampler_exist(sampler_name = "Niskin bottle")
+#' @keywords internal
+#'
+### function check_sampler_exist
+check_sampler_exist <- function(sampler_name = NULL) {
+  library(magrittr)
+  sampler_query <- paste0("PREFIX sosa: <http://www.w3.org/ns/sosa/>
+     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+     SELECT ?c ?label 
+     WHERE {
+       ?c rdf:type sosa:Sampler .
+       ?c rdfs:label ?label .
+      FILTER( REGEX( ?label, '",
+                           sampler_name,
+                           "', 'i' ))
+    }
+    ORDER BY ASC(?l)")
+  sampler_qr <- httr2::request("http://fuseki1.get-it.it/specimen") |>
+    httr2::req_url_query(query = sampler_query) |>
+    httr2::req_method("POST") |>
+    httr2::req_headers(Accept = "application/sparql-results+json") |>
+    httr2::req_retry(max_tries = 3, max_seconds = 120) |>
+    httr2::req_perform()
+  httr2::resp_check_status(sampler_qr)
+  sampler_list <- httr2::resp_body_json(sampler_qr, simplifyVector = TRUE) |>
+    purrr::pluck("results") |>
+    tibble::as_tibble()
+  if (nrow(sampler_list) == 0) {
+    sampler_exist <- FALSE
+  } else {
+    sampler_exist <- TRUE
   }
+  sampler_exist
 }
