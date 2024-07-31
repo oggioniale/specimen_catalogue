@@ -9,9 +9,9 @@
     xmlns:sams="http://www.opengis.net/samplingSpatial/2.0"
     xmlns:sf="http://www.opengis.net/sampling/2.0" xmlns:gco="http://www.isotc211.org/2005/gco"
     xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fn="http://www.w3.org/2005/xpath-functions"
     xmlns:dc="http://purl.org/dc/elements/1.1/" exclude-result-prefixes="xs" version="2.0">
-
+    
     <xsl:output method="html" doctype-system="about:legacy-compat" encoding="UTF-8" indent="yes"/>
 
     <xsl:strip-space elements="*"/>
@@ -26,14 +26,14 @@
                 <meta name="description"
                     content="Human readable version of a sample description from resources"/>
                 <meta name="author" content="Alessandro Oggioni"/>
-                <link rel="icon" href="http://www.lteritalia.it/wordpress/wp-content/uploads/2023/09/solo_foglia.png"/>
+                <link rel="icon" href="//www.get-it.it/objects/specimen/assets/img/solo_foglia.png"/>
 
                 <title>Sample description</title>
-                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+                <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
                     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-                    crossorigin=""/>
+                    crossorigin=""/>-->
 
-                <link href="../trasformation_html/assets/css/font-awesome.min.css" rel="stylesheet"/>
+                <link href="//www.get-it.it/objects/specimen/assets/css/font-awesome.min.css" rel="stylesheet"/>
 
                 <style type="text/css">
                     .tldate {
@@ -162,16 +162,16 @@
                         display: none;
                     }</style>
 
-                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""/>
+                <!--<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""/>-->
 
                 <!-- DataTables -->
                 <link rel="stylesheet"
-                    href="../trasformation_html/assets/css/bootstrap-3.3.7.min.css"/>
-                <link rel="stylesheet" href="../trasformation_html/assets/DataTables/datatables.css"/>
+                    href="//www.get-it.it/objects/specimen/assets/css/bootstrap-3.3.7.min.css"/>
+                <link rel="stylesheet" href="//www.get-it.it/objects/specimen/assets/DataTables/datatables.css"/>
 
-                <script type="text/javascript" src="../trasformation_html/assets/js/jquery-1.12.4.js"/>
-                <script type="text/javascript" src="../trasformation_html/assets/js/jquery-1.10.16.dataTables.min.js"/>
-                <script type="text/javascript" src="../trasformation_html/assets/DataTables/datatables.js"/>
+                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/js/jquery-1.12.4.js"/>
+                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/js/jquery-1.10.16.dataTables.min.js"/>
+                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/DataTables/datatables.js"/>
 
                 <script type="text/javascript">
                     $(document).ready(function () {
@@ -231,9 +231,11 @@
                         }
                     }</style>
 
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"/>
+                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/js/jquery.qrcode.min.js"/>
 
-                <script src="../trasformation_html/assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
+                <script src="//www.get-it.it/objects/specimen/assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
+                
+                <script src="//www.get-it.it/objects/specimen/assets/js/SaxonJS2.js"/>
 
             </head>
 
@@ -246,7 +248,7 @@
                         <div class="container-fluid">
                             <div class="navbar-header">
                                 <a class="navbar-brand" href="http://www.lteritalia.it" target="_blank">
-                                    <img src="http://www.lteritalia.it/wordpress/wp-content/uploads/LTER-IT-033-2048x610.png"
+                                    <img src="//www.get-it.it/objects/specimen/assets/img/LTER-IT-033-2048x610.png"
                                         height="50"
                                         style="padding-top: 0px;margin-top: -19px;"/>
                                 </a>
@@ -277,10 +279,10 @@
                                     style="padding-right: 20px;">
                                     <xsl:call-template name="parameters"/>
                                 </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                <!--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"
                                     style="padding-left: 20px;">
                                     <xsl:call-template name="position"/>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -325,7 +327,7 @@
                 </div>
                 <!--/.container-->
 
-                <!-- qrcod -->
+                <!-- qrcode -->
                 <script type="text/javascript">
                     $("#qrcode").qrcode({
                         text: "<xsl:value-of select="//cs:landingPage"/>",
@@ -346,6 +348,7 @@
         </html>
     </xsl:template>
 
+    <!--  Citation  -->
     <xsl:template name="cite">
         <xsl:variable name="landingPage" select="//cs:landingPage"/>
         <xsl:variable name="resID" select="//cs:resourceIdentifier"/>
@@ -376,7 +379,8 @@
         <br/>
         <a role="button" class="btn btn-danger btn-xs" onclick="copyText()">Copy BibTex</a>
     </xsl:template>
-
+    
+    <!--  Description  -->
     <xsl:template name="description">
         <h1>
             <xsl:value-of select="//cs:resourceTitle"/> (PID: <xsl:value-of
@@ -456,6 +460,7 @@
         </h1>
     </xsl:template>
 
+    <!--  Parameters  -->
     <xsl:template name="parameters">
         <h2>Sample information</h2>
         <!-- row -->
@@ -484,10 +489,44 @@
                         </td>
                         <td>
                             <xsl:variable name="activityLink"
-                                select="json-doc(concat('https://deims.org/api/activities/', substring-after(//cs:campaign, 'https://deims.org/activity/')))"/>
+                                select="concat('https://deims.org/api/activities/', substring-after(//cs:campaign, 'https://deims.org/activity/'))"/>
                             <a href="{//cs:campaign}" target="_blank">
-                                <xsl:value-of select="$activityLink?title"/>
+                                <div id="log"></div>
                             </a>
+                            <script type="text/javascript">
+                                const xml = `&lt;activity&gt;https://deims.org/api/activities/50d7a52d-e384-4ed4-9976-5bf9c8302843&lt;/activity&gt;`;
+                                
+                                const xslt = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                                    version="3.0"
+                                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                    exclude-result-prefixes="#all"
+                                    expand-text="yes"&gt;
+                                    
+                                    &lt;xsl:template match="activity"&gt;
+                                        &lt;xsl:copy&gt;{json-doc(.)?title}&lt;/xsl:copy&gt;
+                                    &lt;/xsl:template&gt;
+                                    
+                                    &lt;xsl:mode on-no-match="shallow-copy"/&gt;
+                                    
+                                    &lt;xsl:template match="/" name="xsl:initial-template"&gt;
+                                        &lt;xsl:next-match/&gt;
+                                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
+                                    &lt;/xsl:template&gt;
+                                    
+                                &lt;/xsl:stylesheet&gt;`;
+                                
+                                const result = SaxonJS.XPath.evaluate(`
+                                  transform(map {
+                                    'stylesheet-text' : $xslt,
+                                    'source-node' : parse-xml($xml),
+                                    'delivery-format' : 'serialized'
+                                  })?output`,
+                                  null,
+                                  { params : { xml : xml, xslt : xslt } }
+                                );
+                                
+                                document.getElementById('log').innerHTML = result;
+                            </script>
                         </td>
                     </tr>
                     <!-- cs:purpose -->
@@ -600,8 +639,10 @@
                             </td>
                             <td>
                                 <xsl:variable name="typeLink" select="."/>
+                                <!-- TODO move the skos vocabs of medium in fuseky1 because the http cannot be called from https -->
                                 <a href="{$typeLink}" target="_blank">
-                                    <xsl:value-of select="document(concat('http://vocabulary.odm2.org/api/v1/specimentype', substring-after($typeLink, 'specimentype'), '/?format=skos'))//rdf:RDF/rdf:Description/skos:prefLabel"/>
+                                    <!--<xsl:value-of select="document(concat('http://vocabulary.odm2.org/api/v1/specimentype/', substring-after($typeLink, 'http://vocabulary.odm2.org/specimentype/'), '/?format=skos'))//rdf:RDF/rdf:Description/skos:prefLabel"/>-->
+                                    <xsl:value-of select="$typeLink"/>
                                 </a>
                             </td>
                         </tr>
@@ -614,8 +655,10 @@
                             </td>
                             <td>
                                 <xsl:variable name="matLink" select="."/>
+                                <!-- TODO move the skos vocabs of medium in fuseky1 because the http cannot be called from https -->
                                 <a href="{$matLink}" target="_blank">
-                                    <xsl:value-of select="document(concat('http://vocabulary.odm2.org/api/v1/medium', substring-after($matLink, 'medium'), '/?format=skos'))//rdf:RDF/rdf:Description/skos:prefLabel"/>
+                                    <!--<xsl:value-of select="document(concat('http://vocabulary.odm2.org/api/v1/medium', substring-after($matLink, 'medium'), '/?format=skos'))//rdf:RDF/rdf:Description/skos:prefLabel"/>-->
+                                    <xsl:value-of select="$matLink"/>
                                 </a>
                             </td>
                         </tr>
@@ -658,6 +701,7 @@
         </div>
     </xsl:template>
 
+    <!--  Curation  -->
     <xsl:template name="curation">
         <div class="row">
             <xsl:if test="//cs:contributors">
@@ -665,14 +709,6 @@
                 <h3>Curation by</h3>
                 <xsl:for-each select="//cs:curationDetails/cs:curation">
                     <p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                            fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
-                            <path
-                                d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
-                            <path
-                                d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"
-                            />
-                        </svg>
                         <xsl:text> </xsl:text>
                         <xsl:choose>
                             <xsl:when
@@ -682,9 +718,45 @@
                                         src="https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg"
                                         height="24"/>
                                     <xsl:text> </xsl:text>
-                                    <xsl:variable name="rorLink"
-                                        select="json-doc(concat('https://api.dev.ror.org/v2/organizations/', substring-after(./cs:curatingInstitution/@institutionURI, 'https://ror.org/')))"/>
-                                    <xsl:value-of select="$rorLink?names?1?value"/>
+                                    <xsl:value-of select="./cs:curatingInstitution/@institutionURI"/>
+                                    <!-- TODO substitute this rows when soved the ussue about json-doc -->
+                                    <!--<xsl:variable name="rorLink"
+                                        select="concat('https://api.dev.ror.org/v2/organizations/', substring-after(./cs:curatingInstitution/@institutionURI, 'https://ror.org/'))"/>
+                                    <div id="logRor"></div>
+                                    <script type="text/javascript">
+                                        const xmlRor = `&lt;organization&gt;https://api.dev.ror.org/v2/organizations/02db0kh50&lt;/organization&gt;`;
+                                        
+                                        const xsltRor = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                                        version="3.0"
+                                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                        exclude-result-prefixes="#all"
+                                        expand-text="yes"&gt;
+                                        
+                                        &lt;xsl:template match="organization"&gt;
+                                          &lt;xsl:copy&gt;{json-doc(.)?names?1?value}&lt;/xsl:copy&gt;
+                                        &lt;/xsl:template&gt;
+                                        
+                                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
+                                        
+                                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
+                                        &lt;xsl:next-match/&gt;
+                                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
+                                        &lt;/xsl:template&gt;
+                                        
+                                        &lt;/xsl:stylesheet&gt;`;
+                                        
+                                        const resultRor = SaxonJS.XPath.evaluate(`
+                                          transform(map {
+                                            'stylesheet-text' : $xsltRor,
+                                            'source-node' : parse-xml($xmlRor),
+                                            'delivery-format' : 'serialized'
+                                          })?output`,
+                                          null,
+                                          { params : { xml : xml, xslt : xslt } }
+                                        );
+                                        
+                                        document.getElementById('logRor').innerHTML = resultRor;
+                                    </script>-->
                                 </a>
                             </xsl:when>
                             <xsl:otherwise>
@@ -703,14 +775,6 @@
                             select="substring-after(./@contributorType, 'http://inspire.ec.europa.eu/metadata-codelist/ResponsiblePartyRole/')"
                         />: </h3>
                     <p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                            fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
-                            <path
-                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
-                            />
-                        </svg>
                         <xsl:text> </xsl:text>
                         <xsl:choose>
                             <xsl:when
@@ -738,22 +802,23 @@
         </div>
     </xsl:template>
 
-    <xsl:template name="position">
+    <!--  Position  -->
+    <!--<xsl:template name="position">
         <xsl:variable name="locationURI" select="//cs:location/cs:locality/@localityURI"/>
         <xsl:variable name="locationIDAPI"
-            select="json-doc(concat('https://deims.org/api/locations/', substring-after($locationURI, 'https://deims.org/locations/')))"/>
+            select="fn:json-doc(concat('https://deims.org/api/locations/', substring-after($locationURI, 'https://deims.org/locations/')))"/>
         <xsl:variable name="sampledFURI"
             select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI"/>
         <xsl:variable name="deimsIDAPI"
-            select="json-doc(concat('https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/')))"/>
+            select="fn:json-doc(concat('https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/')))"/>
         <h4>The sampling locations is <a href="{//cs:location/cs:locality/@localityURI}" target="_blank"><xsl:value-of
             select="$locationIDAPI?properties?title"/></a> within the eLTER site <a href="{$sampledFURI}" target="_blank"><xsl:value-of select="$deimsIDAPI?title"/></a></h4>
-        <!-- row -->
+        <!-\- row -\->
         <div class="row">
             <div id="map-container">
                 <div id="map">
-                    <!-- https://deims.org/geoserver/deims/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=deims:deims_sites_boundaries&outputFormat=text/javascript&CQL_FILTER=deimsid=%27https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe%27&amp;&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326 -->
-                    <!-- map -->
+                    <!-\- https://deims.org/geoserver/deims/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=deims:deims_sites_boundaries&outputFormat=text/javascript&CQL_FILTER=deimsid=%27https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe%27&amp;&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326 -\->
+                    <!-\- map -\->
                     <script type="text/javascript">
                         var popup;
                         var map;
@@ -798,11 +863,11 @@
                         }).addTo(map);
     
                         var geojsonFeature = <xsl:value-of select="serialize($locationIDAPI, map{'method':'json'})"/>
-                          <!--{"type":"Feature",
+                          <!-\-{"type":"Feature",
                           "geometry": {
                             "coordinates":<xsl:value-of select="serialize($locationIDAPI?geometry?coordinates, map {'method':'json'})"/>,
                             "type":"<xsl:value-of select="$locationIDAPI?geometry?type"/>"
-                          }}-->
+                          }}-\->
                         L.geoJSON(geojsonFeature, {
                             style: function (feature) {
                                 return {
@@ -822,8 +887,8 @@
                     </script>
                 </div>
             </div>
-            <!-- /map-outer -->
+            <!-\- /map-outer -\->
         </div>
-    </xsl:template>
+    </xsl:template>-->
 
 </xsl:stylesheet>
