@@ -26,14 +26,14 @@
                 <meta name="description"
                     content="Human readable version of a sample description from resources"/>
                 <meta name="author" content="Alessandro Oggioni"/>
-                <link rel="icon" href="//www.get-it.it/objects/specimen/assets/img/solo_foglia.png"/>
+                <link rel="icon" href="https://www.lteritalia.it/wordpress/wp-content/uploads/2023/09/solo_foglia.png"/>
 
                 <title>Sample description</title>
                 <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
                     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
                     crossorigin=""/>-->
 
-                <link href="//www.get-it.it/objects/specimen/assets/css/font-awesome.min.css" rel="stylesheet"/>
+                <link href="//www.get-it.it/objects/specimen/transformation_html/assets/css/font-awesome.min.css" rel="stylesheet"/>
 
                 <style type="text/css">
                     .tldate {
@@ -162,16 +162,16 @@
                         display: none;
                     }</style>
 
-                <!--<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""/>-->
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""/>
 
                 <!-- DataTables -->
                 <link rel="stylesheet"
-                    href="//www.get-it.it/objects/specimen/assets/css/bootstrap-3.3.7.min.css"/>
-                <link rel="stylesheet" href="//www.get-it.it/objects/specimen/assets/DataTables/datatables.css"/>
+                    href="//www.get-it.it/objects/specimen/transformation_html/assets/css/bootstrap-3.3.7.min.css"/>
+                <link rel="stylesheet" href="//www.get-it.it/objects/specimen/transformation_html/assets/DataTables/datatables.css"/>
 
-                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/js/jquery-1.12.4.js"/>
-                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/js/jquery-1.10.16.dataTables.min.js"/>
-                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/DataTables/datatables.js"/>
+                <script type="text/javascript" src="//www.get-it.it/objects/specimen/transformation_html/assets/js/jquery-1.12.4.js"/>
+                <script type="text/javascript" src="//www.get-it.it/objects/specimen/transformation_html/assets/js/jquery-1.10.16.dataTables.min.js"/>
+                <script type="text/javascript" src="//www.get-it.it/objects/specimen/transformation_html/assets/DataTables/datatables.js"/>
 
                 <script type="text/javascript">
                     $(document).ready(function () {
@@ -231,11 +231,11 @@
                         }
                     }</style>
 
-                <script type="text/javascript" src="//www.get-it.it/objects/specimen/assets/js/jquery.qrcode.min.js"/>
+                <script src="//www.get-it.it/objects/specimen/transformation_html/assets/js/jquery.qrcode.min.js"/>
 
-                <script src="//www.get-it.it/objects/specimen/assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
+                <script src="//www.get-it.it/objects/specimen/transformation_html/assets/js/bootstrap-3.0.3.min.js" type="text/javascript"/>
                 
-                <script src="//www.get-it.it/objects/specimen/assets/js/SaxonJS2.js"/>
+                <script src="//www.get-it.it/objects/specimen/transformation_html/assets/js/SaxonJS2.js"/>
 
             </head>
 
@@ -247,8 +247,8 @@
                         style="background-color: #334155;margin-top: 19px;">
                         <div class="container-fluid">
                             <div class="navbar-header">
-                                <a class="navbar-brand" href="http://www.lteritalia.it" target="_blank">
-                                    <img src="//www.get-it.it/objects/specimen/assets/img/LTER-IT-033-2048x610.png"
+                                <a class="navbar-brand" href="https://www.lteritalia.it" target="_blank">
+                                    <img src="https://www.lteritalia.it/wordpress/wp-content/uploads/LTER-IT-033-300x89.png"
                                         height="50"
                                         style="padding-top: 0px;margin-top: -19px;"/>
                                 </a>
@@ -279,10 +279,10 @@
                                     style="padding-right: 20px;">
                                     <xsl:call-template name="parameters"/>
                                 </div>
-                                <!--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"
                                     style="padding-left: 20px;">
                                     <xsl:call-template name="position"/>
-                                </div>-->
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -489,12 +489,13 @@
                         </td>
                         <td>
                             <xsl:variable name="activityLink"
-                                select="concat('https://deims.org/api/activities/', substring-after(//cs:campaign, 'https://deims.org/activity/'))"/>
+                                select="concat('&lt;activity&gt;https://deims.org/api/activities/', substring-after(//cs:campaign, 'https://deims.org/activity/'), '&lt;/activity&gt;')"/>
                             <a href="{//cs:campaign}" target="_blank">
                                 <div id="log"></div>
                             </a>
+                            
                             <script type="text/javascript">
-                                const xml = `&lt;activity&gt;https://deims.org/api/activities/50d7a52d-e384-4ed4-9976-5bf9c8302843&lt;/activity&gt;`;
+                                const xml = `<xsl:value-of select="$activityLink" />`;
                                 
                                 const xslt = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                                     version="3.0"
@@ -704,68 +705,63 @@
     <!--  Curation  -->
     <xsl:template name="curation">
         <div class="row">
-            <xsl:if test="//cs:contributors">
+            <xsl:if test="//cs:curationDetails/cs:curation">
                 <!-- curation -->
                 <h3>Curation by</h3>
                 <xsl:for-each select="//cs:curationDetails/cs:curation">
-                    <p>
-                        <xsl:text> </xsl:text>
-                        <xsl:choose>
-                            <xsl:when
-                                test="(./cs:curatingInstitution/@institutionURI) and (contains(./cs:curatingInstitution/@institutionURI, 'ror.org'))">
-                                <a href="{./cs:curatingInstitution/@institutionURI}" target="_blank">
-                                    <img alt="ROR logo"
-                                        src="https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg"
-                                        height="24"/>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:value-of select="./cs:curatingInstitution/@institutionURI"/>
-                                    <!-- TODO substitute this rows when soved the ussue about json-doc -->
-                                    <!--<xsl:variable name="rorLink"
-                                        select="concat('https://api.dev.ror.org/v2/organizations/', substring-after(./cs:curatingInstitution/@institutionURI, 'https://ror.org/'))"/>
-                                    <div id="logRor"></div>
-                                    <script type="text/javascript">
-                                        const xmlRor = `&lt;organization&gt;https://api.dev.ror.org/v2/organizations/02db0kh50&lt;/organization&gt;`;
-                                        
-                                        const xsltRor = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                                        version="3.0"
-                                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                                        exclude-result-prefixes="#all"
-                                        expand-text="yes"&gt;
-                                        
-                                        &lt;xsl:template match="organization"&gt;
-                                          &lt;xsl:copy&gt;{json-doc(.)?names?1?value}&lt;/xsl:copy&gt;
-                                        &lt;/xsl:template&gt;
-                                        
-                                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
-                                        
-                                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
-                                        &lt;xsl:next-match/&gt;
-                                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
-                                        &lt;/xsl:template&gt;
-                                        
-                                        &lt;/xsl:stylesheet&gt;`;
-                                        
-                                        const resultRor = SaxonJS.XPath.evaluate(`
-                                          transform(map {
-                                            'stylesheet-text' : $xsltRor,
-                                            'source-node' : parse-xml($xmlRor),
-                                            'delivery-format' : 'serialized'
-                                          })?output`,
-                                          null,
-                                          { params : { xml : xml, xslt : xslt } }
-                                        );
-                                        
-                                        document.getElementById('logRor').innerHTML = resultRor;
-                                    </script>-->
-                                </a>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <a href="{./cs:curatingInstitution/@institutionURI}" target="_blank"
-                                    > PID </a>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        <br/>
-                    </p>
+                    <xsl:variable name="componentsPosition" select="position()" />
+                    <xsl:variable name="rorLink"
+                        select="concat('&lt;organization&gt;https://api.ror.org/v2/organizations/', substring-after(./cs:curatingInstitution/@institutionURI, 'https://ror.org/'), '&lt;/organization&gt;')"/>
+                    <xsl:choose>
+                        <xsl:when
+                            test="contains(./cs:curatingInstitution/@institutionURI, 'ror.org')">
+                            <a href="{./cs:curatingInstitution/@institutionURI}" target="_blank">
+                                <img alt="ROR logo"
+                                    src="//www.get-it.it/objects/specimen/transformation_html/assets/img/icon/ror-icon-rgb.svg"
+                                    height="24"/>
+                                <xsl:text> </xsl:text>
+                                <b id="logRor{$componentsPosition}"></b>
+                            </a>
+                            <script type="text/javascript">
+                                const xmlRor<xsl:value-of select="$componentsPosition"/> = `<xsl:value-of select="$rorLink" />`;
+                                
+                                const xsltRor<xsl:value-of select="$componentsPosition"/> = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                                version="3.0"
+                                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                                exclude-result-prefixes="#all"
+                                expand-text="yes"&gt;
+                                
+                                &lt;xsl:template match="organization"&gt;
+                                &lt;xsl:copy&gt;{json-doc(.)?names?2?value}&lt;/xsl:copy&gt;
+                                &lt;/xsl:template&gt;
+                                
+                                &lt;xsl:mode on-no-match="shallow-copy"/&gt;
+                                
+                                &lt;xsl:template match="/" name="xsl:initial-template"&gt;
+                                &lt;xsl:next-match/&gt;
+                                &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
+                                &lt;/xsl:template&gt;
+                                
+                                &lt;/xsl:stylesheet&gt;`;
+                                
+                                const resultRor<xsl:value-of select="$componentsPosition"/> = SaxonJS.XPath.evaluate(`
+                                  transform(map {
+                                    'stylesheet-text' : $xsltRor<xsl:value-of select="$componentsPosition"/>,
+                                    'source-node' : parse-xml($xmlRor<xsl:value-of select="$componentsPosition"/>),
+                                    'delivery-format' : 'serialized'
+                                  })?output`,
+                                  null,
+                                  { params : { xmlRor<xsl:value-of select="$componentsPosition"/> : xmlRor<xsl:value-of select="$componentsPosition"/>, xsltRor<xsl:value-of select="$componentsPosition"/> : xsltRor<xsl:value-of select="$componentsPosition"/> } }
+                                );
+                                
+                                document.getElementById('logRor<xsl:value-of select="$componentsPosition"/>').innerHTML = resultRor<xsl:value-of select="$componentsPosition"/>;
+                            </script>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <a href="{./cs:curatingInstitution/@institutionURI}" target="_blank"> PID </a>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <br/>
                 </xsl:for-each>
             </xsl:if>
             <!-- contributor -->
@@ -781,7 +777,7 @@
                                 test="(./cs:contributorIdentifier) and (contains(./cs:contributorIdentifier, 'orcid.org'))">
                                 <a href="{./cs:contributorIdentifier}" target="_blank">
                                     <img
-                                        src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png"
+                                        src="//www.get-it.it/objects/specimen/transformation_html/assets/img/icon/orcid_16x16.png"
                                         height="16" width="16"/>
                                     <xsl:text> </xsl:text>
                                     <xsl:value-of select="./cs:contributorName"/>
@@ -794,7 +790,6 @@
                                 </a>
                             </xsl:otherwise>
                         </xsl:choose>
-                        
                         <br/>
                     </p>
                 </xsl:for-each>
@@ -803,22 +798,30 @@
     </xsl:template>
 
     <!--  Position  -->
-    <!--<xsl:template name="position">
+    <xsl:template name="position">
         <xsl:variable name="locationURI" select="//cs:location/cs:locality/@localityURI"/>
-        <xsl:variable name="locationIDAPI"
-            select="fn:json-doc(concat('https://deims.org/api/locations/', substring-after($locationURI, 'https://deims.org/locations/')))"/>
+        <xsl:variable name="locationIDURL"
+            select="concat('https://deims.org/api/locations/', substring-after($locationURI, 'https://deims.org/locations/'))"/>
+        <xsl:variable name="locationDEIMSID"
+            select="concat('&lt;location&gt;https://deims.org/api/locations/', substring-after($locationURI, 'https://deims.org/locations/'), '&lt;/location&gt;')"/>
         <xsl:variable name="sampledFURI"
             select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI"/>
         <xsl:variable name="deimsIDAPI"
-            select="fn:json-doc(concat('https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/')))"/>
-        <h4>The sampling locations is <a href="{//cs:location/cs:locality/@localityURI}" target="_blank"><xsl:value-of
-            select="$locationIDAPI?properties?title"/></a> within the eLTER site <a href="{$sampledFURI}" target="_blank"><xsl:value-of select="$deimsIDAPI?title"/></a></h4>
-        <!-\- row -\->
+            select="concat('&lt;sampledFeature&gt;https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/'), '&lt;/sampledFeature&gt;')"/>
+        <h4>The sampling locations is 
+            <a href="{//cs:location/cs:locality/@localityURI}" target="_blank">
+                <i id="logLocation"></i>
+            </a> within the eLTER site 
+            <a href="{$sampledFURI}" target="_blank">
+                <i id="logSampledFeature"/>
+            </a>
+        </h4>
+        <!-- row -->
         <div class="row">
             <div id="map-container">
                 <div id="map">
-                    <!-\- https://deims.org/geoserver/deims/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=deims:deims_sites_boundaries&outputFormat=text/javascript&CQL_FILTER=deimsid=%27https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe%27&amp;&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326 -\->
-                    <!-\- map -\->
+                    <!-- https://deims.org/geoserver/deims/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=deims:deims_sites_boundaries&outputFormat=text/javascript&CQL_FILTER=deimsid=%27https://deims.org/f30007c4-8a6e-4f11-ab87-569db54638fe%27&amp;&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326 -->
+                    <!-- map -->
                     <script type="text/javascript">
                         var popup;
                         var map;
@@ -846,7 +849,7 @@
                                             popupOptions = {
                                                 maxWidth: 200
                                             };
-                                            layer.bindPopup('<a href="{$sampledFURI}"><xsl:value-of select="$deimsIDAPI?title"/></a><br/>Type: <xsl:value-of select="$deimsIDAPI?type"/>', popupOptions);
+                                            layer.bindPopup('<a href="{$sampledFURI}"><i id="logSampledFeature"/></a>', popupOptions);
                                         }
                                     }).addTo(map);
                                     map.fitBounds(WFSLayer.getBounds());
@@ -862,12 +865,12 @@
                             attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         }).addTo(map);
     
-                        var geojsonFeature = <xsl:value-of select="serialize($locationIDAPI, map{'method':'json'})"/>
-                          <!-\-{"type":"Feature",
+                        <!--var geojsonFeature = <xsl:value-of select="serialize($locationIDURL, map{'method':'json'})"/>-->
+                          <!--{"type":"Feature",
                           "geometry": {
                             "coordinates":<xsl:value-of select="serialize($locationIDAPI?geometry?coordinates, map {'method':'json'})"/>,
                             "type":"<xsl:value-of select="$locationIDAPI?geometry?type"/>"
-                          }}-\->
+                          }}-->
                         L.geoJSON(geojsonFeature, {
                             style: function (feature) {
                                 return {
@@ -879,16 +882,156 @@
                                 popupOptions = {
                                     maxWidth: 200
                                 };
-                                layer.bindPopup('<a href="{//cs:location/cs:locality/@localityURI}" target="_blank"><xsl:value-of select="$locationIDAPI?properties?title"/></a><br/>Type: <xsl:value-of select="$locationIDAPI?properties?locationType?label"/>', popupOptions);
+                                layer.bindPopup('<a href="{//cs:location/cs:locality/@localityURI}" target="_blank"><i id="logLocation"></i></a>', popupOptions);
                             }
                         }).addTo(map)
                         
                         loadFOI();
                     </script>
+                    <!-- location ?properties?title -->
+                    <script type="text/javascript">
+                        const xmlLocation = `<xsl:value-of select="$locationDEIMSID" />`;
+                        
+                        const xsltLocation = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                        version="3.0"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        exclude-result-prefixes="#all"
+                        expand-text="yes"&gt;
+                        
+                        &lt;xsl:template match="location"&gt;
+                        &lt;xsl:copy&gt;{json-doc(.)?properties?title}&lt;/xsl:copy&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
+                        
+                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
+                        &lt;xsl:next-match/&gt;
+                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;/xsl:stylesheet&gt;`;
+                        
+                        const resultLocation = SaxonJS.XPath.evaluate(`
+                        transform(map {
+                        'stylesheet-text' : $xsltLocation,
+                        'source-node' : parse-xml($xmlLocation),
+                        'delivery-format' : 'serialized'
+                        })?output`,
+                        null,
+                        { params : { xmlLocation : xmlLocation, xsltLocation : xsltLocation } }
+                        );
+                        
+                        document.getElementById('logLocation').innerHTML = resultLocation;
+                    </script>
+                    <!-- site ?title -->
+                    <script type="text/javascript">
+                        const xmlSampledFeature = `<xsl:value-of select="$deimsIDAPI" />`;
+                        
+                        const xsltSampledFeature = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                        version="3.0"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        exclude-result-prefixes="#all"
+                        expand-text="yes"&gt;
+                        
+                        &lt;xsl:template match="sampledFeature"&gt;
+                        &lt;xsl:copy&gt;{json-doc(.)?title}&lt;/xsl:copy&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
+                        
+                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
+                        &lt;xsl:next-match/&gt;
+                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;/xsl:stylesheet&gt;`;
+                        
+                        const resultSampledFeature = SaxonJS.XPath.evaluate(`
+                        transform(map {
+                        'stylesheet-text' : $xsltSampledFeature,
+                        'source-node' : parse-xml($xmlSampledFeature),
+                        'delivery-format' : 'serialized'
+                        })?output`,
+                        null,
+                        { params : { xmlSampledFeature : xmlSampledFeature, xsltSampledFeature : xsltSampledFeature } }
+                        );
+                        
+                        document.getElementById('logSampledFeature').innerHTML = resultSampledFeature;
+                    </script>
+                    <!-- site ?type -->
+                    <!--<script type="text/javascript">
+                        const xmlType = `<xsl:value-of select="$deimsIDAPI" />`;
+                        
+                        const xsltType = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                        version="3.0"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        exclude-result-prefixes="#all"
+                        expand-text="yes"&gt;
+                        
+                        &lt;xsl:template match="sampledFeature"&gt;
+                        &lt;xsl:copy&gt;{json-doc(.)?type}&lt;/xsl:copy&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
+                        
+                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
+                        &lt;xsl:next-match/&gt;
+                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;/xsl:stylesheet&gt;`;
+                        
+                        const resultType = SaxonJS.XPath.evaluate(`
+                        transform(map {
+                        'stylesheet-text' : $xsltType,
+                        'source-node' : parse-xml($xmlType),
+                        'delivery-format' : 'serialized'
+                        })?output`,
+                        null,
+                        { params : { xmlType : xmlType, xsltType : xsltType } }
+                        );
+                        
+                        document.getElementById('logType').innerHTML = resultType;
+                    </script>-->
+                    <!-- location ?properties?locationType?label -->
+                    <!--<script type="text/javascript">
+                        const xmlLocationType = `<xsl:value-of select="$locationDEIMSID" />`;
+                        
+                        const xsltLocationType = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                        version="3.0"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        exclude-result-prefixes="#all"
+                        expand-text="yes"&gt;
+                        
+                        &lt;xsl:template match="location"&gt;
+                        &lt;xsl:copy&gt;{json-doc(.)?properties?locationType?label}&lt;/xsl:copy&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
+                        
+                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
+                        &lt;xsl:next-match/&gt;
+                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
+                        &lt;/xsl:template&gt;
+                        
+                        &lt;/xsl:stylesheet&gt;`;
+                        
+                        const resultLocationType = SaxonJS.XPath.evaluate(`
+                        transform(map {
+                        'stylesheet-text' : $xsltLocationType,
+                        'source-node' : parse-xml($xmlLocationType),
+                        'delivery-format' : 'serialized'
+                        })?output`,
+                        null,
+                        { params : { xmlLocationType : xmlLocationType, xsltLocationType : xsltLocationType } }
+                        );
+                        
+                        document.getElementById('logLocationType').innerHTML = resultLocationType;
+                    </script>-->
                 </div>
             </div>
-            <!-\- /map-outer -\->
+            <!-- /map-outer -->
         </div>
-    </xsl:template>-->
+    </xsl:template>
 
 </xsl:stylesheet>
