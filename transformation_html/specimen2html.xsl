@@ -29,9 +29,9 @@
                 <link rel="icon" href="https://www.lteritalia.it/wordpress/wp-content/uploads/2023/09/solo_foglia.png"/>
 
                 <title>Sample description</title>
-                <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+                <link rel="stylesheet" href="//www.get-it.it/objects/specimen/transformation_html/assets/css/leaflet.css"
                     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-                    crossorigin=""/>-->
+                    crossorigin=""/>
 
                 <link href="//www.get-it.it/objects/specimen/transformation_html/assets/css/font-awesome.min.css" rel="stylesheet"/>
 
@@ -808,14 +808,9 @@
             select="//cs:sampledFeatures/cs:sampledFeature/@sampledFeatureURI"/>
         <xsl:variable name="deimsIDAPI"
             select="concat('&lt;sampledFeature&gt;https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/'), '&lt;/sampledFeature&gt;')"/>
-        <h4>The sampling locations is 
-            <a href="{//cs:location/cs:locality/@localityURI}" target="_blank">
-                <i id="logLocation"></i>
-            </a> within the eLTER site 
-            <a href="{$sampledFURI}" target="_blank">
-                <i id="logSampledFeature"/>
-            </a>
-        </h4>
+        <xsl:variable name="deimsIDurl"
+            select="concat('https://deims.org/api/sites/', substring-after($sampledFURI, 'https://deims.org/'))"/>
+        <h4>The sampling locations is:</h4> 
         <!-- row -->
         <div class="row">
             <div id="map-container">
@@ -825,8 +820,13 @@
                     <script type="text/javascript">
                         var popup;
                         var map;
-                        
+
                         function loadFOI() {
+			(async () => {
+                            const deimsIDurl = '<xsl:value-of select="$deimsIDurl"/>';
+			    const responseSite = await fetch(deimsIDurl);
+			    const jsonSite = await responseSite.json();
+                            console.log('jsonSite', jsonSite);
                             var owsrootUrl = "<xsl:value-of select="concat('https://deims.org/geoserver/deims/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=deims:deims_sites_boundaries&amp;outputFormat=text/javascript&amp;CQL_FILTER=deimsid=%27', $sampledFURI, '%27&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326')"/>"
                             var URL = owsrootUrl;
                             var WFSLayer = null;
@@ -849,185 +849,46 @@
                                             popupOptions = {
                                                 maxWidth: 200
                                             };
-                                            layer.bindPopup('<a href="{$sampledFURI}"><i id="logSampledFeature"/></a>', popupOptions);
+                                            layer.bindPopup(`Site: <a href="{$sampledFURI}">${jsonSite.title}</a>`, popupOptions);
                                         }
                                     }).addTo(map);
                                     map.fitBounds(WFSLayer.getBounds());
                                 }
                             });
+
+                            map = L.map('map');
+                            popup = L.popup();
+
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                maxZoom: 19,
+                                attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                            }).addTo(map);
+
+                            const locationIDURL = '<xsl:value-of select="$locationIDURL"/>';
+			                const response = await fetch(locationIDURL);
+			                const geojsonFeature = await response.json();
+
+			                console.log('geojsonFeature', geojsonFeature);
+				
+                            L.geoJSON(geojsonFeature, {
+                            	    style: function (feature) {
+                                	    return {
+                                    		    stroke: true,
+                                    		    color: '#336600'
+                                	    };
+                            	    },
+                            	    onEachFeature: function (feature, layer) {
+                                	    popupOptions = {
+                                    		    maxWidth: 200
+                                	    };
+                                	    layer.bindPopup(`Location: <a href="{//cs:location/cs:locality/@localityURI}" target="_blank">${feature.properties.title}</a><br/>Type: ${feature.properties.locationType.label}`, popupOptions);
+                            	    }
+                            }).addTo(map)
+
+			              })();
                         }
-    
-                        map = L.map('map');
-                        popup = L.popup();
-    
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            maxZoom: 19,
-                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                        }).addTo(map);
-    
-                        <!--var geojsonFeature = <xsl:value-of select="serialize($locationIDURL, map{'method':'json'})"/>-->
-                          <!--{"type":"Feature",
-                          "geometry": {
-                            "coordinates":<xsl:value-of select="serialize($locationIDAPI?geometry?coordinates, map {'method':'json'})"/>,
-                            "type":"<xsl:value-of select="$locationIDAPI?geometry?type"/>"
-                          }}-->
-                        L.geoJSON(geojsonFeature, {
-                            style: function (feature) {
-                                return {
-                                    stroke: true,
-                                    color: '#336600'
-                                };
-                            },
-                            onEachFeature: function (feature, layer) {
-                                popupOptions = {
-                                    maxWidth: 200
-                                };
-                                layer.bindPopup('<a href="{//cs:location/cs:locality/@localityURI}" target="_blank"><i id="logLocation"></i></a>', popupOptions);
-                            }
-                        }).addTo(map)
-                        
                         loadFOI();
                     </script>
-                    <!-- location ?properties?title -->
-                    <script type="text/javascript">
-                        const xmlLocation = `<xsl:value-of select="$locationDEIMSID" />`;
-                        
-                        const xsltLocation = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                        version="3.0"
-                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        exclude-result-prefixes="#all"
-                        expand-text="yes"&gt;
-                        
-                        &lt;xsl:template match="location"&gt;
-                        &lt;xsl:copy&gt;{json-doc(.)?properties?title}&lt;/xsl:copy&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
-                        
-                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
-                        &lt;xsl:next-match/&gt;
-                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;/xsl:stylesheet&gt;`;
-                        
-                        const resultLocation = SaxonJS.XPath.evaluate(`
-                        transform(map {
-                        'stylesheet-text' : $xsltLocation,
-                        'source-node' : parse-xml($xmlLocation),
-                        'delivery-format' : 'serialized'
-                        })?output`,
-                        null,
-                        { params : { xmlLocation : xmlLocation, xsltLocation : xsltLocation } }
-                        );
-                        
-                        document.getElementById('logLocation').innerHTML = resultLocation;
-                    </script>
-                    <!-- site ?title -->
-                    <script type="text/javascript">
-                        const xmlSampledFeature = `<xsl:value-of select="$deimsIDAPI" />`;
-                        
-                        const xsltSampledFeature = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                        version="3.0"
-                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        exclude-result-prefixes="#all"
-                        expand-text="yes"&gt;
-                        
-                        &lt;xsl:template match="sampledFeature"&gt;
-                        &lt;xsl:copy&gt;{json-doc(.)?title}&lt;/xsl:copy&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
-                        
-                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
-                        &lt;xsl:next-match/&gt;
-                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;/xsl:stylesheet&gt;`;
-                        
-                        const resultSampledFeature = SaxonJS.XPath.evaluate(`
-                        transform(map {
-                        'stylesheet-text' : $xsltSampledFeature,
-                        'source-node' : parse-xml($xmlSampledFeature),
-                        'delivery-format' : 'serialized'
-                        })?output`,
-                        null,
-                        { params : { xmlSampledFeature : xmlSampledFeature, xsltSampledFeature : xsltSampledFeature } }
-                        );
-                        
-                        document.getElementById('logSampledFeature').innerHTML = resultSampledFeature;
-                    </script>
-                    <!-- site ?type -->
-                    <!--<script type="text/javascript">
-                        const xmlType = `<xsl:value-of select="$deimsIDAPI" />`;
-                        
-                        const xsltType = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                        version="3.0"
-                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        exclude-result-prefixes="#all"
-                        expand-text="yes"&gt;
-                        
-                        &lt;xsl:template match="sampledFeature"&gt;
-                        &lt;xsl:copy&gt;{json-doc(.)?type}&lt;/xsl:copy&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
-                        
-                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
-                        &lt;xsl:next-match/&gt;
-                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;/xsl:stylesheet&gt;`;
-                        
-                        const resultType = SaxonJS.XPath.evaluate(`
-                        transform(map {
-                        'stylesheet-text' : $xsltType,
-                        'source-node' : parse-xml($xmlType),
-                        'delivery-format' : 'serialized'
-                        })?output`,
-                        null,
-                        { params : { xmlType : xmlType, xsltType : xsltType } }
-                        );
-                        
-                        document.getElementById('logType').innerHTML = resultType;
-                    </script>-->
-                    <!-- location ?properties?locationType?label -->
-                    <!--<script type="text/javascript">
-                        const xmlLocationType = `<xsl:value-of select="$locationDEIMSID" />`;
-                        
-                        const xsltLocationType = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                        version="3.0"
-                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        exclude-result-prefixes="#all"
-                        expand-text="yes"&gt;
-                        
-                        &lt;xsl:template match="location"&gt;
-                        &lt;xsl:copy&gt;{json-doc(.)?properties?locationType?label}&lt;/xsl:copy&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;xsl:mode on-no-match="shallow-copy"/&gt;
-                        
-                        &lt;xsl:template match="/" name="xsl:initial-template"&gt;
-                        &lt;xsl:next-match/&gt;
-                        &lt;xsl:comment&gt;Run with {system-property('xsl:product-name')} {system-property('xsl:product-version')} {system-property('Q{http://saxon.sf.net/}platform')}&lt;/xsl:comment&gt;
-                        &lt;/xsl:template&gt;
-                        
-                        &lt;/xsl:stylesheet&gt;`;
-                        
-                        const resultLocationType = SaxonJS.XPath.evaluate(`
-                        transform(map {
-                        'stylesheet-text' : $xsltLocationType,
-                        'source-node' : parse-xml($xmlLocationType),
-                        'delivery-format' : 'serialized'
-                        })?output`,
-                        null,
-                        { params : { xmlLocationType : xmlLocationType, xsltLocationType : xsltLocationType } }
-                        );
-                        
-                        document.getElementById('logLocationType').innerHTML = resultLocationType;
-                    </script>-->
                 </div>
             </div>
             <!-- /map-outer -->
