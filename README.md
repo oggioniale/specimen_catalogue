@@ -11,7 +11,7 @@ The implementation adheres to several standards and recommendations to ensure co
 
 - ESIP: the solution follows the [Physical Sample Curation recommendations](https://wiki.esipfed.org/Physical_Sample_Curation);
 - SOSA Ontology: the main version of the SOSA ontology (19-10-2017) - [W3C SOSA Ontology](https://www.w3.org/TR/vocab-ssn/);
-- The extension of the SOSA ontology (05-09-2024) - [W3C SOSA-SSN Draft](https://w3c.github.io/sdw-sosa-ssn/ssn-extensions/) and its [GitHub repository](https://github.com/w3c/sdw-sosa-ssn?tab=readme-ov-file);
+- The extension of the SOSA ontology (05-09-2024) - [W3C SOSA-SSN Draft](https://w3c.github.io/sdw-sosa-ssn/ssn/) and its [GitHub repository](https://github.com/w3c/sdw-sosa-ssn?tab=readme-ov-file);
 - SESAR (System for Earth Sample Registration) XSD schema solutions [1];
 - IGSN (International Generic Sample Number) CSIRO (Commonwealth Scientific and Industrial Research Organisation) schema compliance [2];
 - [TDWG MIDS (Minimum Information about a Digital Specimen) specification](https://github.com/tdwg/mids/blob/working-draft/current-draft%20/MIDS-definition-v0.17-13Jul2023.md) at [level 1](https://github.com/tdwg/mids/blob/working-draft/current-draft%20/MIDS-definition-v0.17-13Jul2023.md#42-information-elements-expected-at-mids-level-1).
