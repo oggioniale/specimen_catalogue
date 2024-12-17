@@ -4,9 +4,9 @@
 # --------------------------------------------
  
 cff-version: 1.2.0
-message: 'To cite package "Speciment" in publications use:'
+message: 'To cite package "Specimen" in publications use:'
 type: software
-title: 'Speciment: What the Package Does (One Line, Title Case)'
+title: 'Specimen: What the Package Does (One Line, Title Case)'
 version: 0.0.0.9000
 abstract: What the package does (one paragraph).
 authors:
@@ -14,8 +14,18 @@ authors:
   given-names: Alessandro
   email: alessandro.oggioni@cnr.it
   orcid: https://orcid.org/0000-0002-7997-219X
+preferred-citation:
+  type: generic
+  title: Specimen
+  authors:
+  - family-names: Oggioni
+    given-names: Alessandro
+    email: alessandro.oggioni@cnr.it
+    orcid: https://orcid.org/0000-0002-7997-219X
+  year: '2024'
+  notes: R package version v0.0.0.9000
 repository-code: https://github.com/oggioniale/specimen_catalogue
-url: https://github.com/oggioniale/specimen_catalogue
+url: https://oggioniale.github.io/specimen_catalogue/
 contact:
 - family-names: Oggioni
   given-names: Alessandro
@@ -72,4 +82,20 @@ references:
     given-names: Barbara
   year: '2024'
   doi: 10.32614/CRAN.package.shiny
+- type: software
+  title: lifecycle
+  abstract: 'lifecycle: Manage the Life Cycle of your Package Functions'
+  notes: Imports
+  url: https://lifecycle.r-lib.org/
+  repository: https://CRAN.R-project.org/package=lifecycle
+  authors:
+  - family-names: Henry
+    given-names: Lionel
+    email: lionel@posit.co
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@posit.co
+    orcid: https://orcid.org/0000-0003-4757-117X
+  year: '2024'
+  doi: 10.32614/CRAN.package.lifecycle
 

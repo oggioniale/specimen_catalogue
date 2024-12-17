@@ -1,4 +1,4 @@
-Package: Speciment
+Package: Specimen
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: person("Alessandro", "Oggioni", , "alessandro.oggioni@cnr.it", role = c("aut", "cre", "fnd"),
