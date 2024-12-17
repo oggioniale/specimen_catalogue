@@ -1,0 +1,21 @@
+title: Specimen
+url: https://github.com/oggioniale/specimen_catalogue
+template:
+  bootstrap: 5
+  params:
+    mathjax: true
+  includes:
+    in_header: |
+      <script defer data-domain="" src="https://plausible.io/js/plausible.js"></script>
+
+reference:
+  - title: All functions
+    contents:
+    - specimen_catalogue
+    - check_sampler_exist
+    - specimen_runApp
+navbar:
+  structure:
+    left: [reference]
+    right: [github]
+    

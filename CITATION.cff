@@ -1,0 +1,75 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "Speciment" in publications use:'
+type: software
+title: 'Speciment: What the Package Does (One Line, Title Case)'
+version: 0.0.0.9000
+abstract: What the package does (one paragraph).
+authors:
+- family-names: Oggioni
+  given-names: Alessandro
+  email: alessandro.oggioni@cnr.it
+  orcid: https://orcid.org/0000-0002-7997-219X
+repository-code: https://github.com/oggioniale/specimen_catalogue
+url: https://github.com/oggioniale/specimen_catalogue
+contact:
+- family-names: Oggioni
+  given-names: Alessandro
+  email: alessandro.oggioni@cnr.it
+  orcid: https://orcid.org/0000-0002-7997-219X
+references:
+- type: software
+  title: 'R: A Language and Environment for Statistical Computing'
+  notes: Depends
+  url: https://www.R-project.org/
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2024'
+  version: '>= 2.10'
+- type: software
+  title: shiny
+  abstract: 'shiny: Web Application Framework for R'
+  notes: Suggests
+  url: https://shiny.posit.co/
+  repository: https://CRAN.R-project.org/package=shiny
+  authors:
+  - family-names: Chang
+    given-names: Winston
+    email: winston@posit.co
+    orcid: https://orcid.org/0000-0002-1576-2126
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@posit.co
+  - family-names: Allaire
+    given-names: JJ
+    email: jj@posit.co
+  - family-names: Sievert
+    given-names: Carson
+    email: carson@posit.co
+    orcid: https://orcid.org/0000-0002-4958-2844
+  - family-names: Schloerke
+    given-names: Barret
+    email: barret@posit.co
+    orcid: https://orcid.org/0000-0001-9986-114X
+  - family-names: Xie
+    given-names: Yihui
+    email: yihui@posit.co
+  - family-names: Allen
+    given-names: Jeff
+  - family-names: McPherson
+    given-names: Jonathan
+    email: jonathan@posit.co
+  - family-names: Dipert
+    given-names: Alan
+  - family-names: Borges
+    given-names: Barbara
+  year: '2024'
+  doi: 10.32614/CRAN.package.shiny
+

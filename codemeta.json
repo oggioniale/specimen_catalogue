@@ -1,0 +1,68 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "Speciment",
+  "description": "What the package does (one paragraph).",
+  "name": "Speciment: What the Package Does (One Line, Title Case)",
+  "codeRepository": "https://github.com/oggioniale/specimen_catalogue",
+  "issueTracker": "https://github.com/oggioniale/specimen_catalogue/issues",
+  "license": "`use_gpl3_license()`",
+  "version": "0.0.0.9000",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.3.0 (2023-04-21)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Alessandro",
+      "familyName": "Oggioni",
+      "email": "alessandro.oggioni@cnr.it",
+      "@id": "https://orcid.org/0000-0002-7997-219X"
+    }
+  ],
+  "funder": [
+    {
+      "@type": "Person",
+      "givenName": "Alessandro",
+      "familyName": "Oggioni",
+      "email": "alessandro.oggioni@cnr.it",
+      "@id": "https://orcid.org/0000-0002-7997-219X"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Alessandro",
+      "familyName": "Oggioni",
+      "email": "alessandro.oggioni@cnr.it",
+      "@id": "https://orcid.org/0000-0002-7997-219X"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "shiny",
+      "name": "shiny",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=shiny"
+    }
+  ],
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 2.10"
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "0KB"
+}
