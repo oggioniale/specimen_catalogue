@@ -8,6 +8,7 @@ message: 'To cite package "Specimen" in publications use:'
 type: software
 title: 'Specimen: What the Package Does (One Line, Title Case)'
 version: 0.0.0.9000
+doi: 10.5281/zenodo.14517494
 abstract: What the package does (one paragraph).
 authors:
 - family-names: Oggioni

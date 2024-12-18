@@ -1,3 +1,5 @@
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.14517494-blue.svg)](https://doi.org/10.5281/zenodo.14517494)
+
 # Specimen catalogue
 This repository includes a comprehensive solution to manage specimen information. The solution encompasses the following processes:
 
