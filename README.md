@@ -47,3 +47,4 @@ specimen_runApp(launch.browser = rstudioapi::viewer)
 ```
 
 The dashboard offers an intuitive interface to explore the output of the specimen catalogue:
+<img width="1431" height="727" alt="image" src="https://github.com/user-attachments/assets/e0991ef9-9794-4f7a-bb6b-5bad68f52edd" />
