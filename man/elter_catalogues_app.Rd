@@ -21,6 +21,7 @@ No return value.
 The function launches the unified Shiny application.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 This function launches the unified Shiny application that includes:
 \itemize{
 \item the \strong{Samples Catalogue}, and

@@ -36,7 +36,7 @@ A list with:
 The function also writes XML and TTL files to disk under \code{output_dir}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 This function reads a specimen spreadsheet template
 (e.g. \code{'specimen_template.xlsx'}) and generates, for each row
 in the \code{SpecimenInfo} sheet:

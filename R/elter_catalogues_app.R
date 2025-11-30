@@ -1,5 +1,5 @@
 #' Launch the Unified eLTER-IT Shiny Catalogues Application
-#' @description
+#' @description `r lifecycle::badge("stable")`
 #' This function launches the unified Shiny application that includes:
 #' \itemize{
 #'   \item the **Samples Catalogue**, and

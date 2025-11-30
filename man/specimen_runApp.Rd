@@ -11,6 +11,7 @@ No return value.
 The function launches the Shiny application.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 This function launches the unified eLTER-IT Shiny catalogue
 and automatically opens the \strong{Samples} tab.
 It provides a user-friendly entry point to the Samples

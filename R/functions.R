@@ -1,6 +1,6 @@
 #' Create a catalogue of samples (XML + TTL + validation)
 #'
-#' @description `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("stable")`
 #' This function reads a specimen spreadsheet template
 #' (e.g. `'specimen_template.xlsx'`) and generates, for each row
 #' in the `SpecimenInfo` sheet:
@@ -928,7 +928,7 @@ check_sampler_exist <- function(sampler_name = NULL) {
 }
 
 #' Launch the eLTER-IT Catalogue (Samples view)
-#' @description
+#' @description `r lifecycle::badge("stable")`
 #' This function launches the unified eLTER-IT Shiny catalogue
 #' and automatically opens the **Samples** tab.
 #' It provides a user-friendly entry point to the Samples
