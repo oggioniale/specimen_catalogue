@@ -892,7 +892,7 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
 #' 
 #' }
 #' ## End (Not run)
-#' @export
+#' @keywords internal
 #'
 ### function check_sampler_exist
 check_sampler_exist <- function(sampler_name = NULL) {
