@@ -1,6 +1,6 @@
 [![](https://img.shields.io/badge/doi-10.5281/zenodo.14517494-blue.svg)](https://doi.org/10.5281/zenodo.14517494)
 
-# Specimen catalogue
+# Specimen Catalogue
 This repository includes a comprehensive solution to manage specimen information. The solution encompasses the following processes:
 
 1. Data Collection: Collect information about specimens using an Excel file.
@@ -31,3 +31,19 @@ The production flow of this implementation is illustrated in the figure below:
 1. Fill the Spreadsheet: complete the `specimen_template.xlsx` spreadsheet with the relevant specimen information;
 
 2. Generate XML and TTL: use the `specimen_catalogue()` function to generate IGSN CSIRO XML and TTL (Turtle) files based on the SOSA Ontology for each record present in the spreadsheet.
+
+3. The workflow includes an integrated RDF validation stage that automatically checks the quality and consistency of each generated Turtle (TTL) file.
+The validation is executed by the internal function specimen_validate_ttl(), which implements a set of SHACL-like rules designed to verify the structural completeness and semantic correctness of the produced RDF graphs.
+
+# 📊 Interactive Validation & Inspection App (Shiny)
+
+The package also includes an interactive Shiny-based dashboard that allows users to visually inspect the generated specimen metadata and their validation status.
+
+The application can be launched directly from R or RStudio using:
+
+```
+library(Specimen)
+specimen_runApp(launch.browser = rstudioapi::viewer)
+```
+
+The dashboard offers an intuitive interface to explore the output of the specimen catalogue:

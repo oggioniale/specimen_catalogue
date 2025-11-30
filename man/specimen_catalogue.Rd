@@ -2,36 +2,66 @@
 % Please edit documentation in R/functions.R
 \name{specimen_catalogue}
 \alias{specimen_catalogue}
-\title{Create a catalogue of samples}
+\title{Create a catalogue of samples (XML + TTL + validation)}
 \usage{
-specimen_catalogue(excel_path = NULL)
+specimen_catalogue(
+  excel_path = NULL,
+  creator_name = NULL,
+  creator_surname = NULL,
+  creator_orcid = NULL
+)
 }
 \arguments{
-\item{excel_path}{A \code{string} of the location where the spreadsheet template
-is located}
+\item{excel_path}{A character string with the path to the spreadsheet
+template (typically \code{'specimen_template.xlsx'}).}
+
+\item{creator_name}{Character. First name of the sample(s) creator to be
+used in the TTL provenance metadata (DCMI / PROV).}
+
+\item{creator_surname}{Character. Last name of the sample(s) creator.}
+
+\item{creator_orcid}{Character. ORCID of the sample(s) creator
+(e.g. \code{"0000-0002-1825-0097"}). It will be normalised to a full ORCID URL
+(\verb{https://orcid.org/...}) if needed.}
 }
 \value{
-A folder in the working directory containing two files, TTL and XML,
-for each sample listed in the 'SpecimenInfo' worksheet of the spreadsheet
-template.
+A list with:
+\itemize{
+\item \code{output_dir} – the root directory created for this run
+\item \code{specimen_uuids} – vector of UUIDs assigned to specimens
+\item \code{validation} – list of tibbles, one per TTL file, as returned by
+\code{\link[=specimen_ttl]{specimen_ttl()}} / \code{\link[=specimen_validate_ttl]{specimen_validate_ttl()}}.
+}
+
+The function also writes XML and TTL files to disk under \code{output_dir}.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-This function generates a series of files in TTL and XML formats based on a
-spreadsheet template ('specimen_template.xlsx'). These files reproduce the
-contents of each row according to the Semantic Sensor Network Ontology (SSN)
-model and the relevant standards. For more details on compatibility, refer
-to: https://github.com/oggioniale/specimen_catalogue?tab=readme-ov-file.
+This function reads a specimen spreadsheet template
+(e.g. \code{'specimen_template.xlsx'}) and generates, for each row
+in the \code{SpecimenInfo} sheet:
+\itemize{
+\item an XML representation of the sample, following the IGSN / ODM2 model;
+\item a Turtle (TTL) representation using SOSA/SSN, PROV-O, DCAT and related
+vocabularies;
+\item a SHACL-like validation report on each TTL file
+(via \code{\link[=specimen_validate_ttl]{specimen_validate_ttl()}}).
+}
+
+The XML files are created by \code{\link[=specimen_XML]{specimen_XML()}}, while the TTL files and
+the validation are handled by \code{\link[=specimen_ttl]{specimen_ttl()}}.
 }
 \examples{
 \dontrun{
-## Not run:
-specimen_catalogue(excel_path = "./specimen_template.xlsx")
-
+specimen_catalogue(
+  excel_path = "./specimen_template.xlsx",
+  creator_name = "Alessandro",
+  creator_surname = "Oggioni",
+  creator_orcid = "0000-0002-7997-219X"
+)
 }
-## End (Not run)
 
 }
 \author{
-Alessandro Oggioni, phD (2023) \email{oggioni.a@cnr.it}
+Alessandro Oggioni, PhD (2023–2025) \email{oggioni.a@cnr.it}
 }

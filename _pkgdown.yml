@@ -1,4 +1,4 @@
-title: Specimen
+title: SpecimenCat
 url: https://github.com/oggioniale/specimen_catalogue
 template:
   bootstrap: 5
@@ -12,7 +12,7 @@ reference:
   - title: All functions
     contents:
     - specimen_catalogue
-    - check_sampler_exist
+    - elter_catalogues_app
     - specimen_runApp
 navbar:
   structure:

@@ -10,7 +10,10 @@ specimen_ttl(
   excel_relation = NULL,
   excel_sampler = NULL,
   specimen_uuids = NULL,
-  root_dir = NULL
+  root_dir = NULL,
+  creator_name = creator_name,
+  creator_surname = creator_surname,
+  creator_orcid = creator_orcid
 )
 }
 \arguments{
@@ -33,8 +36,16 @@ of the spreadsheet template.}
 \item{root_dir}{A \code{string} with the path to the folder where the ttl and
 XML files will be written.}
 }
+\value{
+A list of tibbles, each one being the validation result for a
+single TTL file, as returned by \code{\link[=specimen_validate_ttl]{specimen_validate_ttl()}}.
+}
 \description{
-This function generates ttl files for each sample.
+This function generates Turtle (TTL) files for each sample listed
+in the input \code{excel_file}, using SOSA/SSN, PROV-O, DCAT and related
+vocabularies. For each generated TTL, a SHACL-like validation is
+performed via \code{\link[=specimen_validate_ttl]{specimen_validate_ttl()}}, and a per-file validation
+tibble is returned.
 }
 \author{
 Alessandro Oggioni, phD (2023) \email{oggioni.a@cnr.it}

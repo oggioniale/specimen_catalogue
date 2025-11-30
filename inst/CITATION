@@ -1,14 +1,14 @@
-citHeader("To cite the 'Specimen' package in publications use:")
+citHeader("To cite the 'SpecimenCat' package in publications use:")
 
 year <- format(Sys.Date(), "%Y")
 
 citEntry(entry = "Misc",
-         title = "Specimen",
+         title = "SpecimenCat",
          author = personList(as.person("Alessandro Oggioni")),
          year = year,
-         note = paste("R package version", "v0.0.0.9000"),
+         note = paste("R package version", "v0.1.0"),
          textVersion =
            paste("Alessandro Oggioni.",
-                 " (2024). Specimen (v0.0.0.9000).",
+                 " (2025). SpecimenCat (v0.1.0).",
                  "Zenodo. https://doi.org/10.5281/zenodo.14517494")
 )

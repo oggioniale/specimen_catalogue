@@ -2,23 +2,37 @@
 % Please edit documentation in R/functions.R
 \name{specimen_runApp}
 \alias{specimen_runApp}
-\title{Run shiny app for get and visualize sample catalogue}
+\title{Launch the eLTER-IT Catalogue (Samples view)}
 \usage{
 specimen_runApp(...)
 }
+\value{
+No return value.
+The function launches the Shiny application.
+}
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-This function run the Shiny App
+This function launches the unified eLTER-IT Shiny catalogue
+and automatically opens the \strong{Samples} tab.
+It provides a user-friendly entry point to the Samples
+Catalogue within the integrated multi-view application.
+}
+\details{
+The eLTER-IT catalogue Shiny application includes:
+\itemize{
+\item the \strong{Samples Catalogue}, and
+\item the \strong{Sensor Type Catalogue}.
+}
+Calling \code{specimen_runApp()} opens the application with
+the \strong{"Samples"} tab preselected.
+Internally, this function calls:
+\code{Specimen::elter_catalogues_app(default_tab = "samples")}.
 }
 \examples{
-\dontrun{
-## Not run:
-specimen_runApp(launch.browser = rstudioapi::viewer)
-
+if (interactive()) {
+  specimen_runApp()
 }
-## End (Not run)
-
 }
 \author{
-Alessandro Oggioni, phD \email{alessandro.oggioni@cnr.it}
+Alessandro Oggioni, PhD (2023–2025)
+\email{oggioni.a@cnr.it}
 }
