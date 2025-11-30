@@ -1,286 +1,283 @@
-
-        @prefix schema: <http://schema.org/> .
-        @prefix adms: <http://www.w3.org/ns/adms#> .
-        @prefix owl: <http://www.w3.org/2002/07/owl#> .
-        @prefix org: <http://www.w3.org/ns/org#> .
-        @prefix xls2rdf: <https://xls2rdf.sparna.fr/vocabulary#> .
-        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-        @prefix skosthes: <http://purl.org/iso25964/skos-thes#> .
-        @prefix dcmitype: <http://purl.org/dc/dcmitype/> .
-        @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-        @prefix st: <https://rdfdata.lteritalia.it/specimenType/> .
-        @prefix qb: <http://purl.org/linked-data/cube#> .
-        @prefix dct: <http://purl.org/dc/terms/> .
-        @prefix doap: <http://usefulinc.com/ns/doap#> .
-        @prefix sh: <http://www.w3.org/ns/shacl#> .
-        @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-        @prefix omv: <http://omv.ontoware.org/2005/05/ontology#> .
-        @prefix dcat: <http://www.w3.org/ns/dcat#> .
-        @prefix euvoc: <http://publications.europa.eu/ontology/euvoc#> .
-        @prefix prov: <http://www.w3.org/ns/prov#> .
-        @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-        @prefix dc: <http://purl.org/dc/elements/1.1/> .
-        @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-        @prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
-        <https://rdfdata.lteritalia.it/specimenType/> a skos:ConceptScheme;
-            skos:prefLabel "LTER-Italy specimentType"@en;
-            dct:title "LTER-Italy speciment type"@en;
-            dct:description "Thesaurus for LTER-Italy about speciment type"@en;
-            dct:creator <https://orcid.org/0000-0002-7997-219X>;
-            dct:contributor <https://ror.org/02wxw4x45>;
-            dct:license <https://creativecommons.org/licenses/by/4.0/>;
-            owl:versionInfo "0.1.0"@en;
-            dct:created "2024-08-30T11:00:00+00:00"@en;
-            owl:ontolgoyIRI <https://rdfdata.lteritalia.it/specimenType/>;
-            omv:acronym "SpecimenType"@en;
-            omv:resourceLocator <https://github.com/oggioniale/specimen_catalogue>;
-            omv:keywords <http://vocabs.lter-europe.net/EnvThes/21672>;
-            dct:publisher <https://orcid.org/0000-0002-7997-219X>;
-            dct:audience schema:Researcher;
-            dct:language "en"@en;
-            schema:includedInDataCatalog <https://rdfdata.lteritalia.it/>.
-                                                                    
-        st:foliageDigestion a skos:Concept ;
-            skos:prefLabel "Foliage digestion"@en ;
-            skos:definition "Sample that consists of a digestion of plant foliage"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/foliageDigestion> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:thinSection a skos:Concept ;
-            skos:prefLabel "Thin section"@en ;
-            skos:definition "Thin section"@en ;
-            dct:source <http://vocabulary.odm2.org/specimentype/> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/thinSection> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:theSpecimenTypeIsUnknown a skos:Concept ;
-            skos:prefLabel "The specimen type is unknown"@en ;
-            skos:definition "The specimen type is unknown"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/theSpecimenTypeIsUnknown> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:grab a skos:Concept ;
-            skos:prefLabel "Grab"@en ;
-            skos:definition "A sample (sometimes mechanically collected) from a deposit or area, not intended to be representative of the deposit or area."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/grab> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:petriDishDryDeposition a skos:Concept ;
-            skos:prefLabel "Petri dish (dry deposition)"@en ;
-            skos:definition "Sample from dry deposition in a petri dish"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/petriDishDryDeposition> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:coreSection a skos:Concept ;
-            skos:prefLabel "Core section"@en ;
-            skos:definition "Arbitrarily cut segments of a "core""@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/coreSection> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:coreWholeRound a skos:Concept ;
-            skos:prefLabel "Core whole round"@en ;
-            skos:definition "Cylindrical segments of core or core section material."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/coreWholeRound> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:coreHalfRound a skos:Concept ;
-            skos:prefLabel "Core half round"@en ;
-            skos:definition "Half-cylindrical products of along-axis split of a whole round"@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/coreHalfRound> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:automated a skos:Concept ;
-            skos:prefLabel "Automated"@en ;
-            skos:definition "Sample collected using an automated sampler."@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/automated> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:coreSectionHalf a skos:Concept ;
-            skos:prefLabel "Core section half"@en ;
-            skos:definition "Half-cylindrical products of along-axis split of a section or its component fragments through a selected diameter."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/coreSectionHalf> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:foliageLeaching a skos:Concept ;
-            skos:prefLabel "Foliage leaching"@en ;
-            skos:definition "Sample that consists of leachate from foliage"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/foliageLeaching> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:forestFloorDigestion a skos:Concept ;
-            skos:prefLabel "Forest floor digestion"@en ;
-            skos:definition "Sample that consists of a digestion of forest floor material"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/forestFloorDigestion> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:rockPowder a skos:Concept ;
-            skos:prefLabel "Rock powder"@en ;
-            skos:definition "A sample created from pulverizing a rock to powder."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/rockPowder> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:standardReferenceSpecimen a skos:Concept ;
-            skos:prefLabel "Standard reference specimen"@en ;
-            skos:definition "Standard reference specimen"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/standardReferenceSpecimen> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:core a skos:Concept ;
-            skos:prefLabel "Core"@en ;
-            skos:definition "Long cylindrical cores"@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/core> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:litterFallDigestion a skos:Concept ;
-            skos:prefLabel "Litter fall digestion"@en ;
-            skos:definition "Sample that consists of a digestion of litter fall"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/litterFallDigestion> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:orientedCore a skos:Concept ;
-            skos:prefLabel "Oriented core"@en ;
-            skos:definition "Core that can be positioned on the surface in the same way that it was arranged in the borehole before extraction."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/orientedCore> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:coreSub-Piece a skos:Concept ;
-            skos:prefLabel "Core sub-piece"@en ;
-            skos:definition "Unambiguously mated portion of a larger piece noted for curatorial management of the material."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/coreSub-Piece> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:other a skos:Concept ;
-            skos:prefLabel "Other"@en ;
-            skos:definition "Sample does not fit any of the existing type designations. It is expected that further detailed description of the particular sample be provided."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/other> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:terrestrialSection a skos:Concept ;
-            skos:prefLabel "Terrestrial section"@en ;
-            skos:definition "A sample of a section of the near-surface Earth, generally in the critical zone."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/terrestrialSection> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:dredge a skos:Concept ;
-            skos:prefLabel "Dredge"@en ;
-            skos:definition "A group of rocks collected by dragging a dredge along the seafloor."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/dredge> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:corePiece a skos:Concept ;
-            skos:prefLabel "Core piece"@en ;
-            skos:definition "Material occurring between unambiguous [as curated] breaks in recovery."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/corePiece> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:individualSample a skos:Concept ;
-            skos:prefLabel "Individual sample"@en ;
-            skos:definition "A sample that is an individual unit, including rock hand samples, a biological specimen, or a bottle of fluid."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/individualSample> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:biota a skos:Concept ;
-            skos:prefLabel "Biota"@en ;
-            skos:definition "A specimen consisting of all or part of a biological organism, including flora or fauna."@en ;
-            dct:source <http://vocabulary.odm2.org/specimentype/> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/biota> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:cuttings a skos:Concept ;
-            skos:prefLabel "Cuttings"@en ;
-            skos:definition "Loose, coarse, unconsolidated material suspended in drilling fluid."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/cuttings> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:precipitationBulk a skos:Concept ;
-            skos:prefLabel "Precipitation bulk"@en ;
-            skos:definition "Sample from bulk precipitation"@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV > ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/precipitationBulk> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        st:coreQuarterRound a skos:Concept ;
-            skos:prefLabel "Core quarter round"@en ;
-            skos:definition "Quarter-cylindrical products of along-axis split of a half round."@en ;
-            dct:source <http://www.geosamples.org/help/vocabularies#object> ;
-            owl:sameAs <http://vocabulary.odm2.org/specimentype/coreQuarterRound> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
+@prefix schema: <http://schema.org/> .
+@prefix adms: <http://www.w3.org/ns/adms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix xls2rdf: <https://xls2rdf.sparna.fr/vocabulary#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skosthes: <http://purl.org/iso25964/skos-thes#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix st: <https://rdfdata.get-it.it/specimenType/> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix omv: <http://omv.ontoware.org/2005/05/ontology#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix euvoc: <http://publications.europa.eu/ontology/euvoc#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+<https://rdfdata.lteritalia.it/specimenType/> a skos:ConceptScheme;
+    skos:prefLabel "Get-It specimenType"@en;
+    dct:title "Get-It specimen type"@en;
+    dct:description "Thesaurus for Get-It about specimen type"@en;
+    dct:creator <https://orcid.org/0000-0002-7997-219X>;
+    dct:contributor <https://ror.org/02wxw4x45>;
+    dct:license <https://creativecommons.org/licenses/by/4.0/>;
+    owl:versionInfo "0.1.0"@en;
+    dct:created "2024-08-30T11:00:00+00:00"@en;
+    owl:ontolgoyIRI <https://rdfdata.get-it.it/specimenType/>;
+    omv:acronym "SpecimenType"@en;
+    omv:resourceLocator <https://github.com/oggioniale/specimen_catalogue>;
+    omv:keywords <http://vocabs.lter-europe.net/EnvThes/21672>;
+    dct:publisher <https://orcid.org/0000-0002-7997-219X>;
+    dct:audience schema:Researcher;
+    dct:language "en"@en;
+    schema:includedInDataCatalog <https://rdfdata.get-it.it/>.
+                                                                
+    <https://rdfdata.get-it.it/specimenType/foliageDigestion> a skos:Concept ;
+        skos:prefLabel "Foliage digestion"@en ;
+        skos:definition "Sample that consists of a digestion of plant foliage"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/foliageDigestion> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
         
+    <https://rdfdata.get-it.it/specimenType/thinSection> a skos:Concept ;
+        skos:prefLabel "Thin section"@en ;
+        skos:definition "Thin section"@en ;
+        dct:source <http://vocabulary.odm2.org/specimentype/> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/thinSection> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/theSpecimenTypeIsUnknown> a skos:Concept ;
+        skos:prefLabel "The specimen type is unknown"@en ;
+        skos:definition "The specimen type is unknown"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/theSpecimenTypeIsUnknown> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/grab> a skos:Concept ;
+        skos:prefLabel "Grab"@en ;
+        skos:definition "A sample (sometimes mechanically collected) from a deposit or area, not intended to be representative of the deposit or area."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/grab> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/petriDishDryDeposition> a skos:Concept ;
+        skos:prefLabel "Petri dish (dry deposition)"@en ;
+        skos:definition "Sample from dry deposition in a petri dish"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/petriDishDryDeposition> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/coreSection> a skos:Concept ;
+        skos:prefLabel "Core section"@en ;
+        skos:definition "Arbitrarily cut segments of a 'core'"@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/coreSection> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/coreWholeRound> a skos:Concept ;
+        skos:prefLabel "Core whole round"@en ;
+        skos:definition "Cylindrical segments of core or core section material."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/coreWholeRound> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/coreHalfRound> a skos:Concept ;
+        skos:prefLabel "Core half round"@en ;
+        skos:definition "Half-cylindrical products of along-axis split of a whole round"@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/coreHalfRound> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/automated> a skos:Concept ;
+        skos:prefLabel "Automated"@en ;
+        skos:definition "Sample collected using an automated sampler."@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/automated> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/coreSectionHalf> a skos:Concept ;
+        skos:prefLabel "Core section half"@en ;
+        skos:definition "Half-cylindrical products of along-axis split of a section or its component fragments through a selected diameter."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/coreSectionHalf> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/foliageLeaching> a skos:Concept ;
+        skos:prefLabel "Foliage leaching"@en ;
+        skos:definition "Sample that consists of leachate from foliage"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/foliageLeaching> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/forestFloorDigestion> a skos:Concept ;
+        skos:prefLabel "Forest floor digestion"@en ;
+        skos:definition "Sample that consists of a digestion of forest floor material"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/forestFloorDigestion> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/rockPowder> a skos:Concept ;
+        skos:prefLabel "Rock powder"@en ;
+        skos:definition "A sample created from pulverizing a rock to powder."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/rockPowder> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/standardReferenceSpecimen> a skos:Concept ;
+        skos:prefLabel "Standard reference specimen"@en ;
+        skos:definition "Standard reference specimen"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/standardReferenceSpecimen> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/core> a skos:Concept ;
+        skos:prefLabel "Core"@en ;
+        skos:definition "Long cylindrical cores"@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/core> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/litterFallDigestion> a skos:Concept ;
+        skos:prefLabel "Litter fall digestion"@en ;
+        skos:definition "Sample that consists of a digestion of litter fall"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/litterFallDigestion> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/orientedCore> a skos:Concept ;
+        skos:prefLabel "Oriented core"@en ;
+        skos:definition "Core that can be positioned on the surface in the same way that it was arranged in the borehole before extraction."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/orientedCore> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/coreSub-Piece> a skos:Concept ;
+        skos:prefLabel "Core sub-piece"@en ;
+        skos:definition "Unambiguously mated portion of a larger piece noted for curatorial management of the material."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/coreSub-Piece> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/other> a skos:Concept ;
+        skos:prefLabel "Other"@en ;
+        skos:definition "Sample does not fit any of the existing type designations. It is expected that further detailed description of the particular sample be provided."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/other> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/terrestrialSection> a skos:Concept ;
+        skos:prefLabel "Terrestrial section"@en ;
+        skos:definition "A sample of a section of the near-surface Earth, generally in the critical zone."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/terrestrialSection> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/dredge> a skos:Concept ;
+        skos:prefLabel "Dredge"@en ;
+        skos:definition "A group of rocks collected by dragging a dredge along the seafloor."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/dredge> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/corePiece> a skos:Concept ;
+        skos:prefLabel "Core piece"@en ;
+        skos:definition "Material occurring between unambiguous [as curated] breaks in recovery."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/corePiece> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/individualSample> a skos:Concept ;
+        skos:prefLabel "Individual sample"@en ;
+        skos:definition "A sample that is an individual unit, including rock hand samples, a biological specimen, or a bottle of fluid."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/individualSample> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/biota> a skos:Concept ;
+        skos:prefLabel "Biota"@en ;
+        skos:definition "A specimen consisting of all or part of a biological organism, including flora or fauna."@en ;
+        dct:source <http://vocabulary.odm2.org/specimentype/> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/biota> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/cuttings> a skos:Concept ;
+        skos:prefLabel "Cuttings"@en ;
+        skos:definition "Loose, coarse, unconsolidated material suspended in drilling fluid."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/cuttings> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/precipitationBulk> a skos:Concept ;
+        skos:prefLabel "Precipitation bulk"@en ;
+        skos:definition "Sample from bulk precipitation"@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/precipitationBulk> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/specimenType/coreQuarterRound> a skos:Concept ;
+        skos:prefLabel "Core quarter round"@en ;
+        skos:definition "Quarter-cylindrical products of along-axis split of a half round."@en ;
+        dct:source <http://www.geosamples.org/help/vocabularies#object> ;
+        owl:sameAs <http://vocabulary.odm2.org/specimentype/coreQuarterRound> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .

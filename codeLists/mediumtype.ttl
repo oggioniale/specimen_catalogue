@@ -1,224 +1,220 @@
+@prefix schema: <http://schema.org/> .
+@prefix adms: <http://www.w3.org/ns/adms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix xls2rdf: <https://xls2rdf.sparna.fr/vocabulary#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skosthes: <http://purl.org/iso25964/skos-thes#> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mt: <https://rdfdata.get-it.it/mediumType/> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix omv: <http://omv.ontoware.org/2005/05/ontology#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix euvoc: <http://publications.europa.eu/ontology/euvoc#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+<https://rdfdata.get-it.it/mediumType/> a skos:ConceptScheme;
+    skos:prefLabel "Get-It mediumType"@en;
+    dct:title "Get-It medium type"@en;
+    dct:description "Thesaurus for Get-It about medium type"@en;
+    dct:creator <https://orcid.org/0000-0002-7997-219X>;
+    dct:contributor <https://ror.org/02wxw4x45>;
+    dct:license <https://creativecommons.org/licenses/by/4.0/>;
+    owl:versionInfo "0.1.0"@en;
+    dct:created "2024-08-30T12:00:00+00:00"@en;
+    owl:ontolgoyIRI <https://rdfdata.get-it.it/mediumType/>;
+    omv:acronym "MediumType"@en;
+    omv:resourceLocator <https://github.com/oggioniale/specimen_catalogue>;
+    omv:keywords <http://vocabs.lter-europe.net/EnvThes/21672>;
+    dct:publisher <https://orcid.org/0000-0002-7997-219X>;
+    dct:audience schema:Researcher;
+    dct:language "en"@en;
+    schema:includedInDataCatalog <https://rdfdata.get-it.it/>.
 
-        @prefix schema: <http://schema.org/> .
-        @prefix adms: <http://www.w3.org/ns/adms#> .
-        @prefix owl: <http://www.w3.org/2002/07/owl#> .
-        @prefix org: <http://www.w3.org/ns/org#> .
-        @prefix xls2rdf: <https://xls2rdf.sparna.fr/vocabulary#> .
-        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-        @prefix skosthes: <http://purl.org/iso25964/skos-thes#> .
-        @prefix dcmitype: <http://purl.org/dc/dcmitype/> .
-        @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-        @prefix mt: <https://rdfdata.lteritalia.it/mediumType/> .
-        @prefix qb: <http://purl.org/linked-data/cube#> .
-        @prefix dct: <http://purl.org/dc/terms/> .
-        @prefix doap: <http://usefulinc.com/ns/doap#> .
-        @prefix sh: <http://www.w3.org/ns/shacl#> .
-        @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-        @prefix omv: <http://omv.ontoware.org/2005/05/ontology#> .
-        @prefix dcat: <http://www.w3.org/ns/dcat#> .
-        @prefix euvoc: <http://publications.europa.eu/ontology/euvoc#> .
-        @prefix prov: <http://www.w3.org/ns/prov#> .
-        @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-        @prefix dc: <http://purl.org/dc/elements/1.1/> .
-        @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-        @prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
-        <https://rdfdata.lteritalia.it/mediumType/> a skos:ConceptScheme;
-        skos:prefLabel "LTER-Italy mediumType"@en;
-        dct:title "LTER-Italy medium type"@en;
-        dct:description "Thesaurus for LTER-Italy about medium type"@en;
-        dct:creator <https://orcid.org/0000-0002-7997-219X>;
-        dct:contributor <https://ror.org/02wxw4x45>;
-        dct:license <https://creativecommons.org/licenses/by/4.0/>;
-        owl:versionInfo "0.1.0"@en;
-        dct:created "2024-08-30T12:00:00+00:00"@en;
-        owl:ontolgoyIRI <https://rdfdata.lteritalia.it/mediumType/>;
-        omv:acronym "MediumType"@en;
-        omv:resourceLocator <https://github.com/oggioniale/specimen_catalogue>;
-        omv:keywords <http://vocabs.lter-europe.net/EnvThes/21672>;
-        dct:publisher <https://orcid.org/0000-0002-7997-219X>;
-        dct:audience schema:Researcher;
-        dct:language "en"@en;
-        schema:includedInDataCatalog <https://rdfdata.lteritalia.it/>.
+    <https://rdfdata.get-it.it/mediumType/liquidAqueous> a skos:Concept ;
+        skos:prefLabel "Liquid aqueous"@en ;
+        skos:definition "Specimen collected as liquid water or sensor emplaced to measure properties of water in sampled environment."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/liquidAqueous> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
         
-        mt:liquidAqueous a skos:Concept ;
-            skos:prefLabel "Liquid aqueous"@en ;
-            skos:definition "Specimen collected as liquid water or sensor emplaced to measure properties of water in sampled environment."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/liquidAqueous> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:snow a skos:Concept ;
-            skos:prefLabel "Snow"@en ;
-            skos:definition "Observation in, of or sample taken from snow."@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/snow> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:equipment a skos:Concept ;
-            skos:prefLabel "Equipment"@en ;
-            skos:definition "An instrument, sensor or other piece of human-made equipment upon which a measurement is made, such as datalogger temperature or battery voltage."@en ;
-            dct:source <http://vocabulary.odm2.org/medium/> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/equipment> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:rock a skos:Concept ;
-            skos:prefLabel "Rock"@en ;
-            skos:definition "Specimen collected from a naturally occuring solid aggregate of one or more minerals."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php. Definition adapted from Wikipedia. See: https://en.wikipedia.org/wiki/Rock_(geology)> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/rock> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:mineral a skos:Concept ;
-            skos:prefLabel "Mineral"@en ;
-            skos:definition "Specimen collected as a mineral."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/mineral> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:soil a skos:Concept ;
-            skos:prefLabel "Soil"@en ;
-            skos:definition "Specimen collected from soil or sensor emplaced to measure properties of soil. Soil includes the mixture of minerals, organic matter, gasses, liquids, and organisms that make up the upper layer of earth in which plants grow. "@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/soil> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:notApplicable a skos:Concept ;
-            skos:prefLabel "Not applicable"@en ;
-            skos:definition "There is no applicable sampled medium.  "@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/notApplicable> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:sediment a skos:Concept ;
-            skos:prefLabel "Sediment"@en ;
-            skos:definition "Specimen collected from material broken down by processes of weathering and erosion and subsequently transported by the action of wind, water, or ice, and/or by the force of gravity acting on the particles. Sensors may also be emplaced to measure sediment properties."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php. Definition adapted from Wikipedia. See: https://en.wikipedia.org/wiki/Sediment> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/sediment> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:vegetation a skos:Concept ;
-            skos:prefLabel "Vegetation"@en ;
-            skos:definition "The plants of an area considered in general or as communities, but not taxonomically."@en ;
-            dct:source <http://www.eionet.europa.eu/gemet> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/vegetation> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:regolith a skos:Concept ;
-            skos:prefLabel "Regolith"@en ;
-            skos:definition "The entire unconsolidated or secondarily recemented cover that overlies more coherent bedrock, that has been formed by weathering, erosion, transport and/or deposition of the older material. The regolith thus includes fractured and weathered basement rocks, saprolites, soils, organic accumulations, volcanic material, glacial deposits, colluvium, alluvium, evaporitic sediments, aeolian deposits and ground water.
-            Everything from fresh rock to fresh air."@en ;
-            dct:source <http://vocabulary.odm2.org/medium/> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/regolith> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:particulate a skos:Concept ;
-            skos:prefLabel "Particulate"@en ;
-            skos:definition "Specimen collected from particulates suspended in a paticulate-fluid mixture. Examples include particulates in water or air."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/particulate> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:tissue a skos:Concept ;
-            skos:prefLabel "Tissue"@en ;
-            skos:definition "Sample of a living organism's tissue or sensor emplaced to measure property of tissue."@en ;
-            dct:source <http://vocabulary.odm2.org/medium/> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/tissue> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:ice a skos:Concept ;
-            skos:prefLabel "Ice"@en ;
-            skos:definition "Sample collected as frozen water or sensor emplaced to measure properties of ice."@en ;
-            dct:source <http://vocabulary.odm2.org/medium/> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/ice> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:air a skos:Concept ;
-            skos:prefLabel "Air"@en ;
-            skos:definition "Specimen collection of ambient air or sensor emplaced to measure properties of ambient air."@en ;
-            dct:source <http://vocabulary.odm2.org/medium/> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/air> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:organism a skos:Concept ;
-            skos:prefLabel "Organism"@en ;
-            skos:definition "Data collected about a species at organism level."@en ;
-            dct:source <http://vocabulary.odm2.org/medium/> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/organism> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:gas a skos:Concept ;
-            skos:prefLabel "Gas"@en ;
-            skos:definition "Gas phase specimen or sensor emplaced to measure properties of a gas."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/gas> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:liquidOrganic a skos:Concept ;
-            skos:prefLabel "Liquid organic"@en ;
-            skos:definition "Specimen collected as an organic liquid."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/liquidOrganic> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:other a skos:Concept ;
-            skos:prefLabel "Other"@en ;
-            skos:definition "Other."@en ;
-            dct:source <http://app.geosamples.org/reference/materials.php> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/other> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:habitat a skos:Concept ;
-            skos:prefLabel "Habitat"@en ;
-            skos:definition "A habitat is an ecological or environmental area that is inhabited by a particular species of animal, plant, or other type of organism."@en ;
-            dct:source <http://waterqualitydata.us/portal_userguide/#WQPUserGuide-Table2> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/habitat> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
-        mt:unknown a skos:Concept ;
-            skos:prefLabel "Unknown"@en ;
-            skos:definition "The sampled medium is unknown."@en ;
-            dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
-            owl:sameAs <http://vocabulary.odm2.org/medium/unknown> ;
-            dct:created "2024-08-30"^^xsd:date;
-            skos:inScheme <https://rdfdata.lteritalia.it/specimenType/> ;
-            skos:topConceptOf <https://rdfdata.lteritalia.it/specimenType/> .           
-            
+    <https://rdfdata.get-it.it/mediumType/snow> a skos:Concept ;
+        skos:prefLabel "Snow"@en ;
+        skos:definition "Observation in, of or sample taken from snow."@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/snow> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
         
+    <https://rdfdata.get-it.it/mediumType/equipment> a skos:Concept ;
+        skos:prefLabel "Equipment"@en ;
+        skos:definition "An instrument, sensor or other piece of human-made equipment upon which a measurement is made, such as datalogger temperature or battery voltage."@en ;
+        dct:source <http://vocabulary.odm2.org/medium/> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/equipment> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/rock> a skos:Concept ;
+        skos:prefLabel "Rock"@en ;
+        skos:definition "Specimen collected from a naturally occuring solid aggregate of one or more minerals."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/rock> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/mineral> a skos:Concept ;
+        skos:prefLabel "Mineral"@en ;
+        skos:definition "Specimen collected as a mineral."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/mineral> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/soil> a skos:Concept ;
+        skos:prefLabel "Soil"@en ;
+        skos:definition "Specimen collected from soil or sensor emplaced to measure properties of soil. Soil includes the mixture of minerals, organic matter, gasses, liquids, and organisms that make up the upper layer of earth in which plants grow. "@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/soil> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/notApplicable> a skos:Concept ;
+        skos:prefLabel "Not applicable"@en ;
+        skos:definition "There is no applicable sampled medium.  "@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/notApplicable> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/sediment> a skos:Concept ;
+        skos:prefLabel "Sediment"@en ;
+        skos:definition "Specimen collected from material broken down by processes of weathering and erosion and subsequently transported by the action of wind, water, or ice, and/or by the force of gravity acting on the particles. Sensors may also be emplaced to measure sediment properties."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/sediment> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/vegetation> a skos:Concept ;
+        skos:prefLabel "Vegetation"@en ;
+        skos:definition "The plants of an area considered in general or as communities, but not taxonomically."@en ;
+        dct:source <http://www.eionet.europa.eu/gemet> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/vegetation> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/regolith> a skos:Concept ;
+        skos:prefLabel "Regolith"@en ;
+        skos:definition "The entire unconsolidated or secondarily recemented cover that overlies more coherent bedrock, that has been formed by weathering, erosion, transport and/or deposition of the older material. The regolith thus includes fractured and weathered basement rocks, saprolites, soils, organic accumulations, volcanic material, glacial deposits, colluvium, alluvium, evaporitic sediments, aeolian deposits and ground water. Everything from fresh rock to fresh air."@en ;
+        dct:source <http://vocabulary.odm2.org/medium/> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/regolith> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/particulate> a skos:Concept ;
+        skos:prefLabel "Particulate"@en ;
+        skos:definition "Specimen collected from particulates suspended in a paticulate-fluid mixture. Examples include particulates in water or air."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/particulate> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/tissue> a skos:Concept ;
+        skos:prefLabel "Tissue"@en ;
+        skos:definition "Sample of a living organism's tissue or sensor emplaced to measure property of tissue."@en ;
+        dct:source <http://vocabulary.odm2.org/medium/> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/tissue> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/ice> a skos:Concept ;
+        skos:prefLabel "Ice"@en ;
+        skos:definition "Sample collected as frozen water or sensor emplaced to measure properties of ice."@en ;
+        dct:source <http://vocabulary.odm2.org/medium/> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/ice> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/air> a skos:Concept ;
+        skos:prefLabel "Air"@en ;
+        skos:definition "Specimen collection of ambient air or sensor emplaced to measure properties of ambient air."@en ;
+        dct:source <http://vocabulary.odm2.org/medium/> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/air> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/organism> a skos:Concept ;
+        skos:prefLabel "Organism"@en ;
+        skos:definition "Data collected about a species at organism level."@en ;
+        dct:source <http://vocabulary.odm2.org/medium/> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/organism> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/gas> a skos:Concept ;
+        skos:prefLabel "Gas"@en ;
+        skos:definition "Gas phase specimen or sensor emplaced to measure properties of a gas."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/gas> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/liquidOrganic> a skos:Concept ;
+        skos:prefLabel "Liquid organic"@en ;
+        skos:definition "Specimen collected as an organic liquid."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/liquidOrganic> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/other> a skos:Concept ;
+        skos:prefLabel "Other"@en ;
+        skos:definition "Other."@en ;
+        dct:source <http://app.geosamples.org/reference/materials.php> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/other> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/habitat> a skos:Concept ;
+        skos:prefLabel "Habitat"@en ;
+        skos:definition "A habitat is an ecological or environmental area that is inhabited by a particular species of animal, plant, or other type of organism."@en ;
+        dct:source <http://waterqualitydata.us/portal_userguide/#WQPUserGuide-Table2> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/habitat> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .           
+        
+    <https://rdfdata.get-it.it/mediumType/unknown> a skos:Concept ;
+        skos:prefLabel "Unknown"@en ;
+        skos:definition "The sampled medium is unknown."@en ;
+        dct:source <http://his.cuahsi.org/mastercvreg/edit_cv11.aspx?tbl=SampleMediumCV> ;
+        owl:sameAs <http://vocabulary.odm2.org/medium/unknown> ;
+        dct:created "2024-08-30"^^xsd:date;
+        skos:inScheme <https://rdfdata.get-it.it/specimenType/> ;
+        skos:topConceptOf <https://rdfdata.get-it.it/specimenType/> .

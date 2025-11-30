@@ -39,9 +39,9 @@
         @prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
         @prefix skosxl: &lt;http://www.w3.org/2008/05/skos-xl#&gt; .
         &lt;https://rdfdata.lteritalia.it/specimenType/&gt; a skos:ConceptScheme;
-            skos:prefLabel "LTER-Italy specimentType"@en;
-            dct:title "LTER-Italy speciment type"@en;
-            dct:description "Thesaurus for LTER-Italy about speciment type"@en;
+            skos:prefLabel "LTER-Italy specimenType"@en;
+            dct:title "LTER-Italy specimen type"@en;
+            dct:description "Thesaurus for LTER-Italy about specimen type"@en;
             dct:creator &lt;https://orcid.org/0000-0002-7997-219X&gt;;
             dct:contributor &lt;https://ror.org/02wxw4x45&gt;;
             dct:license &lt;https://creativecommons.org/licenses/by/4.0/&gt;;
