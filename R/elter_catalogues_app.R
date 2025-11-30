@@ -109,8 +109,7 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
         shiny::tags$head(
           shiny::tags$link(
             rel  = "stylesheet",
-            type = "text/css",
-            href = "css/style.css"
+            type = "text/css"
           )
         ),
         
