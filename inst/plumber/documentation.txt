@@ -1,0 +1,11 @@
+# execute
+pr <- plumber::plumb("inst/plumber/plumber.R")
+pr$setDebug(TRUE)
+pr$run(port = 8000) 
+  
+curl -X POST "http://127.0.0.1:8000/run?creator_name=Ale&creator_surname=Ogg&creator_orcid=aaaa" \
+  --data-binary "@/Users/alessandrooggioni/Sites/GitHub/specimen_catalogue/specimen_template.xlsx" \
+  -H "Content-Type: application/octet-stream"
+
+# for download
+GET http://localhost:8000/download?name=20250112_233301_specimens

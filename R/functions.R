@@ -74,10 +74,11 @@ specimen_catalogue <- function(
   specimen_uuids <- sapply(1:n_specimen, uuid::UUIDgenerate)
   # folders creation
   # root folder
-  root_dir <- paste0(
-    format(Sys.time(), format = "%Y%m%d_%H%M%S"),
+  root_dir <- file.path(tempdir(), paste0(
+    format(Sys.time(), "%Y%m%d_%H%M%S"),
     "_specimens"
-  )
+  ))
+  dir.create(root_dir, recursive = TRUE, showWarnings = FALSE)
   if (!dir.exists(root_dir)) {
     dir.create(root_dir)
   }
@@ -276,8 +277,14 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
       dplyr::filter(specimen_id == sp_id)
     # name of XML specimen file
     file_name <- paste0("specimen_", specimen_uuids[[i]])
+    # Locate template file inside the installed package
+    xml_template <- system.file("base_resource.xml", package = "SpecimenCat")
+    if (!file.exists(xml_template)) {
+      stop("Cannot find 'base_resource.xml' inside installed package. ",
+           "Check inst/ directory during build.")
+    }
     # read XML
-    specimen_XML_base <- xml2::read_xml("base_resource.xml")
+    specimen_XML_base <- xml2::read_xml(xml_template)
     # XML
     # cs:resource
     a <- specimen_XML_base |>
@@ -1262,4 +1269,3 @@ specimen_validate_ttl <- function(ttl_path) {
   
   out
 }
-

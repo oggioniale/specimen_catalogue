@@ -43,7 +43,7 @@
 #' }
 #' @author
 #' Alessandro Oggioni, PhD (2023–2025)  
-#' \email{oggioni.a@@cnr.it}
+#' \email{alesssandro.oggioni@cnr.it}
 #' @importFrom magrittr %>%
 #' @export
 #'
@@ -53,6 +53,7 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
   
   shiny::shinyApp(
     ui = shinydashboard::dashboardPage(
+      shinyjs::useShinyjs(),
       header = shinydashboard::dashboardHeader(
         title = shiny::tagList(
           shiny::tags$head(
@@ -73,7 +74,7 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
           ),
           shiny::tags$span(class = "logo-lg", "eLTER-IT catalogues")
         ),
-        # logo LTER a destra
+        # logo eLTER-IT to the right
         shiny::tags$li(
           class = "dropdown",
           shiny::tags$a(
@@ -98,6 +99,11 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
             icon    = shiny::icon("map-marked-alt", lib = "font-awesome")
           ),
           shinydashboard::menuItem(
+            "Samples metadata",
+            tabName = "sample_api_run",
+            icon    = shiny::icon("map-marked-alt", lib = "font-awesome")
+          ),
+          shinydashboard::menuItem(
             "Sensors type",
             tabName = "sensors",
             icon    = shiny::icon("thermometer-half", lib = "font-awesome")
@@ -112,9 +118,12 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
             type = "text/css"
           )
         ),
-        
+        # API popup message
+        shinyjs::useShinyjs(),
+        uiOutput("api_warning"),
+        # tab items
         shinydashboard::tabItems(
-          # ------------ TAB SAMPLES ------------
+          # ------------ TAB SAMPLES
           shinydashboard::tabItem(
             tabName = "samples",
             shiny::fluidRow(
@@ -131,8 +140,29 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
               )
             )
           ),
+          # ------------ TAB SAMPLES upload
+          shinydashboard::tabItem(
+            tabName = "sample_api_run",
+            shiny::fluidRow(
+              shinydashboard::box(
+                width = 12,
+                title = "Specimen Metadata generator",
+                closable = FALSE,
+                status = "info",
+                solidHeader = FALSE,
+                collapsible = TRUE,
+                enable_sidebar = TRUE,
+                fileInput("excel_file", "Upload Excel (.xlsx)"),
+                textInput("creator_name", "Creator name"),
+                textInput("creator_surname", "Creator surname"),
+                textInput("creator_orcid", "Creator ORCID"),
+                actionButton("run_api", "Upload"),
+                verbatimTextOutput("api_response")
+              )
+            )
+          ),
           
-          # ------------ TAB SENSORS ------------
+          # ------------ TAB SENSORS
           shinydashboard::tabItem(
             tabName = "sensors",
             shiny::fluidRow(
@@ -171,6 +201,217 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
     ),
     
     server = function(input, output, session) {
+      api_results <- reactiveVal(NULL)
+      # INPUT VALIDATION (shinyvalidate)
+      iv <- shinyvalidate::InputValidator$new()
+      # Excel file required
+      iv$add_rule("excel_file", shinyvalidate::sv_required("Please upload an Excel file (.xlsx)"))
+      iv$add_rule("excel_file", function(value) {
+        if (!is.null(value) && !grepl("\\.xlsx$", value$name)) {
+          return("Only .xlsx files are allowed")
+        }
+      })
+      # Creator name
+      iv$add_rule("creator_name", shinyvalidate::sv_required("Creator name is required"))
+      # Creator surname
+      iv$add_rule("creator_surname", shinyvalidate::sv_required("Creator surname is required"))
+      # ORCID
+      iv$add_rule("creator_orcid", shinyvalidate::sv_required("ORCID is required"))
+      iv$add_rule(
+        "creator_orcid",
+        shinyvalidate::sv_regex(
+          "^(https://orcid\\.org/)?\\d{4}-\\d{4}-\\d{4}-\\d{3}[0-9X]$",
+          "ORCID must follow the format 0000-0000-0000-0000 or end with X"
+        )
+      )
+      # Enable validation
+      iv$enable()
+      # Disable Run button when input invalid
+      observe({
+        valid <- iv$is_valid()
+        shinyjs::toggleState("run_api", condition = valid)
+      })
+      # Other server parts
+      session$userData$api_available <- FALSE
+      pr_file <- system.file("plumber/plumber.R", package = "SpecimenCat")
+      api_process <- NULL
+      observe({
+        if (session$userData$api_available) return()
+        if (!file.exists("/.dockerenv")) {
+          try({
+            message(">> Starting Specimen API locally...")
+            api_process <<- callr::r_bg(function(pr_path) {
+              pr <- plumber::plumb(pr_path)
+              pr$run(host="127.0.0.1", port=8000)
+            }, args = list(pr_file))
+          })
+        }
+        # Multiple attempts to allow plumber to start
+        attempt_health_check <- function(tries = 3, wait = 2) {
+          for (i in seq_len(tries)) {
+            ok <- tryCatch({
+              httr2::request("http://127.0.0.1:8000/health") |>
+                httr2::req_timeout(2) |>
+                httr2::req_perform()
+              TRUE
+            }, error = function(e) FALSE)
+            if (ok) return(TRUE)
+            message(">> Health check failed (attempt ", i, "), retrying...")
+            Sys.sleep(wait)
+          }
+          return(FALSE)
+        }
+        later::later(function() {
+          ok <- attempt_health_check()
+          session$userData$api_available <- ok
+          message(">> API available: ", ok)
+        }, delay = 1)
+      })
+      # warning banner
+      output$api_warning <- renderUI({
+        invalidateLater(2000)
+        if (!isTRUE(session$userData$api_available)) {
+          return(tags$div(
+            style = "background:#fee2e2; padding:12px; color:#991b1b; margin-bottom:15px;",
+            tags$b("⚠️ The Specimen API server is not running."),
+            br(),
+            "Local mode: automatic startup failed. Run API manually or use Docker."
+          ))
+        }
+        return(NULL)
+      })
+      # download zip
+      output$download_zip <- downloadHandler(
+        filename = function() {
+          paste0("specimens_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".zip")
+        },
+        content = function(file) {
+          # get output_dir from reactive value
+          out_dir <- api_results()$output_dir
+          validate(need(dir.exists(out_dir), "Output directory not found"))
+          # temp ZIP path
+          tmp_zip <- tempfile(fileext = ".zip")
+          # --- ZIP ONLY THE CONTENTS OF THE FOLDER (NO NESTING!) ---
+          old_wd <- setwd(out_dir)
+          utils::zip(zipfile = tmp_zip, files = list.files(".", full.names = FALSE))
+          setwd(old_wd)
+          # copy final ZIP to Shiny download location
+          file.copy(tmp_zip, file)
+        }
+      )
+      # exclude run button
+      observe({
+        shinyjs::toggleState("run_catalogue", session$userData$api_available)
+      })
+      # Run API
+      observeEvent(input$run_api, {
+        cat("\n=== EVENT: run_api clicked ===\n")
+        # validation
+        if (!iv$is_valid()) {
+          cat("Validation failed — modal not triggered\n")
+          iv$enable()
+          return(NULL)
+        }
+        cat("Validation OK\n")
+        req(input$excel_file)
+        # prepare request
+        api_url <- "http://127.0.0.1:8000/run"
+        params <- list(
+          creator_name    = trimws(input$creator_name),
+          creator_surname = trimws(input$creator_surname),
+          creator_orcid   = trimws(input$creator_orcid)
+        )
+        body_list <- list(
+          excel = httr::upload_file(
+            input$excel_file$datapath,
+            type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          )
+        )
+        # debug curl
+        cat("\n=== CURL SENT ===\n")
+        curl_cmd <- glue::glue(
+          "curl -X POST '{api_url}?creator_name={params$creator_name}&creator_surname={params$creator_surname}&creator_orcid={params$creator_orcid}' \\
+-H 'accept: application/json' \\
+-H 'Content-Type: multipart/form-data' \\
+-F 'excel=@{input$excel_file$datapath};type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
+        )
+        cat(curl_cmd, "\n================\n")
+        # send request
+        cat("Sending POST request...\n")
+        res <- httr::POST(
+          url = api_url,
+          query = params,
+          body = body_list,
+          encode = "multipart"
+        )
+        cat("POST completed. Status:", res$status_code, "\n")
+        # parse response
+        content_res <- httr::content(res)
+        cat("=== API response (raw) ===\n")
+        print(content_res)
+        status_value <- tryCatch(as.character(content_res$status[[1]]), error = function(e) NA)
+        output_dir_value <- tryCatch(as.character(content_res$output_dir[[1]]), error = function(e) NA)
+        full_path_value  <- tryCatch(as.character(content_res$full_path[[1]]),  error = function(e) NA)
+        cat("\nParsed values:\n")
+        cat(" status_value     =", status_value, "\n")
+        cat(" output_dir_value =", output_dir_value, "\n")
+        cat(" full_path_value  =", full_path_value, "\n")
+        # Save results
+        api_results(list(
+          status     = status_value,
+          output_dir = output_dir_value,
+          full_path  = full_path_value
+        ))
+        # Success modal
+        if (res$status_code == 200 && identical(status_value, "success")) {
+          showModal(
+            modalDialog(
+              title = "File for describe the specimen are created",
+              size = "l",
+              tags$div(
+                style="color:#065f46; background:#ecfdf5; padding:10px; border-left:4px solid #059669;",
+                tags$strong("The specimen catalogue has been successfully generated!")
+              ),
+              br(),
+              downloadButton("download_zip", "Download ZIP"),
+              br(), br(),
+              tags$div(
+                style="background:#eef6ff; padding:12px; border-left:4px solid #3b82f6;",
+                tags$strong("Where should I upload these files?"),
+                tags$p("The generated XML and TTL files should be uploaded to your institutional RDF repository or the eLTER-IT catalogue:"),
+                tags$ul(
+                  tags$li("eLTER-IT RDF triple store (Fuseki) - https://sparql.lteritalia.it")
+                )
+              ),
+              easyClose = TRUE,
+              footer = modalButton("Close")
+            )
+          )
+          # reset input fields (only if success)
+          try(iv$reset(), silent = TRUE)
+          try(updateTextInput(session, "creator_name", value = ""), silent = TRUE)
+          try(updateTextInput(session, "creator_surname", value = ""), silent = TRUE)
+          try(updateTextInput(session, "creator_orcid", value = ""), silent = TRUE)
+          try(shinyjs::reset("excel_file"), silent = TRUE)
+          output$api_response <- renderPrint({invisible(NULL)})
+          # error modal
+        } else {
+          showModal(
+            modalDialog(
+              title = "Error Running API",
+              size = "m",
+              tags$div(
+                style="background:#fef2f2; padding:10px; color:#991b1b; border-left:4px solid #dc2626;",
+                tags$strong("The API returned an error."),
+                tags$p(content_res$message)
+              ),
+              easyClose = TRUE,
+              footer = modalButton("Close")
+            )
+          )
+        }
+      })
+      
       shinydashboard::updateTabItems(session, "tabs", default_tab)
       ## ------------------------------------------------------------------
       ## SERVER SAMPLES (Specimen)
@@ -556,6 +797,7 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
             )
           )
       })
+      
       ## ------------------------------------------------------------------
       ## SERVER SENSORS (Systems Type)
       ## ------------------------------------------------------------------
