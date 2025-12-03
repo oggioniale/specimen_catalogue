@@ -191,8 +191,13 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
               </p>
             </div>
             <div class="column">
-              <span style="color: #94c5e5"><strong>Useful links</strong></span><br>
-              <a href="http://sparql.lteritalia.it/" target="_blank">SPARQL Endpoint</a>
+              <span style="color: #94c5e5"><strong>Useful links</strong></span>
+              <ul style="margin-top: 5px;">
+                <li><a href="http://sparql.lteritalia.it/" target="_blank">SPARQL Endpoint</a></li>
+                <li><a href="http://127.0.0.1:8000/__docs__/" target="_blank">eLTER-IT Specimen Catalogue API</a></li>
+                <li><a href="https://www.lteritalia.it" target="_blank">eLTERIT</a></li>
+                <li><a href="https://elter-ri.eu" target="_blank">eLTER RI</a></li>
+              </ul>
             </div>
           </div>'),
           align = 'left'
