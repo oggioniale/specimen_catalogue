@@ -120,7 +120,7 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
         ),
         # API popup message
         shinyjs::useShinyjs(),
-        uiOutput("api_warning"),
+        shiny::uiOutput("api_warning"),
         # tab items
         shinydashboard::tabItems(
           # ------------ TAB SAMPLES
@@ -152,12 +152,12 @@ elter_catalogues_app <- function(default_tab = c("samples", "sensors")) {
                 solidHeader = FALSE,
                 collapsible = TRUE,
                 enable_sidebar = TRUE,
-                fileInput("excel_file", "Upload Excel (.xlsx)"),
-                textInput("creator_name", "Creator name"),
-                textInput("creator_surname", "Creator surname"),
-                textInput("creator_orcid", "Creator ORCID"),
-                actionButton("run_api", "Upload"),
-                verbatimTextOutput("api_response")
+                shiny::fileInput("excel_file", "Upload Excel (.xlsx)"),
+                shiny::textInput("creator_name", "Creator name"),
+                shiny::textInput("creator_surname", "Creator surname"),
+                shiny::textInput("creator_orcid", "Creator ORCID"),
+                shiny::actionButton("run_api", "Upload"),
+                shiny::verbatimTextOutput("api_response")
               )
             )
           ),

@@ -789,6 +789,7 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     # Sample
     sosa_sample <- c(
       paste0("<http://rdfdata.lteritalia.it/samples/specimen_", uuid, "> rdf:type sosa:Sample , sosa:sampleMaterial , prov:Entity ;"),
+      paste0("  dct:identifier \"", uuid, "\" ;"),
       paste0("  dcat:landingPage <http://rdfdata.lteritalia.it/samples/specimen_", uuid, ".xml> ;"),
       description,
       paste0("  rdfs:label '", excel_file$resource_title[[i]], "'@en ;"),
