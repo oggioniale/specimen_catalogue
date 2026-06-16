@@ -30,26 +30,34 @@ RoxygenNote: 7.3.3
 Depends: R (>= 4.2)
 VignetteBuilder: 
     knitr
-Suggests:
-    usethis,
-    devtools
 Imports:
-    shiny,
+    shiny (>= 1.7.0),
     shinydashboard,
-    crosstalk,
-    leaflet,
+    shinyjs,
+    shinyFiles,
+    shinyTime,
+    shinyvalidate,
     DT,
+    leaflet,
+    crosstalk,
+    httr2,
+    jsonlite,
+    dplyr,
+    tibble,
+    purrr,
+    stringr,
+    sf,
     htmltools,
+    lifecycle,
     readxl,
     uuid,
-    dplyr,
-    purrr,
-    tibble,
-    stringr,
+    lubridate,
     xml2,
-    jsonlite,
-    sf,
-    httr2,
-    jqr,
     rdflib,
-    ReLTER
+    crayon,
+    stats
+Suggests:
+    ReLTER,
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown

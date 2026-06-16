@@ -5,8 +5,8 @@
     exclude-result-prefixes="#all"
     expand-text="yes">
     
-    <xsl:template match="location">
-        <xsl:copy>{json-doc(.)?geometry}</xsl:copy>
+    <xsl:template match="contact">
+        <xsl:copy>{json-doc(.)?@graph?3?name}</xsl:copy>
     </xsl:template>
     
     <xsl:mode on-no-match="shallow-copy"/>

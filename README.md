@@ -18,6 +18,9 @@ The implementation adheres to several standards and recommendations to ensure co
 - IGSN (International Generic Sample Number) CSIRO (Commonwealth Scientific and Industrial Research Organisation) schema compliance [2];
 - [TDWG MIDS (Minimum Information about a Digital Specimen) specification](https://github.com/tdwg/mids/blob/working-draft/current-draft%20/MIDS-definition-v0.17-13Jul2023.md) at [level 1](https://github.com/tdwg/mids/blob/working-draft/current-draft/MIDS-definition-v0.17-13Jul2023.md#42-information-elements-expected-at-mids-level-1).
 
+[1] System for Earth Sample Registration (SESAR). 2020. SESAR XML Schema for samples (Version 4.0). Zenodo. http://doi.org/10.5281/zenodo.3875531
+[2] IGSN CSIRO version 3.0 - https://igsn.csiro.au/schemas/3.0/ 08-2019
+
 By adhering to the above standards and schemas, the solution ensures compliance with DataCite requirements, facilitating standardized and interoperable specimen data management.
 
 Production Flow

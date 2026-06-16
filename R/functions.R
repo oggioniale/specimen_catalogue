@@ -34,6 +34,8 @@
 #' @author Alessandro Oggioni, PhD (2023–2025) \email{oggioni.a@@cnr.it}
 #' @importFrom readxl read_excel
 #' @importFrom uuid UUIDgenerate
+#' @importFrom dplyr bind_rows
+#' @importFrom crayon green bold cyan yellow red
 #' @export
 #'
 #' @examples
@@ -59,22 +61,21 @@ specimen_catalogue <- function(
   excel_relation <- readxl::read_excel(excel_path, sheet = "RelationInfo")
   excel_sampler <- readxl::read_excel(excel_path, sheet = "SamplersInfo")
   # lines concerning examples, units of measurement and data types are removed
-  # excel_file <- excel_file[-c(1:3), ]
-  # excel_curators <- excel_curators[-c(1:5), ]
-  # excel_relation <- excel_relation[-c(1:3), ]
-  # excel_sampler <- excel_sampler[-c(1:3), ]
+  excel_file <- excel_file[-c(1:3), ]
+  excel_curators <- excel_curators[-c(1:5), ]
+  excel_relation <- excel_relation[-c(1:3), ]
+  excel_sampler <- excel_sampler[-c(1:3), ]
   # if excel file contains only example sensor
-  excel_file <- excel_file[-1, ]
-  excel_curators <- excel_curators[-1, ]
-  excel_relation <- excel_relation[-1, ]
-  excel_sampler <- excel_sampler[-1, ]
+  # excel_file <- excel_file[-1, ]
+  # excel_curators <- excel_curators[-1, ]
+  # excel_relation <- excel_relation[-1, ]
+  # excel_sampler <- excel_sampler[-1, ]
   # assign sample IDs, so that references can be made
-  # TODO change when the DOI can generate trough DataCite
   n_specimen <- nrow(excel_file)
   specimen_uuids <- sapply(1:n_specimen, uuid::UUIDgenerate)
   # folders creation
   # root folder
-  root_dir <- file.path(tempdir(), paste0(
+  root_dir <- file.path(getwd(), paste0(
     format(Sys.time(), "%Y%m%d_%H%M%S"),
     "_specimens"
   ))
@@ -87,15 +88,15 @@ specimen_catalogue <- function(
                specimen_uuids = specimen_uuids, root_dir = root_dir)
   # --- Generate TTL files + validation
   validation_report <- specimen_ttl(
-    excel_file     = excel_file,
+    excel_file = excel_file,
     excel_curators = excel_curators,
     excel_relation = excel_relation,
-    excel_sampler  = excel_sampler,
+    excel_sampler = excel_sampler,
     specimen_uuids = specimen_uuids,
-    root_dir       = root_dir,
-    creator_name   = creator_name,
+    root_dir = root_dir,
+    creator_name = creator_name,
     creator_surname = creator_surname,
-    creator_orcid  = creator_orcid
+    creator_orcid = creator_orcid
   )
   # === POST-PROCESSING REPORT =============================================
   
@@ -260,7 +261,6 @@ parse_datetime_iso_z <- function(x) {
 #' @importFrom dplyr filter
 #' @importFrom xml2 read_xml xml_add_child xml_add_sibling write_xml
 #' @importFrom stringr str_to_lower
-#' @importFrom ReLTER get_location_info
 #' @importFrom sf st_as_text
 #' @keywords internal
 #'
@@ -542,15 +542,14 @@ specimen_XML <- function(excel_file = NULL, excel_curators = NULL,
 #' @return A list of tibbles, each one being the validation result for a
 #'   single TTL file, as returned by [specimen_validate_ttl()].
 #' @author Alessandro Oggioni, phD (2023) \email{oggioni.a@@cnr.it}
-#' @importFrom httr2 request req_url_query req_method req_auth_basic
-#' @importFrom httr2 req_headers req_retry req_perform req_body_file
-#' @importFrom httr2 resp_check_status resp_body_json
-#' @importFrom dplyr filter mutate select
-#' @importFrom purrr pluck
-#' @importFrom tibble as_tibble
+#' @importFrom dplyr filter mutate
+#' @importFrom purrr map_chr
 #' @importFrom uuid UUIDgenerate
-#' @importFrom ReLTER get_location_info
-#' @importFrom sf st_as_text st_geometry_type
+#' @importFrom sf st_as_text st_geometry_type st_transform
+#' @importFrom sf st_point_on_surface st_coordinates
+#' @importFrom stringr str_to_title
+#' @importFrom tibble tibble
+#' @importFrom crayon green red cyan bold
 #' @keywords internal
 #'
 ### function specimen_ttl
@@ -566,7 +565,7 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
   if (is.null(creator_orcid))    creator_orcid   <- "https://orcid.org/0000-0002-7997-219X"
   # ORCID normalization
   if (!startsWith(creator_orcid, "https://orcid.org/"))
-    creator_orcid <- paste0("https://orcid.org/", creator_orcid)
+  creator_orcid <- paste0("https://orcid.org/", creator_orcid)
   # For saving the outputs of the validation process
   validation_report <- vector("list", length(specimen_uuids))
   
@@ -579,15 +578,31 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
   
   message(crayon::cyan$bold("\nStarting specimen TTL generation...\n"))
   
+  # assign UUID to the sampler(s)
+  samplers_uris <- excel_sampler |>
+    mutate(
+      sampler_uri = purrr::map_chr(
+        sampler_name,
+        ~ {
+          x <- get_existing_sampler_uri(.x)
+          if (is.null(x) || length(x) == 0 || is.na(x) || x == "") {
+            paste0("http://rdfdata.lteritalia.it/sampler/", uuid::UUIDgenerate())
+          } else {
+            as.character(x)  # URI already done on Fuseki
+          }
+        }
+      )
+    )
+  
   # --- TTL FILE CREATION LOOP ---
   for (i in 1:length(specimen_uuids)) {
     sp_id <- excel_file$specimen_id[[i]]
     excel_curator <- excel_curators |> dplyr::filter(specimen_id == sp_id)
-    excel_rel     <- excel_relation  |> dplyr::filter(specimen_id == sp_id)
+    excel_rel <- excel_relation  |> dplyr::filter(specimen_id == sp_id)
     
     # Filename
     file_name <- paste0("specimen_", specimen_uuids[[i]])
-    ttl_path  <- file.path(root_dir, paste0(file_name, ".ttl"))
+    ttl_path <- file.path(root_dir, paste0(file_name, ".trig"))
     
     # Open connection
     specimen_file_ttl <- file(ttl_path)
@@ -610,87 +625,40 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     activity_id <- excel_file$campaign[[i]]
     #  date and time in ISO 8601 with Z
     created_iso <- parse_datetime_iso_z(excel_file$date_time[[i]])
-    # samplers
+    # Samplers
     sampler_name <- excel_file$sampler[[i]]
-    if (check_sampler_exist(sampler_name = sampler_name)) {
-      sampler_query <- paste0("PREFIX sosa: <http://www.w3.org/ns/sosa/>
-     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-     SELECT ?c ?label 
-     WHERE {
-       ?c rdf:type sosa:Sampler .
-       ?c rdfs:label ?label .
-      FILTER( REGEX( ?label, '",
-                              sampler_name,
-                              "', 'i' ))
-    }
-    ORDER BY ASC(?l)")
-      sampler_qr <- httr2::request("http://fuseki1.get-it.it/specimen") |>
-        httr2::req_url_query(query = sampler_query) |>
-        httr2::req_method("POST") |>
-        httr2::req_headers(Accept = "application/sparql-results+json") |>
-        httr2::req_retry(max_tries = 3, max_seconds = 120) |>
-        httr2::req_perform()
-      httr2::resp_check_status(sampler_qr)
-      sampler_list <- httr2::resp_body_json(sampler_qr, simplifyVector = TRUE) |>
-        purrr::pluck("results") |>
-        tibble::as_tibble() |>
-        dplyr::mutate(
-          sampler_uri = bindings$c$value,
-          specimen_label = bindings$label$value,
-          .keep = "used"
-        ) |>
-        dplyr::select(
-          sampler_uri, specimen_label
-        )
-      sampler_uri <- paste0("<", sampler_list$sampler_uri, ">")
-      madeBy <- paste0("  sosa:MadeBySampler ", sampler_uri, " ;")
-      # sosa:Sampler
-      sosa_sampler <- ""
-      if (!is.na(activity_id)) {
+    
+    sampler_uri <- ""
+    sosa_sampler <- character(0)
+    madeBy <- ""
+    act_sampler_ass <- ""
+    
+    has_activity <- !is.na(activity_id) && nzchar(activity_id)
+    
+    if (!is.na(sampler_name) && nzchar(sampler_name)) {
+      
+      idx <- match(sampler_name, samplers_uris$sampler_name)
+      if (is.na(idx)) {
+        stop("No sampler_uri found for sampler_name: ", sampler_name)
+      }
+      
+      sampler_uri <- samplers_uris$sampler_uri[[idx]]
+      
+      sosa_sampler <- c(
+        paste0("<", sampler_uri, "> rdf:type sosa:Sampler , prov:Agent , prov:Entity ;"),
+        paste0("  rdfs:label '", sampler_name, "'@en .")
+      )
+      
+      madeBy <- paste0("  sosa:madeBySampler <", sampler_uri, "> ;")
+      
+      if (has_activity) {
         act_sampler_ass <- paste0(
-          "<", activity_id, ">\n",
-          "  prov:wasAssociatedWith ", sampler_uri, " .\n",
-          sampler_uri, "\n",
-          "  prov:wasAssociatedWith <", activity_id, "> .\n"
+          "<", activity_id, "> prov:wasAssociatedWith <", sampler_uri, "> .\n",
+          "<", sampler_uri, "> prov:wasAssociatedWith <", activity_id, "> .\n"
         )
-      } else {
-        act_sampler_ass <- ""
-      }
-    } else {
-      if (!is.na(sampler_name)) {
-        sampler_uuid <- sapply(
-          length(
-            excel_file$sampler[[i]]
-          ), 
-          uuid::UUIDgenerate
-        )
-        sampler_uri <- paste0("<http://rdfdata.lteritalia.it/sampler/", sampler_uuid, ">")
-        # sosa:Sampler
-        sosa_sampler <- c(
-          paste0(sampler_uri, " rdf:type sosa:Sampler , prov:Agent , prov:Entity ;"),
-          paste0("  rdfs:label '", sampler_name, "'@en .")
-        )
-        if (!is.na(activity_id)) {
-          act_sampler_ass <- paste0(
-            "  <", activity_id, ">\n",
-            "    prov:wasAssociatedWith ", sampler_uri, " ;\n",
-            sampler_uri, "\n",
-            "    prov:wasAssociatedWith <", activity_id, "> ;\n"
-          )
-          sosa_sampler <- c(
-            sosa_sampler,
-            "",
-            act_sampler_ass
-          )
-        } 
-        madeBy <- paste0("  sosa:MadeBySampler ", sampler_uri, " ;")
-      } else {
-        sampler_uri <- ""
-        sosa_sampler <- ""
-        madeBy <- ""
       }
     }
+    # location
     location_info <- ReLTER::get_location_info(
       locationid = location_id
     )
@@ -701,6 +669,34 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
       location_info$boundaries,
       by_geometry = TRUE) |>
         as.character()
+    # location geometry (sf)
+    g <- location_info$boundaries  # sfc/sf
+    
+    g_proj <- sf::st_transform(g, 3857)
+    pt_proj <- sf::st_point_on_surface(g_proj)
+    pt_4326 <- sf::st_transform(pt_proj, 4326)
+    
+    xy <- sf::st_coordinates(pt_4326)
+    lon_vis <- as.numeric(xy[1, 1])
+    lat_vis <- as.numeric(xy[1, 2])
+    
+    lon_txt <- formatC(lon_vis, format = "f", digits = 6)
+    lat_txt <- formatC(lat_vis, format = "f", digits = 6)
+    if (geo_type == "POINT") {
+      geo <- c(
+        "  geo:hasGeometry [ ",
+        paste0("    rdf:type sf:", stringr::str_to_title(geo_type), " ;"),
+        paste0("    geo:asWKT \"<urn:ogc:def:crs:EPSG::4326> ", geo_wkt, "\"^^geo:wktLiteral ;"),
+        "  ] ;"
+      )
+    } else {
+      geo <- c(
+        "  geo:hasGeometry [ ",
+        "    rdf:type sf:Point ;",
+        paste0("    geo:asWKT \"<urn:ogc:def:crs:EPSG::4326> POINT (", lon_txt, " ", lat_txt, ")\"^^geo:wktLiteral ;"),
+        "  ] ;"
+      )
+    }
     # curators
     curators <- ""
     institution_ror <- excel_curator$institution_ror |>
@@ -788,6 +784,7 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
     }
     # Sample
     sosa_sample <- c(
+      "<http://rdfdata.lteritalia.it/graph/samples> {",
       paste0("<http://rdfdata.lteritalia.it/samples/specimen_", uuid, "> rdf:type sosa:Sample , sosa:sampleMaterial , prov:Entity ;"),
       paste0("  dct:identifier \"", uuid, "\" ;"),
       paste0("  dcat:landingPage <http://rdfdata.lteritalia.it/samples/specimen_", uuid, ".xml> ;"),
@@ -798,24 +795,23 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
         '  prov:generatedAtTime "', created_iso, '"^^xsd:dateTime ;'
       ),
       paste0('  dct:creator <', creator_orcid, '> ;'),
-      paste0("  sosa:isSampleOf <", site_id, "> ;"),
+      paste0("  sosa:isSampleOf <", location_id, "> ;"),
       activityId,
       madeBy,
-      "  geo:hasGeometry [ ",
-      paste0("    rdf:type sf:", stringr::str_to_title(geo_type), " ;"),
-      paste0("    geo:asWKT '<urn:ogc:def:crs:EPSG::4283> ", geo_wkt, "'^^geo:wktLiteral ;"),
-      "  ] ;",
+      geo,
       curators,
       contributors,
       related,
       procedure,
-      material
+      material,
+      "}"
     )
     # sosa:hasSample
+    sosa_hasSampling <- c(
+      paste0("<", site_id, "> sosa:hasSample <http://rdfdata.lteritalia.it/samples/specimen_", uuid, "> .")
+    )
+    # sosa:Sampling
     if (!is.na(activity_id)) {
-      sosa_hasSampling <- c(
-        paste0("<", site_id, "> sosa:hasSample <http://rdfdata.lteritalia.it/samples/specimen_", uuid, "> .")
-      )
       # reuse same ISO datetime for resultTime
       result_iso <- created_iso
       sosa_sampling <- c(
@@ -838,7 +834,9 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
       "",
       sosa_sampling,
       "",
+      "<http://rdfdata.lteritalia.it/graph/samplers> {",
       sosa_sampler,
+      "}",
       "",
       act_sampler_ass,
       ""
@@ -857,7 +855,7 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
           paste0("✖ RDF validation failed for ", file_name, ": ", e$message)
         ))
         tibble::tibble(
-          ttl_file = paste0(file_name, ".ttl"),
+          ttl_file = paste0(file_name, ".trig"),
           total_triples = NA_integer_,
           predicates_found = NA_integer_,
           missing_predicates = "Validation error",
@@ -890,49 +888,56 @@ specimen_ttl <- function(excel_file = NULL, excel_curators = NULL,
 #' @param sampler_name description
 #' @return description
 #' @author Alessandro Oggioni, phD (2023) \email{oggioni.a@@cnr.it}
-#' @importFrom httr2 request req_url_query req_method
-#' @importFrom httr2 req_headers req_retry req_perform
-#' @importFrom httr2 resp_check_status resp_body_json
+#' @importFrom httr2 request req_method req_headers req_body_form
+#' @importFrom httr2 req_timeout req_perform resp_body_json
 #' @examples
 #' \dontrun{
 #' ## Not run:
-#' check_sampler_exist(sampler_name = "Niskin bottle")
+#' get_existing_sampler_uri(
+#'   sampler_name = "Niskin bottle"
+#' )
 #' 
 #' }
 #' ## End (Not run)
 #' @keywords internal
 #'
-### function check_sampler_exist
-check_sampler_exist <- function(sampler_name = NULL) {
-  library(magrittr)
-  sampler_query <- paste0("PREFIX sosa: <http://www.w3.org/ns/sosa/>
-     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-     SELECT ?c ?label 
-     WHERE {
-       ?c rdf:type sosa:Sampler .
-       ?c rdfs:label ?label .
-      FILTER( REGEX( ?label, '",
-                           sampler_name,
-                           "', 'i' ))
-    }
-    ORDER BY ASC(?l)")
-  sampler_qr <- httr2::request("http://fuseki1.get-it.it/specimen") |>
-    httr2::req_url_query(query = sampler_query) |>
+### function get_existing_sampler_uri
+get_existing_sampler_uri <- function(sampler_name) {
+  if (is.na(sampler_name) || !nzchar(sampler_name)) return(NULL)
+  
+  # escape per stringa SPARQL tra apici
+  sampler_esc <- gsub("\\\\", "\\\\\\\\", sampler_name)
+  sampler_esc <- gsub("'", "\\\\'", sampler_esc)
+  
+  endpoint_query <- "https://fuseki.lteritalia.it/specimen/query"
+  q <- paste0("
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?c ?label
+WHERE {
+  ?c rdf:type sosa:Sampler ;
+     rdfs:label ?label .
+  FILTER (lcase(str(?label)) = lcase('", sampler_esc, "'))
+}
+LIMIT 1
+")
+  
+  resp <- httr2::request(endpoint_query) |>
     httr2::req_method("POST") |>
-    httr2::req_headers(Accept = "application/sparql-results+json") |>
-    httr2::req_retry(max_tries = 3, max_seconds = 120) |>
+    httr2::req_headers(
+      "Accept" = "application/sparql-results+json",
+      "Content-Type" = "application/x-www-form-urlencoded; charset=UTF-8"
+    ) |>
+    httr2::req_body_form(query = q) |>
+    httr2::req_timeout(20) |>
     httr2::req_perform()
-  httr2::resp_check_status(sampler_qr)
-  sampler_list <- httr2::resp_body_json(sampler_qr, simplifyVector = TRUE) |>
-    purrr::pluck("results") |>
-    tibble::as_tibble()
-  if (nrow(sampler_list) == 0) {
-    sampler_exist <- FALSE
-  } else {
-    sampler_exist <- TRUE
-  }
-  sampler_exist
+  
+  js <- httr2::resp_body_json(resp, simplifyVector = TRUE)
+  b <- js$results$bindings
+  if (is.null(b) || NROW(b) == 0) return(NULL)
+  
+  b$c$value[[1]]
 }
 
 #' Launch the eLTER-IT Catalogue (Samples view)
@@ -1002,7 +1007,7 @@ specimen_runApp <- function(...) {
 #' but checks internal consistency and key structural elements.
 #' @examples
 #' \dontrun{
-#'   specimen_validate_ttl("specimen_12345.ttl")
+#'   specimen_validate_ttl("specimen_12345.trig")
 #' }
 #' @importFrom rdflib rdf_parse rdf_query
 #' @importFrom tibble tibble
@@ -1171,9 +1176,9 @@ specimen_validate_ttl <- function(ttl_path) {
   has_WKT_EPSG <- FALSE
   if (length(wkt_vals) > 0) {
     # very simple pattern: <urn:ogc:def:crs:EPSG::XXXX> POINT (...)
-    pattern <- "^<urn:ogc:def:crs:EPSG::[0-9]+> POINT \\([-+0-9\\.]+ [-+0-9\\.]+\\)$"
-    # strip possible quotes if rdf_query returns them
-    clean_wkt <- gsub('^"|"$', "", wkt_vals)
+    pattern <- "^<urn:ogc:def:crs:EPSG::[0-9]+>\\s+(POINT|POLYGON|LINESTRING|MULTIPOINT|MULTIPOLYGON|MULTILINESTRING)\\s*\\(.*\\)$"
+    clean_wkt <- gsub("^'|'$", "", wkt_vals)        # nel tuo TTL usi apici singoli
+    clean_wkt <- gsub('^"|"$', "", clean_wkt)
     has_WKT_EPSG <- all(grepl(pattern, clean_wkt))
   }
   
@@ -1253,10 +1258,10 @@ specimen_validate_ttl <- function(ttl_path) {
   # --- 12. Human-readable "missing" summary ---
   missing <- character(0)
   if (!has_attribution)         missing <- c(missing, "prov:qualifiedAttribution / Attribution shape")
-  if (!has_contactPoint)        missing <- c(missing, "dcat:contactPoint")
+  if (!has_contactPoint)        missing <- c(missing, "missing dcat:contactPoint - please add row in 'CuratorsInfo'")
   if (!has_geometry)            missing <- c(missing, "geo:hasGeometry")
-  if (!has_WKT_EPSG)            missing <- c(missing, "geo:asWKT with EPSG::XXXX POINT(...)")
-  if (!has_sampler)             missing <- c(missing, "sosa:MadeBySampler with typed sosa:Sampler")
+  if (!has_WKT_EPSG)            missing <- c(missing, "geo:asWKT with EPSG CRS (<urn:ogc:def:crs:EPSG::XXXX> + WKT geometry)")
+  if (!has_sampler)             missing <- c(missing, "mssing sosa:MadeBySampler with typed sosa:Sampler - please add the sampler in the column 'sampler'")
   if (!has_sampling)            missing <- c(missing, "sosa:Sampling instances")
   if (!has_sampleRelationship)  missing <- c(missing, "sosa-rel:SampleRelationship shape")
   if (!has_qualifiedDerivation) missing <- c(missing, "prov:qualifiedDerivation / Derivation shape")

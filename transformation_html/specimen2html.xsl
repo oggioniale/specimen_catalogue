@@ -26,12 +26,18 @@
                 <meta name="description"
                     content="Human readable version of a sample description from resources"/>
                 <meta name="author" content="Alessandro Oggioni"/>
-                <link rel="icon" href="https://www.lteritalia.it/wordpress/wp-content/uploads/2023/09/solo_foglia.png"/>
+                <link rel="icon" href="https://www.lteritalia.it/wp-content/uploads/2023/09/solo_foglia.png"/>
 
                 <title>Sample description</title>
-                <link rel="stylesheet" href="//www.get-it.it/objects/specimen/transformation_html/assets/css/leaflet.css"
+                <!--link rel="stylesheet" href="//www.get-it.it/objects/specimen/transformation_html/assets/css/leaflet.css"
                     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+                    crossorigin=""/-->
+                <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+                    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
                     crossorigin=""/>
+                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+                    crossorigin=""></script>
 
                 <link href="//www.get-it.it/objects/specimen/transformation_html/assets/css/font-awesome.min.css" rel="stylesheet"/>
 
@@ -162,7 +168,7 @@
                         display: none;
                     }</style>
 
-                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""/>
+                <!--script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""/-->
 
                 <!-- DataTables -->
                 <link rel="stylesheet"
@@ -248,7 +254,7 @@
                         <div class="container-fluid">
                             <div class="navbar-header">
                                 <a class="navbar-brand" href="https://www.lteritalia.it" target="_blank">
-                                    <img src="https://www.lteritalia.it/wordpress/wp-content/uploads/LTER-IT-033-300x89.png"
+                                    <img src="https://www.lteritalia.it/wp-content/uploads/LTER-IT-033-scaled-480x143.png"
                                         height="50"
                                         style="padding-top: 0px;margin-top: -19px;"/>
                                 </a>
@@ -319,7 +325,12 @@
                         </div>
                         <div class="col-lg-6">
                             <span style="color: #94c5e5"><strong>Useful links</strong></span><br/>
-                            <a href="http://sparql.lteritalia.it/" target="_blank">SPARQL Endpoint</a>
+                            <ul style="margin-top: 5px;">
+                                <li><a href="http://sparql.lteritalia.it/" target="_blank">SPARQL Endpoint</a></li>
+                                <li><a href="http://127.0.0.1:8000/__docs__/" target="_blank">eLTER-IT Specimen Catalogue API</a></li>
+                                <li><a href="https://www.lteritalia.it" target="_blank">eLTERIT</a></li>
+                                <li><a href="https://elter-ri.eu" target="_blank">eLTER RI</a></li>
+                            </ul>
                         </div>
                     </footer>
                     <!-- End Site footer -->
@@ -495,9 +506,9 @@
                             </a>
                             
                             <script type="text/javascript">
-                                const xml = `<xsl:value-of select="$activityLink" />`;
+                                var xml = `<xsl:value-of select="$activityLink" />`;
                                 
-                                const xslt = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                                var xslt = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                                     version="3.0"
                                     xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                     exclude-result-prefixes="#all"
@@ -516,7 +527,7 @@
                                     
                                 &lt;/xsl:stylesheet&gt;`;
                                 
-                                const result = SaxonJS.XPath.evaluate(`
+                                var result = SaxonJS.XPath.evaluate(`
                                   transform(map {
                                     'stylesheet-text' : $xslt,
                                     'source-node' : parse-xml($xml),
@@ -723,9 +734,9 @@
                                 <b id="logRor{$componentsPosition}"></b>
                             </a>
                             <script type="text/javascript">
-                                const xmlRor<xsl:value-of select="$componentsPosition"/> = `<xsl:value-of select="$rorLink" />`;
+                                var xmlRor<xsl:value-of select="$componentsPosition"/> = `<xsl:value-of select="$rorLink" />`;
                                 
-                                const xsltRor<xsl:value-of select="$componentsPosition"/> = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                                var xsltRor<xsl:value-of select="$componentsPosition"/> = `&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                                 version="3.0"
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 exclude-result-prefixes="#all"
@@ -744,7 +755,7 @@
                                 
                                 &lt;/xsl:stylesheet&gt;`;
                                 
-                                const resultRor<xsl:value-of select="$componentsPosition"/> = SaxonJS.XPath.evaluate(`
+                                var resultRor<xsl:value-of select="$componentsPosition"/> = SaxonJS.XPath.evaluate(`
                                   transform(map {
                                     'stylesheet-text' : $xsltRor<xsl:value-of select="$componentsPosition"/>,
                                     'source-node' : parse-xml($xmlRor<xsl:value-of select="$componentsPosition"/>),
@@ -823,11 +834,11 @@
 
                         function loadFOI() {
 			(async () => {
-                            const deimsIDurl = '<xsl:value-of select="$deimsIDurl"/>';
-			    const responseSite = await fetch(deimsIDurl);
-			    const jsonSite = await responseSite.json();
+                            var deimsIDurl = '<xsl:value-of select="$deimsIDurl"/>';
+			                      var responseSite = await fetch(deimsIDurl);
+			                      var jsonSite = await responseSite.json();
                             console.log('jsonSite', jsonSite);
-                            var owsrootUrl = "<xsl:value-of select="concat('https://deims.org/geoserver/deims/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=deims:deims_sites_boundaries&amp;outputFormat=text/javascript&amp;CQL_FILTER=deimsid=%27', $sampledFURI, '%27&amp;outputFormat=text/javascript&amp;format_options=callback:getJson&amp;srsName=epsg:4326')"/>"
+                            var owsrootUrl = "<xsl:value-of select="concat('https://deims.org/geoserver/deims/ows?service=WFS&amp;version=1.1.0&amp;request=GetFeature&amp;typeName=deims:deims_sites_boundaries&amp;outputFormat=json&amp;CQL_FILTER=deimsid=%27', $sampledFURI, '%27&amp;outputFormat=json&amp;format_options=callback:getJson&amp;srsName=epsg:4326')"/>"
                             var URL = owsrootUrl;
                             var WFSLayer = null;
                             var ajax = $.ajax({
@@ -864,9 +875,9 @@
                                 attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                             }).addTo(map);
 
-                            const locationIDURL = '<xsl:value-of select="$locationIDURL"/>';
-			                const response = await fetch(locationIDURL);
-			                const geojsonFeature = await response.json();
+                            var locationIDURL = '<xsl:value-of select="$locationIDURL"/>';
+			                var response = await fetch(locationIDURL);
+			                var geojsonFeature = await response.json();
 
 			                console.log('geojsonFeature', geojsonFeature);
 				
